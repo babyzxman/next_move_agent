@@ -1,0 +1,5 @@
+app id,task id,create date,source file path,destination file path,file size,status,error no,error message,retry
+Z001,task_external_1002,20251013223100577,file:/Users/a007626/next_move_test/source/fruit.csv,file:/Users/a007626/next_move_test/dest/fruit.csv,279,SUCCESS,,,
+Z001,task_external_1002,20251013223100649,file:/Users/a007626/next_move_test/source/fruit.ctrl,file:/Users/a007626/next_move_test/dest/fruit.ctrl,0,SUCCESS,,,
+Z001,task_external_1002,20251013223100708,file:/Users/a007626/next_move_test/source/fruit_2.csv,file:/Users/a007626/next_move_test/dest/fruit_2.csv,279,SUCCESS,,,
+Z001,task_external_1002,20251013223100779,file:/Users/a007626/next_move_test/source/fruit_2.ctrl,file:/Users/a007626/next_move_test/dest/fruit_2.ctrl,0,SUCCESS,,,

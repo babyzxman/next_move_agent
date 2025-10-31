@@ -1,0 +1,53 @@
+<configuration>
+    <property>
+        <name>dfs.block.size</name>
+        <value>268435456</value> <!-- 256MB -->
+    </property>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>viewfs://blendata</value>
+    </property>
+    <!--  <property>-->
+    <!--          <name>fs.s3a.aws.credentials.provider</name>-->
+    <!--          <value>org.apache.hadoop.fs.s3a.SimpleAWSCredentialsProvider</value>-->
+    <!--  </property>-->
+    <!--  <property>-->
+    <!--          <name>fs.viewfs.mounttable.blendata.link./on-s3</name>-->
+    <!--          <value>s3a://blendata-on-cloud/compute</value>-->
+    <!--  </property>-->
+    <property>
+        <name>fs.viewfs.mounttable.blendata.link./src-local-01</name>
+        <value>file:///Users/anucha.r/MyWork/tmp/test-next-move-src-dest/src</value>
+    </property>
+    <property>
+        <name>fs.viewfs.mounttable.blendata.link./dest-local-01</name>
+        <value>file:///Users/anucha.r/MyWork/tmp/test-next-move-src-dest/dest</value>
+    </property>
+
+    <property>
+        <name>fs.viewfs.mounttable.blendata.link./src-local-02</name>
+        <value>file:///Users/anucha.r/MyWork/tmp/test-next-move-src-dest/src</value>
+    </property>
+    <property>
+        <name>fs.viewfs.mounttable.blendata.link./dest-local-02</name>
+        <value>file:///Users/anucha.r/MyWork/tmp/test-next-move-src-dest/dest</value>
+    </property>
+    <!--  <property>-->
+    <!--          <name>fs.s3a.bucket.blendata-on-cloud.access.key</name>-->
+    <!--          <value>AKIARPJFFCVOBUFAV3HW</value>-->
+    <!--  </property>-->
+    <!--  <property>-->
+    <!--          <name>fs.s3a.bucket.blendata-on-cloud.secret.key</name>-->
+    <!--          <value>uzbtSM77zTWvdXMrozN6a95GOVRcuOM7MbUOC4z+</value>-->
+    <!--  </property>-->
+    <!--  <property>-->
+    <!--          <name>fs.s3a.path.style.access</name>-->
+    <!--          <value>false</value>-->
+    <!--          <description>Enable S3 path style access ie disabling the default virtual hosting behaviour.-->
+    <!--                  Useful for S3A-compliant storage providers as it removes the need to set up DNS for virtual-->
+    <!--                  hosting.-->
+    <!--          </description>-->
+    <!--  </property>-->
+
+
+</configuration>

@@ -1,0 +1,253 @@
+2025-10-13 21:41:37 INFO  [ : ] o.g.b.n.s.NextMoveServiceApplication.logStartupProfileInfo -  The following profiles are active: service-03
+2025-10-13 21:41:37 INFO  [ : ] o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn -  Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-13 21:41:37 INFO  [ : ] o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn -  Finished Spring Data repository scanning in 89ms. Found 1 JPA repository interfaces.
+2025-10-13 21:41:37 WARN  [ : ] o.s.b.a.e.EndpointId.logWarning -  Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2025-10-13 21:41:38 INFO  [ : ] o.s.c.c.s.GenericScope.setSerializationId -  BeanFactory id=57ce4340-08f0-3c1d-b716-6294ee42457d
+2025-10-13 21:41:38 INFO  [ : ] c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor.postProcessBeanFactory -  Post-processing PropertySource instances
+2025-10-13 21:41:38 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2025-10-13 21:41:38 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2025-10-13 21:41:38 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource servletContextInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2025-10-13 21:41:38 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2025-10-13 21:41:38 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+2025-10-13 21:41:38 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2025-10-13 21:41:38 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource springCloudClientHostInfo [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2025-10-13 21:41:38 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource applicationConfig: [classpath:/application.yml] (document #0) [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2025-10-13 21:41:38 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource springCloudDefaultProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2025-10-13 21:41:38 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource cachedrandom [org.springframework.cloud.util.random.CachedRandomPropertySource] to EncryptablePropertySourceWrapper
+2025-10-13 21:41:38 INFO  [ : ] c.u.j.f.DefaultLazyPropertyFilter.lambda$null$2 -  Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2025-10-13 21:41:38 INFO  [ : ] c.u.j.r.DefaultLazyPropertyResolver.lambda$null$2 -  Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2025-10-13 21:41:38 INFO  [ : ] c.u.j.d.DefaultLazyPropertyDetector.lambda$null$2 -  Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2025-10-13 21:41:38 INFO  [ : ] o.s.b.w.e.t.TomcatWebServer.initialize -  Tomcat initialized with port(s): 8081 (https)
+2025-10-13 21:41:38 INFO  [ : ] o.a.c.h.Http11NioProtocol.log -  Initializing ProtocolHandler ["https-jsse-nio-8081"]
+2025-10-13 21:41:38 INFO  [ : ] o.a.c.c.StandardService.log -  Starting service [Tomcat]
+2025-10-13 21:41:38 INFO  [ : ] o.a.c.c.StandardEngine.log -  Starting Servlet engine: [Apache Tomcat/9.0.46]
+2025-10-13 21:41:38 INFO  [ : ] o.a.c.c.C.[.[.[/].log -  Initializing Spring embedded WebApplicationContext
+2025-10-13 21:41:38 INFO  [ : ] o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext -  Root WebApplicationContext: initialization completed in 921 ms
+2025-10-13 21:41:38 WARN  [ : ] c.n.c.s.URLConfigurationSource.<init> -  No URLs will be polled as dynamic configuration sources.
+2025-10-13 21:41:38 INFO  [ : ] c.n.c.s.URLConfigurationSource.<init> -  To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2025-10-13 21:41:38 INFO  [ : ] c.n.c.DynamicPropertyFactory.getInstance -  DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@30bf26df
+2025-10-13 21:41:38 INFO  [ : ] o.h.j.i.u.LogHelper.logPersistenceUnitInformation -  HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-13 21:41:38 INFO  [ : ] o.h.Version.logVersion -  HHH000412: Hibernate ORM core version 5.4.32.Final
+2025-10-13 21:41:38 INFO  [ : ] o.h.a.c.Version.<clinit> -  HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2025-10-13 21:41:38 INFO  [ : ] c.z.h.HikariDataSource.getConnection -  HikariCP - Starting...
+2025-10-13 21:41:38 INFO  [ : ] c.z.h.HikariDataSource.getConnection -  HikariCP - Start completed.
+2025-10-13 21:41:38 INFO  [ : ] o.h.d.Dialect.<init> -  HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2025-10-13 21:41:39 INFO  [ : ] o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService -  HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-10-13 21:41:39 INFO  [ : ] o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory -  Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-13 21:41:39 WARN  [ : ] o.a.h.u.NativeCodeLoader.<clinit> -  Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2025-10-13 21:41:39 INFO  [ : ] o.s.s.c.ThreadPoolTaskExecutor.initialize -  Initializing ExecutorService
+2025-10-13 21:41:39 INFO  [ : ] o.s.s.c.ThreadPoolTaskExecutor.initialize -  Initializing ExecutorService 'taskExecutor'
+2025-10-13 21:41:39 WARN  [ : ] c.n.c.s.URLConfigurationSource.<init> -  No URLs will be polled as dynamic configuration sources.
+2025-10-13 21:41:39 INFO  [ : ] c.n.c.s.URLConfigurationSource.<init> -  To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2025-10-13 21:41:39 WARN  [ : ] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor -  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-13 21:41:40 INFO  [ : ] o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration.discoveryClientOptionalArgs -  Eureka HTTP Client uses Jersey
+2025-10-13 21:41:40 WARN  [ : ] o.s.c.l.c.BlockingLoadBalancerClientAutoConfiguration$BlockingLoadBalancerClientRibbonWarnLogger.logWarning -  You already have RibbonLoadBalancerClient on your classpath. It will be used by default. As Spring Cloud Ribbon is in maintenance mode. We recommend switching to BlockingLoadBalancerClient instead. In order to use it, set the value of `spring.cloud.loadbalancer.ribbon.enabled` to `false` or remove spring-cloud-starter-netflix-ribbon from your project.
+2025-10-13 21:41:40 INFO  [ : ] o.s.b.a.e.w.EndpointLinksResolver.<init> -  Exposing 2 endpoint(s) beneath base path '/actuator'
+2025-10-13 21:41:40 INFO  [ : ] o.s.c.n.e.InstanceInfoFactory.create -  Setting initial instance status as: STARTING
+2025-10-13 21:41:40 INFO  [ : ] c.n.d.DiscoveryClient.<init> -  Initializing Eureka in region us-east-1
+2025-10-13 21:41:40 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using JSON encoding codec LegacyJacksonJson
+2025-10-13 21:41:40 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using JSON decoding codec LegacyJacksonJson
+2025-10-13 21:41:40 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using XML encoding codec XStreamXml
+2025-10-13 21:41:40 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using XML decoding codec XStreamXml
+2025-10-13 21:41:40 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-13 21:41:40 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Disable delta property : false
+2025-10-13 21:41:40 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Single vip registry refresh property : null
+2025-10-13 21:41:40 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Force full registry fetch : false
+2025-10-13 21:41:40 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Application is null : false
+2025-10-13 21:41:40 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Registered Applications size is zero : true
+2025-10-13 21:41:40 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Application version is -1: true
+2025-10-13 21:41:40 INFO  [ : ] c.n.d.DiscoveryClient.getAndStoreFullRegistry -  Getting all instance registry info from the eureka server
+2025-10-13 21:41:41 INFO  [ : ] c.n.d.DiscoveryClient.getAndStoreFullRegistry -  The response status is 200
+2025-10-13 21:41:41 INFO  [ : ] c.n.d.DiscoveryClient.initScheduledTasks -  Starting heartbeat executor: renew interval is: 30
+2025-10-13 21:41:41 INFO  [ : ] c.n.d.InstanceInfoReplicator.<init> -  InstanceInfoReplicator onDemand update allowed rate per min is 4
+2025-10-13 21:41:41 INFO  [ : ] c.n.d.DiscoveryClient.<init> -  Discovery Client initialized at timestamp 1760366501011 with initial instances count: 1
+2025-10-13 21:41:41 INFO  [ : ] o.s.c.n.e.s.EurekaServiceRegistry.register -  Registering application ZERO-SIZE-CONTROL-SERVICE with eureka with status UP
+2025-10-13 21:41:41 INFO  [ : ] c.n.d.DiscoveryClient.notify -  Saw local status change event StatusChangeEvent [timestamp=1760366501013, current=UP, previous=STARTING]
+2025-10-13 21:41:41 INFO  [ : ] o.a.c.h.Http11NioProtocol.log -  Starting ProtocolHandler ["https-jsse-nio-8081"]
+2025-10-13 21:41:41 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_ZERO-SIZE-CONTROL-SERVICE/192.168.1.197:zero-size-control-service:8081: registering service...
+2025-10-13 21:41:41 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_ZERO-SIZE-CONTROL-SERVICE/192.168.1.197:zero-size-control-service:8081 - registration status: 204
+2025-10-13 21:41:41 INFO  [ : ] o.s.b.w.e.t.TomcatWebServer.start -  Tomcat started on port(s): 8081 (https) with context path ''
+2025-10-13 21:41:41 INFO  [ : ] o.s.c.n.e.s.EurekaAutoServiceRegistration.onApplicationEvent -  Updating port to 8081
+2025-10-13 21:41:41 INFO  [ : ] o.g.b.n.s.NextMoveServiceApplication.logStarted -  Started NextMoveServiceApplication in 4.675 seconds (JVM running for 5.032)
+2025-10-13 21:41:41 INFO  [ : ] o.g.b.n.s.NextMoveServiceApplication.run -  ...License validation successful
+2025-10-13 21:46:40 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-13 21:51:40 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-13 21:53:05 INFO  [ : ] o.a.c.c.C.[.[.[/].log -  Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-13 21:53:05 INFO  [ : ] o.s.w.s.DispatcherServlet.initServletBean -  Initializing Servlet 'dispatcherServlet'
+2025-10-13 21:53:05 INFO  [ : ] o.s.w.s.DispatcherServlet.initServletBean -  Completed initialization in 7 ms
+2025-10-13 21:53:06 DEBUG [ : ] o.g.b.n.s.c.ManageFileController.transferFile -  [Blendata][Transfer] file file:/Users/a007626/next_move_test/source/fruit.csv
+2025-10-13 21:53:06 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.moveFiles -  [Blendata] Source root path: file:///Users/a007626/next_move_test/source
+2025-10-13 21:53:06 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.lambda$moveFiles$0 -  [Blendata] Task ID(task_external_0099) Request to move file file:/Users/a007626/next_move_test/source/fruit.csv to file:///Users/a007626/next_move_test/dest
+2025-10-13 21:55:16 DEBUG [ : ] o.g.b.n.s.c.ManageFileController.transferFile -  [Blendata][Transfer] file file:/Users/a007626/next_move_test/source/fruit.csv
+2025-10-13 21:55:16 DEBUG [ : ] o.g.b.n.s.c.ManageFileController.transferFile -  [Blendata][Transfer] file file:/Users/a007626/next_move_test/source/fruit.[ctrl]
+2025-10-13 21:55:16 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.moveFiles -  [Blendata] Source root path: file:///Users/a007626/next_move_test/source
+2025-10-13 21:55:16 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.lambda$moveFiles$0 -  [Blendata] Task ID(task_external_1000) Request to move file file:/Users/a007626/next_move_test/source/fruit.csv to file:///Users/a007626/next_move_test/dest
+2025-10-13 21:55:16 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.lambda$moveFiles$0 -  [Blendata] Task ID(task_external_1000) Request to move file file:/Users/a007626/next_move_test/source/fruit.[ctrl] to file:///Users/a007626/next_move_test/dest
+2025-10-13 21:55:16 ERROR [ : ] o.g.b.n.s.u.FileInfoUtil.extractRelativeSourcePath -  [Blendata] !!!Error cannot extract relative source path , full path = file:/Users/a007626/next_move_test/source/fruit.[ctrl]
+2025-10-13 21:55:16 ERROR [ : ] o.g.b.n.s.u.FileInfoUtil.getFileInfo -  [Blendata] !!!Error get source file info file:/Users/a007626/next_move_test/source/fruit.[ctrl]
+java.lang.IllegalArgumentException: Can not create a Path from a null string
+	at org.apache.hadoop.fs.Path.checkPathArg(Path.java:168)
+	at org.apache.hadoop.fs.Path.<init>(Path.java:184)
+	at org.gable.blendata.nextmove.shared.util.FileInfoUtil.getFileInfo(FileInfoUtil.java:61)
+	at org.gable.blendata.nextmove.service.adapter.impl.HadoopFileSystemAdapter.getSourceFileInfo(HadoopFileSystemAdapter.java:39)
+	at org.gable.blendata.nextmove.service.service.ZeroCtrlService.lambda$processFileTransfers$3(ZeroCtrlService.java:125)
+	at java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1604)
+	at java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1596)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-10-13 21:55:16 ERROR [ : ] o.g.b.n.s.s.ZeroCtrlService.lambda$processFileTransfers$3 -  [Blendata] !!!ErrorNo(Z001-20251013215516-808705ee) : Task C001_task_external_1000_4bbrjj8d error : null 
+java.lang.NullPointerException: null
+	at org.gable.blendata.nextmove.service.service.ZeroCtrlService.lambda$processFileTransfers$3(ZeroCtrlService.java:126)
+	at java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1604)
+	at java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1596)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-10-13 21:55:16 ERROR [ : ] o.g.b.n.s.u.FileInfoUtil.extractRelativeSourcePath -  [Blendata] !!!Error cannot extract relative source path , full path = file:/Users/a007626/next_move_test/source/fruit.[ctrl]
+2025-10-13 21:55:16 ERROR [ : ] o.g.b.n.s.u.FileInfoUtil.getFileInfo -  [Blendata] !!!Error get source file info file:/Users/a007626/next_move_test/source/fruit.[ctrl]
+java.lang.IllegalArgumentException: Can not create a Path from a null string
+	at org.apache.hadoop.fs.Path.checkPathArg(Path.java:168)
+	at org.apache.hadoop.fs.Path.<init>(Path.java:184)
+	at org.gable.blendata.nextmove.shared.util.FileInfoUtil.getFileInfo(FileInfoUtil.java:61)
+	at org.gable.blendata.nextmove.service.service.ZeroCtrlService.addRemainingReconciledInfo(ZeroCtrlService.java:186)
+	at org.gable.blendata.nextmove.service.service.ZeroCtrlService.lambda$processFileTransfers$3(ZeroCtrlService.java:164)
+	at java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1604)
+	at java.util.concurrent.CompletableFuture$AsyncSupply.exec(CompletableFuture.java:1596)
+	at java.util.concurrent.ForkJoinTask.doExec(ForkJoinTask.java:289)
+	at java.util.concurrent.ForkJoinPool$WorkQueue.runTask(ForkJoinPool.java:1056)
+	at java.util.concurrent.ForkJoinPool.runWorker(ForkJoinPool.java:1692)
+	at java.util.concurrent.ForkJoinWorkerThread.run(ForkJoinWorkerThread.java:175)
+2025-10-13 21:56:40 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-13 21:57:36 DEBUG [ : ] o.g.b.n.s.c.ManageFileController.transferFile -  [Blendata][Transfer] file file:/Users/a007626/next_move_test/source/fruit.csv
+2025-10-13 21:57:36 DEBUG [ : ] o.g.b.n.s.c.ManageFileController.transferFile -  [Blendata][Transfer] file file:/Users/a007626/next_move_test/source/fruit.ctrl
+2025-10-13 21:57:36 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.moveFiles -  [Blendata] Source root path: file:///Users/a007626/next_move_test/source
+2025-10-13 21:57:36 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.lambda$moveFiles$0 -  [Blendata] Task ID(task_external_1000) Request to move file file:/Users/a007626/next_move_test/source/fruit.csv to file:///Users/a007626/next_move_test/dest
+2025-10-13 21:57:36 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.lambda$moveFiles$0 -  [Blendata] Task ID(task_external_1000) Request to move file file:/Users/a007626/next_move_test/source/fruit.ctrl to file:///Users/a007626/next_move_test/dest
+2025-10-13 22:01:40 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-13 22:06:40 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-13 22:11:40 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-13 22:16:40 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-13 22:21:40 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-13 22:26:40 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-13 22:26:42 INFO  [ : ] o.s.c.n.e.s.EurekaServiceRegistry.deregister -  Unregistering application ZERO-SIZE-CONTROL-SERVICE with eureka with status DOWN
+2025-10-13 22:26:42 INFO  [ : ] c.n.d.DiscoveryClient.notify -  Saw local status change event StatusChangeEvent [timestamp=1760369202045, current=DOWN, previous=UP]
+2025-10-13 22:26:42 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_ZERO-SIZE-CONTROL-SERVICE/192.168.1.197:zero-size-control-service:8081: registering service...
+2025-10-13 22:26:42 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_ZERO-SIZE-CONTROL-SERVICE/192.168.1.197:zero-size-control-service:8081 - registration status: 204
+2025-10-13 22:26:42 INFO  [ : ] o.s.s.c.ThreadPoolTaskExecutor.shutdown -  Shutting down ExecutorService 'taskExecutor'
+2025-10-13 22:26:42 INFO  [ : ] o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy -  Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-13 22:26:42 INFO  [ : ] c.z.h.HikariDataSource.close -  HikariCP - Shutdown initiated...
+2025-10-13 22:26:42 INFO  [ : ] c.z.h.HikariDataSource.close -  HikariCP - Shutdown completed.
+2025-10-13 22:26:42 INFO  [ : ] c.n.d.DiscoveryClient.shutdown -  Shutting down DiscoveryClient ...
+2025-10-13 22:26:45 WARN  [ : ] c.n.d.TimedSupervisorTask.run -  task supervisor shutting down, can't accept the task
+2025-10-13 22:26:45 INFO  [ : ] c.n.d.DiscoveryClient.unregister -  Unregistering ...
+2025-10-13 22:26:45 INFO  [ : ] c.n.d.DiscoveryClient.unregister -  DiscoveryClient_ZERO-SIZE-CONTROL-SERVICE/192.168.1.197:zero-size-control-service:8081 - deregister  status: 200
+2025-10-13 22:26:45 INFO  [ : ] c.n.d.DiscoveryClient.shutdown -  Completed shut down of DiscoveryClient
+2025-10-13 22:26:52 INFO  [ : ] o.g.b.n.s.NextMoveServiceApplication.logStartupProfileInfo -  The following profiles are active: service-03
+2025-10-13 22:26:53 INFO  [ : ] o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn -  Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-13 22:26:53 INFO  [ : ] o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn -  Finished Spring Data repository scanning in 221ms. Found 1 JPA repository interfaces.
+2025-10-13 22:26:53 WARN  [ : ] o.s.b.a.e.EndpointId.logWarning -  Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2025-10-13 22:26:53 INFO  [ : ] o.s.c.c.s.GenericScope.setSerializationId -  BeanFactory id=57ce4340-08f0-3c1d-b716-6294ee42457d
+2025-10-13 22:26:53 INFO  [ : ] c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor.postProcessBeanFactory -  Post-processing PropertySource instances
+2025-10-13 22:26:53 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2025-10-13 22:26:53 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2025-10-13 22:26:53 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource servletContextInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2025-10-13 22:26:53 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2025-10-13 22:26:53 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+2025-10-13 22:26:53 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2025-10-13 22:26:53 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource springCloudClientHostInfo [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2025-10-13 22:26:53 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource applicationConfig: [classpath:/application.yml] (document #0) [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2025-10-13 22:26:53 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource springCloudDefaultProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2025-10-13 22:26:53 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource cachedrandom [org.springframework.cloud.util.random.CachedRandomPropertySource] to EncryptablePropertySourceWrapper
+2025-10-13 22:26:53 INFO  [ : ] c.u.j.f.DefaultLazyPropertyFilter.lambda$null$2 -  Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2025-10-13 22:26:54 INFO  [ : ] c.u.j.r.DefaultLazyPropertyResolver.lambda$null$2 -  Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2025-10-13 22:26:54 INFO  [ : ] c.u.j.d.DefaultLazyPropertyDetector.lambda$null$2 -  Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2025-10-13 22:26:54 INFO  [ : ] o.s.b.w.e.t.TomcatWebServer.initialize -  Tomcat initialized with port(s): 8081 (https)
+2025-10-13 22:26:54 INFO  [ : ] o.a.c.h.Http11NioProtocol.log -  Initializing ProtocolHandler ["https-jsse-nio-8081"]
+2025-10-13 22:26:54 INFO  [ : ] o.a.c.c.StandardService.log -  Starting service [Tomcat]
+2025-10-13 22:26:54 INFO  [ : ] o.a.c.c.StandardEngine.log -  Starting Servlet engine: [Apache Tomcat/9.0.46]
+2025-10-13 22:26:54 INFO  [ : ] o.a.c.c.C.[.[.[/].log -  Initializing Spring embedded WebApplicationContext
+2025-10-13 22:26:54 INFO  [ : ] o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext -  Root WebApplicationContext: initialization completed in 1484 ms
+2025-10-13 22:26:54 WARN  [ : ] c.n.c.s.URLConfigurationSource.<init> -  No URLs will be polled as dynamic configuration sources.
+2025-10-13 22:26:54 INFO  [ : ] c.n.c.s.URLConfigurationSource.<init> -  To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2025-10-13 22:26:54 INFO  [ : ] c.n.c.DynamicPropertyFactory.getInstance -  DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@261bd7b
+2025-10-13 22:26:54 INFO  [ : ] o.h.j.i.u.LogHelper.logPersistenceUnitInformation -  HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-13 22:26:54 INFO  [ : ] o.h.Version.logVersion -  HHH000412: Hibernate ORM core version 5.4.32.Final
+2025-10-13 22:26:54 INFO  [ : ] o.h.a.c.Version.<clinit> -  HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2025-10-13 22:26:54 INFO  [ : ] c.z.h.HikariDataSource.getConnection -  HikariCP - Starting...
+2025-10-13 22:26:55 INFO  [ : ] c.z.h.HikariDataSource.getConnection -  HikariCP - Start completed.
+2025-10-13 22:26:55 INFO  [ : ] o.h.d.Dialect.<init> -  HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2025-10-13 22:26:55 INFO  [ : ] o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService -  HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2025-10-13 22:26:55 INFO  [ : ] o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory -  Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-13 22:26:56 WARN  [ : ] o.a.h.u.NativeCodeLoader.<clinit> -  Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2025-10-13 22:26:56 INFO  [ : ] o.s.s.c.ThreadPoolTaskExecutor.initialize -  Initializing ExecutorService
+2025-10-13 22:26:56 INFO  [ : ] o.s.s.c.ThreadPoolTaskExecutor.initialize -  Initializing ExecutorService 'taskExecutor'
+2025-10-13 22:26:56 WARN  [ : ] c.n.c.s.URLConfigurationSource.<init> -  No URLs will be polled as dynamic configuration sources.
+2025-10-13 22:26:56 INFO  [ : ] c.n.c.s.URLConfigurationSource.<init> -  To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2025-10-13 22:26:56 WARN  [ : ] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor -  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-10-13 22:26:56 INFO  [ : ] o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration.discoveryClientOptionalArgs -  Eureka HTTP Client uses Jersey
+2025-10-13 22:26:56 WARN  [ : ] o.s.c.l.c.BlockingLoadBalancerClientAutoConfiguration$BlockingLoadBalancerClientRibbonWarnLogger.logWarning -  You already have RibbonLoadBalancerClient on your classpath. It will be used by default. As Spring Cloud Ribbon is in maintenance mode. We recommend switching to BlockingLoadBalancerClient instead. In order to use it, set the value of `spring.cloud.loadbalancer.ribbon.enabled` to `false` or remove spring-cloud-starter-netflix-ribbon from your project.
+2025-10-13 22:26:56 INFO  [ : ] o.s.b.a.e.w.EndpointLinksResolver.<init> -  Exposing 2 endpoint(s) beneath base path '/actuator'
+2025-10-13 22:26:56 INFO  [ : ] o.s.c.n.e.InstanceInfoFactory.create -  Setting initial instance status as: STARTING
+2025-10-13 22:26:56 INFO  [ : ] c.n.d.DiscoveryClient.<init> -  Initializing Eureka in region us-east-1
+2025-10-13 22:26:57 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using JSON encoding codec LegacyJacksonJson
+2025-10-13 22:26:57 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using JSON decoding codec LegacyJacksonJson
+2025-10-13 22:26:57 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using XML encoding codec XStreamXml
+2025-10-13 22:26:57 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using XML decoding codec XStreamXml
+2025-10-13 22:26:57 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-13 22:26:57 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Disable delta property : false
+2025-10-13 22:26:57 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Single vip registry refresh property : null
+2025-10-13 22:26:57 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Force full registry fetch : false
+2025-10-13 22:26:57 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Application is null : false
+2025-10-13 22:26:57 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Registered Applications size is zero : true
+2025-10-13 22:26:57 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Application version is -1: true
+2025-10-13 22:26:57 INFO  [ : ] c.n.d.DiscoveryClient.getAndStoreFullRegistry -  Getting all instance registry info from the eureka server
+2025-10-13 22:26:57 INFO  [ : ] c.n.d.DiscoveryClient.getAndStoreFullRegistry -  The response status is 200
+2025-10-13 22:26:57 INFO  [ : ] c.n.d.DiscoveryClient.initScheduledTasks -  Starting heartbeat executor: renew interval is: 30
+2025-10-13 22:26:57 INFO  [ : ] c.n.d.InstanceInfoReplicator.<init> -  InstanceInfoReplicator onDemand update allowed rate per min is 4
+2025-10-13 22:26:57 INFO  [ : ] c.n.d.DiscoveryClient.<init> -  Discovery Client initialized at timestamp 1760369217417 with initial instances count: 2
+2025-10-13 22:26:57 INFO  [ : ] o.s.c.n.e.s.EurekaServiceRegistry.register -  Registering application ZERO-SIZE-CONTROL-SERVICE with eureka with status UP
+2025-10-13 22:26:57 INFO  [ : ] c.n.d.DiscoveryClient.notify -  Saw local status change event StatusChangeEvent [timestamp=1760369217419, current=UP, previous=STARTING]
+2025-10-13 22:26:57 INFO  [ : ] o.a.c.h.Http11NioProtocol.log -  Starting ProtocolHandler ["https-jsse-nio-8081"]
+2025-10-13 22:26:57 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_ZERO-SIZE-CONTROL-SERVICE/192.168.1.197:zero-size-control-service:8081: registering service...
+2025-10-13 22:26:57 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_ZERO-SIZE-CONTROL-SERVICE/192.168.1.197:zero-size-control-service:8081 - registration status: 204
+2025-10-13 22:26:57 INFO  [ : ] o.s.b.w.e.t.TomcatWebServer.start -  Tomcat started on port(s): 8081 (https) with context path ''
+2025-10-13 22:26:57 INFO  [ : ] o.s.c.n.e.s.EurekaAutoServiceRegistration.onApplicationEvent -  Updating port to 8081
+2025-10-13 22:26:57 INFO  [ : ] o.g.b.n.s.NextMoveServiceApplication.logStarted -  Started NextMoveServiceApplication in 5.555 seconds (JVM running for 6.051)
+2025-10-13 22:26:57 INFO  [ : ] o.g.b.n.s.NextMoveServiceApplication.run -  ...License validation successful
+2025-10-13 22:28:31 INFO  [ : ] o.a.c.c.C.[.[.[/].log -  Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-13 22:28:31 INFO  [ : ] o.s.w.s.DispatcherServlet.initServletBean -  Initializing Servlet 'dispatcherServlet'
+2025-10-13 22:28:31 INFO  [ : ] o.s.w.s.DispatcherServlet.initServletBean -  Completed initialization in 12 ms
+2025-10-13 22:28:31 DEBUG [ : ] o.g.b.n.s.c.ManageFileController.transferFile -  [Blendata][Transfer] file file:/Users/a007626/next_move_test/source/fruit.csv
+2025-10-13 22:28:31 DEBUG [ : ] o.g.b.n.s.c.ManageFileController.transferFile -  [Blendata][Transfer] file file:///Users/a007626/next_move_test/source/ctrl/fruit.ctrl
+2025-10-13 22:28:31 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.moveFiles -  [Blendata] Source root path: file:///Users/a007626/next_move_test/source
+2025-10-13 22:28:31 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.lambda$moveFiles$0 -  [Blendata] Task ID(task_external_1001) Request to move file file:/Users/a007626/next_move_test/source/fruit.csv to file:///Users/a007626/next_move_test/dest
+2025-10-13 22:28:31 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.lambda$moveFiles$0 -  [Blendata] Task ID(task_external_1001) Request to move file file:///Users/a007626/next_move_test/source/ctrl/fruit.ctrl to file:///Users/a007626/next_move_test/dest
+2025-10-13 22:29:29 DEBUG [ : ] o.g.b.n.s.c.ManageFileController.transferFile -  [Blendata][Transfer] file file:/Users/a007626/next_move_test/source/fruit.csv
+2025-10-13 22:29:29 DEBUG [ : ] o.g.b.n.s.c.ManageFileController.transferFile -  [Blendata][Transfer] file file:///Users/a007626/next_move_test/source/ctrl/fruit.ctrl
+2025-10-13 22:29:29 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.moveFiles -  [Blendata] Source root path: file:///Users/a007626/next_move_test/source
+2025-10-13 22:29:29 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.lambda$moveFiles$0 -  [Blendata] Task ID(task_external_1002) Request to move file file:/Users/a007626/next_move_test/source/fruit.csv to file:///Users/a007626/next_move_test/dest
+2025-10-13 22:29:29 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.lambda$moveFiles$0 -  [Blendata] Task ID(task_external_1002) Request to move file file:///Users/a007626/next_move_test/source/ctrl/fruit.ctrl to file:///Users/a007626/next_move_test/dest
+2025-10-13 22:31:00 DEBUG [ : ] o.g.b.n.s.c.ManageFileController.transferFile -  [Blendata][Transfer] file file:/Users/a007626/next_move_test/source/fruit.csv
+2025-10-13 22:31:00 DEBUG [ : ] o.g.b.n.s.c.ManageFileController.transferFile -  [Blendata][Transfer] file file:///Users/a007626/next_move_test/source/fruit.ctrl
+2025-10-13 22:31:00 DEBUG [ : ] o.g.b.n.s.c.ManageFileController.transferFile -  [Blendata][Transfer] file file:/Users/a007626/next_move_test/source/fruit_2.csv
+2025-10-13 22:31:00 DEBUG [ : ] o.g.b.n.s.c.ManageFileController.transferFile -  [Blendata][Transfer] file file:///Users/a007626/next_move_test/source/fruit_2.ctrl
+2025-10-13 22:31:00 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.moveFiles -  [Blendata] Source root path: file:///Users/a007626/next_move_test/source
+2025-10-13 22:31:00 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.lambda$moveFiles$0 -  [Blendata] Task ID(task_external_1002) Request to move file file:///Users/a007626/next_move_test/source/fruit_2.ctrl to file:///Users/a007626/next_move_test/dest
+2025-10-13 22:31:00 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.lambda$moveFiles$0 -  [Blendata] Task ID(task_external_1002) Request to move file file:/Users/a007626/next_move_test/source/fruit_2.csv to file:///Users/a007626/next_move_test/dest
+2025-10-13 22:31:00 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.lambda$moveFiles$0 -  [Blendata] Task ID(task_external_1002) Request to move file file:/Users/a007626/next_move_test/source/fruit.csv to file:///Users/a007626/next_move_test/dest
+2025-10-13 22:31:00 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.lambda$moveFiles$0 -  [Blendata] Task ID(task_external_1002) Request to move file file:///Users/a007626/next_move_test/source/fruit.ctrl to file:///Users/a007626/next_move_test/dest
+2025-10-13 22:31:27 DEBUG [ : ] o.g.b.n.s.c.ManageFileController.transferFile -  [Blendata][Transfer] file file:/Users/a007626/next_move_test/source/fruit.csv
+2025-10-13 22:31:27 DEBUG [ : ] o.g.b.n.s.c.ManageFileController.transferFile -  [Blendata][Transfer] file file:///Users/a007626/next_move_test/source/fruit.ctrl
+2025-10-13 22:31:27 DEBUG [ : ] o.g.b.n.s.c.ManageFileController.transferFile -  [Blendata][Transfer] file file:/Users/a007626/next_move_test/source/fruit_2.csv
+2025-10-13 22:31:27 DEBUG [ : ] o.g.b.n.s.c.ManageFileController.transferFile -  [Blendata][Transfer] file file:///Users/a007626/next_move_test/source/fruit_2.ctrl
+2025-10-13 22:31:27 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.moveFiles -  [Blendata] Source root path: file:///Users/a007626/next_move_test/source
+2025-10-13 22:31:27 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.lambda$moveFiles$0 -  [Blendata] Task ID(task_external_1002) Request to move file file:///Users/a007626/next_move_test/source/fruit_2.ctrl to file:///Users/a007626/next_move_test/dest
+2025-10-13 22:31:27 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.lambda$moveFiles$0 -  [Blendata] Task ID(task_external_1002) Request to move file file:/Users/a007626/next_move_test/source/fruit_2.csv to file:///Users/a007626/next_move_test/dest
+2025-10-13 22:31:27 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.lambda$moveFiles$0 -  [Blendata] Task ID(task_external_1002) Request to move file file:/Users/a007626/next_move_test/source/fruit.csv to file:///Users/a007626/next_move_test/dest
+2025-10-13 22:31:27 INFO  [ : ] o.g.b.n.s.s.ZeroCtrlService.lambda$moveFiles$0 -  [Blendata] Task ID(task_external_1002) Request to move file file:///Users/a007626/next_move_test/source/fruit.ctrl to file:///Users/a007626/next_move_test/dest
+2025-10-13 22:31:57 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-13 22:36:57 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-13 23:28:33 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=51m7s950ms).

@@ -1,0 +1,19 @@
+API Document For Next-Move-Client
+
+1)  List all job
+URL : https://<CLIENT IP AND PORT>/api/job/get/all
+Method : GET
+
+2)  Delete job
+URL : https://<CLIENT IP AND PORT>/api/job/delete/<JOB GROUP>/<JOB NAME>
+Method : DELETE
+
+3) Reload all task (delete all existing tasks and creating new tasks from task-configure.yml )
+URL : https://<CLIENT IP AND PORT>/api/job/reload/task/all
+Method: POST
+
+4) Reload by task ( update task by task id)
+URL : https://<CLIENT IP AND PORT>/api/job/reload/task/<TASK ID>
+METHOD: POST
+
+

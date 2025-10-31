@@ -1,0 +1,30 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<configuration>
+    <property name = "LOG_PATH" value = "${EUREKA_SERVER_LOG}"/>
+    <appender name = "STDOUT" class = "ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p [%X{userId} : %X{traceId}] %c{1}.%M -  %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name = "ROLLING_FILE_DATE_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/eurake-server.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p [%X{userId} : %X{traceId}] %c{1}.%M -  %m%n</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/eurake-server-%d{yyyy-MM-dd}.log</fileNamePattern>
+<!--            <maxHistory>7</maxHistory>-->
+        </rollingPolicy>
+    </appender>
+
+
+    <logger name="org.hibernate.SQL" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <root level = "INFO">
+        <appender-ref ref = "ROLLING_FILE_DATE_APPENDER"/>
+        <appender-ref ref = "STDOUT"/>
+    </root>
+</configuration>

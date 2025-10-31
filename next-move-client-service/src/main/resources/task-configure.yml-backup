@@ -1,0 +1,216 @@
+taskConfig:
+  tasks:
+
+#    - id: task-01
+#      type: ZERO_SIZE_CONTROL
+#      rootPath:
+#        source: /src-local-02/main/submain/none-src/<current_date(ddMMyyyy)-1>
+#        destination: /dest-local-02/none-dest
+##        source: /src-local-01/main/submain/movethis
+##        destination: /dest-local-01/zero-dest
+#      filesPerRound: 10
+##      afterDate: '12/08/2024 08:00:00'
+##      beforeCurrentDateInHours: 5
+##      beforeCurrentDateInDays: 3
+#      ctrlExtensions:
+#        - ctrl
+#      srcExtensions:
+#         - txt
+#      moveType: MOVE
+#      overwrite: true
+#      cronExpression: 0/2 * * ? * * *
+
+#    - id: task-02
+#      type: NONE_CONTROL
+#      sourceType: HADOOP
+#      rootPath:
+#        source: /src-local-02/main/submain/none-*/<current_date(ddMMyyyy)-1>
+##        source: /src-local-02/main/submain/none-src/<current_date(ddMMyyyy)-1>
+##        source: /src-local-02/main/submain/movethis/zero-2
+##        source: /src-local-02/main/submain/mov*/zer*
+#        destination: /dest-local-02/none-dest/<current_date(ddMMyyyy)>
+#      filesPerRound: 100
+##      afterDate: '12/08/2024 08:00:00'
+##      beforeCurrentDateInHours: 5
+##      beforeCurrentDateInDays: 3
+#      srcExtensions:
+#        - ctrl
+#        - txt
+##        - txt.gz
+##        - tar.gz
+##        - txt
+##        - zip
+#        - Z
+##        - zip
+#      wildcardPatterns :
+#        - exam*
+#        - ocs*
+##        - data-1*
+#      compression:
+#        notExtract: false
+#        createTargetDirectory: false
+#      overwrite: false
+#      checkFileSize: true
+#      checkFileDelaySeconds: 10
+#      moveType: COPY
+#      retry: 1
+#      cronExpression: "0/2 * * ? * * *"     # Seconds | Minutes | Hours | Day of Month | Month | Day of Week | Year (optional)
+##
+#    - id: task-03
+#      type: NONE_CONTROL
+#      sourceType: SFTP
+#      rootPath:
+#        source: /home/blendata/test_cp/src
+#        #        source: /src-local-02/main/submain/movethis/zero-2
+#        #        source: /src-local-02/main/submain/mov*/zer*
+#        destination: /minio
+#      sourceProperties:
+#        host: "49.0.196.113"
+#        port: 22
+#        username: "blendata"
+#        privateKeyPath: "/Users/anucha.r/Documents/Document-ME/KeyPair-DEV.cer"
+#        connectionTimeout: 30000
+#        readTimeout: 30000
+#      filesPerRound: 100
+#      #      afterDate: '12/08/2024 08:00:00'
+#      #      beforeCurrentDateInHours: 5
+#      #      beforeCurrentDateInDays: 3
+#      srcExtensions:
+#        - ctrl
+#        - txt
+#        #        - txt.gz
+#        #        - tar.gz
+#        #        - txt
+#        #        - zip
+#        - Z
+#      #        - zip
+#      wildcardPatterns:
+#        - exam*
+#        - ex*
+#      #        - data-1*
+#      compression:
+#        notExtract: false
+#        createTargetDirectory: false
+#      overwrite: false
+#      checkFileSize: true
+#      checkFileDelaySeconds: 10
+#      moveType: COPY
+#      retry: 1
+#      cronExpression: "0/2 * * ? * * *"
+#
+#    - id: task-04
+#      type: ZERO_SIZE_CONTROL
+#      sourceType: SFTP
+#      rootPath:
+#        source: /home/blendata/test_cp/src
+#        #        source: /src-local-02/main/submain/movethis/zero-2
+#        #        source: /src-local-02/main/submain/mov*/zer*
+#        destination: /minio/zero-ctrl
+#      sourceProperties:
+#        host: "49.0.196.113"
+#        port: 22
+#        username: "blendata"
+#        privateKeyPath: "/Users/anucha.r/Documents/Document-ME/KeyPair-DEV.cer"
+#        connectionTimeout: 30000
+#        readTimeout: 30000
+#      filesPerRound: 100
+#      #      afterDate: '12/08/2024 08:00:00'
+#      #      beforeCurrentDateInHours: 5
+#      #      beforeCurrentDateInDays: 3
+#      ctrlExtensions:
+#        - ctrl
+#      srcExtensions:
+#        - csv
+#        - txt
+#        #        - txt.gz
+#        #        - tar.gz
+#        #        - txt
+#        #        - zip
+#        - Z
+#      #        - zip
+#      wildcardPatterns:
+#        - need-*-*
+#      #        - data-1*
+#      compression:
+#        notExtract: false
+#        createTargetDirectory: false
+#      overwrite: true
+#      checkFileSize: true
+#      checkFileDelaySeconds: 10
+#      moveType: COPY
+#      retry: 1
+#      cronExpression: "0/2 * * ? * * *"
+
+#    - id: task-05
+#      type: NONE_CONTROL
+#      sourceType: HADOOP
+#      rootPath:
+#        source: file:///Users/anucha.r/MyWork/tmp/test-next-move-src-dest/src/direct
+#        #        source: /src-local-02/main/submain/movethis/zero-2
+#        #        source: /src-local-02/main/submain/mov*/zer*
+#        #        destination: /minio
+#        destination: s3a://sftp/direct
+#      filesPerRound: 100
+#      #      afterDate: '12/08/2024 08:00:00'
+#      #      beforeCurrentDateInHours: 5
+#      #      beforeCurrentDateInDays: 3
+#      srcExtensions:
+#        - ctrl
+#        - txt
+#        #        - txt.gz
+#        #        - tar.gz
+#        #        - txt
+#        #        - zip
+#        - Z
+#      #        - zip
+#      wildcardPatterns:
+#        - exam*
+#        - ex*
+#      #        - data-1*
+#      compression:
+#        notExtract: false
+#        createTargetDirectory: false
+#      overwrite: false
+#      checkFileSize: true
+#      checkFileDelaySeconds: 10
+#      moveType: COPY
+#      retry: 1
+#      cronExpression: "0/2 * * ? * * *"
+
+    - id: task-06
+      type: NONE_CONTROL
+      sourceType: HADOOP
+      rootPath:
+        source: viewfs://blendata/src-local-02/main/submain/none-*/<current_date(ddMMyyyy)>
+        #        source: /src-local-02/main/submain/none-src/<current_date(ddMMyyyy)-1>
+        #        source: /src-local-02/main/submain/movethis/zero-2
+        #        source: /src-local-02/main/submain/mov*/zer*
+        destination: viewfs://blendata/dest-local-02/none-dest/<current_date(ddMMyyyy)+1>
+      filesPerRound: 100
+      #      afterDate: '12/08/2024 08:00:00'
+      #      beforeCurrentDateInHours: 5
+      #      beforeCurrentDateInDays: 3
+      srcExtensions:
+        - ctrl
+        - txt
+        #        - txt.gz
+        #        - tar.gz
+        #        - txt
+        #        - zip
+        - Z
+      #        - zip
+      wildcardPatterns:
+        - exam*
+        - ocs*
+      #        - data-1*
+      compression:
+        notExtract: false
+        createTargetDirectory: false
+      overwrite: false
+      checkFileSize: true
+      checkFileDelaySeconds: 10
+      moveType: COPY
+      retry: 1
+      cronExpression: "0/2 * * ? * * *"
+
+

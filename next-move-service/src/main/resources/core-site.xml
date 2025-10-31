@@ -1,0 +1,118 @@
+<configuration>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>viewfs://blendata/</value>
+    </property>
+
+    <!-- ระบุว่า viewfs ใช้ Implementation นี้ -->
+    <property>
+        <name>fs.viewfs.impl</name>
+        <value>org.apache.hadoop.fs.viewfs.ViewFileSystem</value>
+    </property>
+
+    <property>
+        <name>fs.viewfs.mounttable.blendata.link./src-local-02</name>
+        <value>file:///Users/anucha.r/MyWork/tmp/test-next-move-src-dest/src</value>
+    </property>
+    <property>
+        <name>fs.viewfs.mounttable.blendata.link./dest-local-02</name>
+        <value>file:///Users/anucha.r/MyWork/tmp/test-next-move-src-dest/dest</value>
+    </property>
+
+    <!-- mount point: /minio  →  s3a://my-bucket/ -->
+    <property>
+        <name>fs.viewfs.mounttable.blendata.link./minio</name>
+        <value>s3a://sftp/</value>
+    </property>
+
+    <!-- endpoint ของ MinIO -->
+    <property>
+        <name>fs.s3a.endpoint</name>
+        <value>http://localhost:9000</value>
+    </property>
+
+    <!-- credential -->
+    <property>
+        <name>fs.s3a.access.key</name>
+        <value>minioadmin</value>
+    </property>
+    <property>
+        <name>fs.s3a.secret.key</name>
+        <value>minioadmin</value>
+    </property>
+
+    <property>
+        <name>fs.s3a.path.style.access</name>
+        <value>true</value>
+        <description>Enable path style access for MinIO compatibility</description>
+    </property>
+
+    <property>
+        <name>fs.s3a.connection.ssl.enabled</name>
+        <value>false</value>
+        <description>Disable SSL for HTTP connections</description>
+    </property>
+
+    <property>
+        <name>fs.s3a.fast.upload</name>
+        <value>true</value>
+        <description>Enable fast upload using memory/disk buffers</description>
+    </property>
+
+    <property>
+        <name>fs.s3a.fast.upload.buffer</name>
+        <value>disk</value>
+        <description>Buffer type: disk (recommended for large files), array, or bytebuffer</description>
+    </property>
+
+    <property>
+        <name>fs.s3a.fast.upload.active.blocks</name>
+        <value>8</value>
+        <description>Maximum number of blocks to upload in parallel per file</description>
+    </property>
+
+    <property>
+        <name>fs.s3a.block.size</name>
+        <value>134217728</value>
+        <description>Block size: 128MB for better performance with large files</description>
+    </property>
+
+    <!-- Threshold: เริ่ม multipart ที่ 128MB -->
+    <property>
+        <n>fs.s3a.multipart.threshold</n>
+        <value>134217728</value>
+    </property>
+
+    <!-- Part Size: ปรับตามขนาดไฟล์ที่คาดว่าจะใหญ่ที่สุด -->
+    <property>
+        <n>fs.s3a.multipart.size</n>
+        <value>536870912</value> <!-- 512MB สำหรับไฟล์ TB -->
+    </property>
+
+    <property>
+        <name>fs.s3a.connection.establish.timeout</name>
+        <value>2000</value> <!-- 2 วินาที -->
+    </property>
+
+    <property>
+        <name>fs.s3a.connection.timeout</name>
+        <value>5000</value> <!-- 5 วินาที -->
+    </property>
+
+    <property>
+        <name>fs.s3a.attempts.maximum</name>
+        <value>1</value> <!-- retry แค่ 3 ครั้ง -->
+    </property>
+
+    <property>
+        <name>fs.s3a.retry.limit</name>
+        <value>1</value>
+    </property>
+
+    <property>
+        <name>fs.s3a.attempts.retry.policy.spec</name>
+        <value>500</value> <!-- backoff time -->
+    </property>
+
+
+</configuration>

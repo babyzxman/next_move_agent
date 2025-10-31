@@ -1,0 +1,51 @@
+
+server:
+  error:
+    include-message: never
+    include-binding-errors: never
+    whitelabel:
+      enabled: false
+
+  port: 8761
+  ssl:
+    enabled: true
+    key-store: /Users/a007626/IdeaProjects/beg-move-file-agent/shared/src/main/resources/eureka-server.p12
+    key-store-password: 'l;ylfu=k;F]d1'
+    key-store-type: PKCS12
+    key-alias: eureka
+#    trust-store: file:/Users/anucha.r/MyWork/research/next-move-agent/shared/src/main/resources/eureka-truststore.jks
+#    trust-store-type: JKS
+#    trust-store-password: 'l;ylfu=k;F]d1'
+eureka:
+  instance:
+    non-secure-port-enabled: false
+    secure-port-enabled: true
+    leaseRenewalIntervalInSeconds: 10
+    leaseExpirationDurationInSeconds: 30
+  server:
+    enable-self-preservation: true
+    wait-time-in-ms-when-sync-empty: 0
+  client:
+#    tls:
+#      enabled: true
+#      key-store: file:/Users/anucha.r/MyWork/research/next-move-agent/shared/src/main/resources/eureka-server.p12
+#      key-store-type: PKCS12
+#      key-store-password: 'l;ylfu=k;F]d1'
+#      key-password: 'l;ylfu=k;F]d1'
+#      trust-store: file:/Users/anucha.r/MyWork/research/next-move-agent/shared/src/main/resources/eureka-truststore.jks
+#      trust-store-type: JKS
+#      trust-store-password: 'l;ylfu=k;F]d1'
+    register-with-eureka: false
+    fetch-registry: false
+
+#    service-url:
+#      defaultZone: https://localhost:8761/eureka/
+
+spring:
+  mvc:
+    dispatch-trace-request: true
+    dispatch-options-request: true
+  application:
+    name: eureka-server
+logging:
+  config: /Users/a007626/IdeaProjects/beg-move-file-agent/eureka-server/src/main/resources/logback.xml

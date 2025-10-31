@@ -1,0 +1,57 @@
+taskConfig:
+  tasks:
+    # ========== TEMPLATE STRUCTURE ==========
+    - id: task-unique-name                   # Required: Unique task identifier
+      type: NONE_CONTROL                     # Required: NONE_CONTROL | ZERO_SIZE_CONTROL
+      sourceType: HADOOP                     # Required: HADOOP | SFTP
+
+      rootPath:
+        source: /path/to/source              # Required: Source directory
+        destination: /path/to/destination    # Required: Destination directory
+
+      # File Selection
+      filesPerRound: 100                     # Max files per execution for sending to service node
+      srcExtensions:                         # Required: File extensions to process
+        - txt
+        - csv
+      ctrlExtensions:                        # For ZERO_SIZE_CONTROL only
+        - ctrl
+      wildcardPatterns:                      # Required: Filename patterns
+        - data-*
+        - report_*
+
+      # File Operations
+      moveType: COPY                         # MOVE | COPY
+      overwrite: false                       # true | false
+      retry: 1                               # Retry attempts
+
+      # File Verification (NONE_CONTROL only - Choose ONE method)
+      checkFileSize: true                    # Method 1: Verify file by checking size stability
+      # OR
+      checkFileDelaySeconds: 10              # Method 2: Wait X seconds before processing
+
+
+      # Time Filters (Optional - Choose ONE or NONE)
+      afterDate: '01/01/2024 00:00:00'      # Process files after date
+      beforeCurrentDateInHours: 24          # Files older than X hours
+      beforeCurrentDateInDays: 1            # Files older than X days
+
+      # Compression (Optional)
+      compression:
+        notExtract: false                    # Don't extract archives
+        createTargetDirectory: false         # Auto-create target dirs
+
+      # SFTP Settings (sourceType: SFTP only)
+      sourceProperties:
+        host: "server.example.com"           # SFTP server hostname/IP
+        port: 22                             # SFTP port (default: 22)
+        username: "username"                 # SFTP username
+        # Authentication Method 1: Private Key (preferred)
+        privateKeyPath: "/path/to/key"       # Path to private key file
+        # Authentication Method 2: Password
+        password: "password"                 # Password (if not using key)
+        connectionTimeout: 30000             # Connection timeout (30 seconds)
+        readTimeout: 30000                   # Read timeout (60 seconds)
+
+      # Scheduling
+      cronExpression: "0 0 2 * * ?"         # Required: Cron schedule

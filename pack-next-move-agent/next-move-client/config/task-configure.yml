@@ -1,0 +1,32 @@
+taskConfig:
+  tasks:
+
+#    - id: task-01
+#      type: ZERO_SIZE_CONTROL
+#      rootPath:
+#        source: /src-local-01/main/submain/movethis
+#        destination: /dest-local-01/zero-dest
+#      filesPerRound: 10
+##      afterDate: '12/08/2024 08:00:00'
+##      beforeCurrentDateInHours: 5
+##      beforeCurrentDateInDays: 3
+#      ctrlExtensions:
+#        - ctrl
+#      moveType: MOVE
+#      cronExpression: 0/30 * * ? * * *
+
+    - id: task-02
+      type: NONE_CONTROL
+      rootPath:
+        source: /src-local-02/main/submain/none-src
+        destination: /dest-local-02/none-dest
+      filesPerRound: 100
+#      afterDate: '12/08/2024 08:00:00'
+#      beforeCurrentDateInHours: 5
+#      beforeCurrentDateInDays: 3
+      srcExtensions:
+        - txt
+      checkFileDelaySeconds: 60
+      moveType: COPY
+      retry: 3
+      cronExpression: "0 0/2 * ? * * *"

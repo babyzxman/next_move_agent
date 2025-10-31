@@ -1,0 +1,17 @@
+# Alter Table Transfer_History
+# Alter column file_path and destination to varchar(1000)
+
+# PostgreSQL
+ALTER TABLE transfer_history
+ALTER COLUMN file_path TYPE VARCHAR(1000),
+ALTER COLUMN destination TYPE VARCHAR(1000);
+
+ALTER TABLE transfer_history DROP CONSTRAINT <<unique constraint [source_root_path, file_path]>>;
+
+# MySQL
+ALTER TABLE transfer_history
+MODIFY COLUMN file_path VARCHAR(1000),
+MODIFY COLUMN destination VARCHAR(1000);
+
+ALTER TABLE transfer_history DROP CONSTRAINT <<unique constraint [source_root_path, file_path]>>;
+

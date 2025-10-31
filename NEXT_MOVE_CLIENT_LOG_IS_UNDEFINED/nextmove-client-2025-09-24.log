@@ -1,0 +1,95 @@
+2025-09-24 01:01:01 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=1h17m40s698ms).
+2025-09-24 01:03:31 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 01:08:31 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 01:13:31 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 01:18:31 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 01:23:31 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 01:28:31 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 01:47:20 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=16m18s941ms).
+2025-09-24 02:53:48 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=1h6m27s981ms).
+2025-09-24 03:49:20 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=55m31s885ms).
+2025-09-24 05:22:44 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=1h33m23s654ms).
+2025-09-24 06:46:06 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 06:46:06 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=1h23m22s243ms).
+2025-09-24 07:58:30 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=1h12m24s80ms).
+2025-09-24 09:26:02 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=1h27m31s888ms).
+2025-09-24 09:30:51 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=4m48s743ms).
+2025-09-24 09:34:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 09:39:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 09:44:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 09:49:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 09:54:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 09:59:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 10:04:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 10:09:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 10:14:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 10:19:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 10:24:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 10:29:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 10:34:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 10:39:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 10:44:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 10:49:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 10:54:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 10:59:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 11:04:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 11:09:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 11:14:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 11:19:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 11:24:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 11:29:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 11:34:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 11:39:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 11:44:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 11:49:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 11:54:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 11:59:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 12:04:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 12:09:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 12:14:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 12:19:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 12:24:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 12:29:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 12:45:12 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=12m20s113ms).
+2025-09-24 13:29:35 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=44m22s884ms).
+2025-09-24 13:30:04 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 13:36:23 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=5m47s688ms).
+2025-09-24 13:40:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 13:45:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 13:50:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 13:55:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 14:01:05 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 14:01:06 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=1m13s33ms).
+2025-09-24 14:02:57 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=1m21s13ms).
+2025-09-24 14:06:56 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 14:11:56 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 14:16:56 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 14:21:56 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 14:26:56 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 14:31:56 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 14:36:56 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 14:41:56 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 14:46:56 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 14:51:56 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 14:56:56 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 15:01:56 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 15:13:35 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=10m7s227ms).
+2025-09-24 15:16:33 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-09-24 15:18:44 INFO  [ : ] o.s.c.n.e.s.EurekaServiceRegistry.deregister -  Unregistering application NEXT-MOVE-CLIENT-SERVICE with eureka with status DOWN
+2025-09-24 15:18:44 INFO  [ : ] c.n.d.DiscoveryClient.notify -  Saw local status change event StatusChangeEvent [timestamp=1758701924781, current=DOWN, previous=UP]
+2025-09-24 15:18:44 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_NEXT-MOVE-CLIENT-SERVICE/192.168.1.130:next-move-client-service:8082: registering service...
+2025-09-24 15:18:44 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_NEXT-MOVE-CLIENT-SERVICE/192.168.1.130:next-move-client-service:8082 - registration status: 204
+2025-09-24 15:18:44 INFO  [ : ] o.q.c.QuartzScheduler.standby -  Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-24 15:18:44 INFO  [ : ] o.s.s.c.ThreadPoolTaskScheduler.shutdown -  Shutting down ExecutorService 'taskScheduler'
+2025-09-24 15:18:44 INFO  [ : ] o.s.s.c.ThreadPoolTaskExecutor.shutdown -  Shutting down ExecutorService 'taskExecutor'
+2025-09-24 15:18:44 INFO  [ : ] o.s.s.q.SchedulerFactoryBean.destroy -  Shutting down Quartz Scheduler
+2025-09-24 15:18:44 INFO  [ : ] o.q.c.QuartzScheduler.shutdown -  Scheduler quartzScheduler_$_NON_CLUSTERED shutting down.
+2025-09-24 15:18:44 INFO  [ : ] o.q.c.QuartzScheduler.standby -  Scheduler quartzScheduler_$_NON_CLUSTERED paused.
+2025-09-24 15:18:44 INFO  [ : ] o.q.c.QuartzScheduler.shutdown -  Scheduler quartzScheduler_$_NON_CLUSTERED shutdown complete.
+2025-09-24 15:18:44 INFO  [ : ] o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy -  Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-09-24 15:18:44 INFO  [ : ] c.z.h.HikariDataSource.close -  HikariCP - Shutdown initiated...
+2025-09-24 15:18:44 INFO  [ : ] c.z.h.HikariDataSource.close -  HikariCP - Shutdown completed.
+2025-09-24 15:18:44 INFO  [ : ] c.n.d.DiscoveryClient.shutdown -  Shutting down DiscoveryClient ...
+2025-09-24 15:18:47 INFO  [ : ] c.n.d.DiscoveryClient.unregister -  Unregistering ...
+2025-09-24 15:18:48 INFO  [ : ] c.n.d.DiscoveryClient.unregister -  DiscoveryClient_NEXT-MOVE-CLIENT-SERVICE/192.168.1.130:next-move-client-service:8082 - deregister  status: 200
+2025-09-24 15:18:48 INFO  [ : ] c.n.d.DiscoveryClient.shutdown -  Completed shut down of DiscoveryClient

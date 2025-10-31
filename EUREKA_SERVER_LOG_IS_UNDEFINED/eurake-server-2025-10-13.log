@@ -1,0 +1,613 @@
+2025-10-13 21:40:57 INFO  [ : ] o.g.b.n.e.s.EurekaServerApplication.logStartupProfileInfo -  No active profile set, falling back to default profiles: default
+2025-10-13 21:40:57 WARN  [ : ] o.s.b.a.e.EndpointId.logWarning -  Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2025-10-13 21:40:57 INFO  [ : ] o.s.c.c.s.GenericScope.setSerializationId -  BeanFactory id=4852a351-5b6e-3560-9ed0-63ba3b0e558a
+2025-10-13 21:40:58 INFO  [ : ] o.s.b.w.e.t.TomcatWebServer.initialize -  Tomcat initialized with port(s): 8761 (https)
+2025-10-13 21:40:58 INFO  [ : ] o.a.c.c.StandardService.log -  Starting service [Tomcat]
+2025-10-13 21:40:58 INFO  [ : ] o.a.c.c.StandardEngine.log -  Starting Servlet engine: [Apache Tomcat/9.0.46]
+2025-10-13 21:40:58 INFO  [ : ] o.a.c.c.C.[.[.[/].log -  Initializing Spring embedded WebApplicationContext
+2025-10-13 21:40:58 INFO  [ : ] o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext -  Root WebApplicationContext: initialization completed in 838 ms
+2025-10-13 21:40:58 WARN  [ : ] c.n.c.s.URLConfigurationSource.<init> -  No URLs will be polled as dynamic configuration sources.
+2025-10-13 21:40:58 INFO  [ : ] c.n.c.s.URLConfigurationSource.<init> -  To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2025-10-13 21:40:58 INFO  [ : ] c.n.c.DynamicPropertyFactory.getInstance -  DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@22587507
+2025-10-13 21:40:58 INFO  [ : ] c.s.j.s.i.a.WebApplicationImpl._initiate -  Initiating Jersey application, version 'Jersey: 1.19.4 05/24/2017 03:20 PM'
+2025-10-13 21:40:58 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using JSON encoding codec LegacyJacksonJson
+2025-10-13 21:40:58 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using JSON decoding codec LegacyJacksonJson
+2025-10-13 21:40:58 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using XML encoding codec XStreamXml
+2025-10-13 21:40:58 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using XML decoding codec XStreamXml
+2025-10-13 21:40:58 WARN  [ : ] c.n.c.s.URLConfigurationSource.<init> -  No URLs will be polled as dynamic configuration sources.
+2025-10-13 21:40:58 INFO  [ : ] c.n.c.s.URLConfigurationSource.<init> -  To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2025-10-13 21:40:58 INFO  [ : ] o.s.s.c.ThreadPoolTaskExecutor.initialize -  Initializing ExecutorService 'applicationTaskExecutor'
+2025-10-13 21:40:59 INFO  [ : ] o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration.discoveryClientOptionalArgs -  Eureka HTTP Client uses Jersey
+2025-10-13 21:40:59 WARN  [ : ] o.s.c.l.c.BlockingLoadBalancerClientAutoConfiguration$BlockingLoadBalancerClientRibbonWarnLogger.logWarning -  You already have RibbonLoadBalancerClient on your classpath. It will be used by default. As Spring Cloud Ribbon is in maintenance mode. We recommend switching to BlockingLoadBalancerClient instead. In order to use it, set the value of `spring.cloud.loadbalancer.ribbon.enabled` to `false` or remove spring-cloud-starter-netflix-ribbon from your project.
+2025-10-13 21:40:59 INFO  [ : ] o.s.c.n.e.InstanceInfoFactory.create -  Setting initial instance status as: STARTING
+2025-10-13 21:40:59 INFO  [ : ] c.n.d.DiscoveryClient.<init> -  Initializing Eureka in region us-east-1
+2025-10-13 21:40:59 INFO  [ : ] c.n.d.DiscoveryClient.<init> -  Client configured to neither register nor query for data.
+2025-10-13 21:40:59 INFO  [ : ] c.n.d.DiscoveryClient.<init> -  Discovery Client initialized at timestamp 1760366459231 with initial instances count: 0
+2025-10-13 21:40:59 INFO  [ : ] c.n.e.DefaultEurekaServerContext.initialize -  Initializing ...
+2025-10-13 21:40:59 INFO  [ : ] c.n.e.c.PeerEurekaNodes.updatePeerEurekaNodes -  Adding new peer nodes [http://localhost:8761/eureka/]
+2025-10-13 21:40:59 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using JSON encoding codec LegacyJacksonJson
+2025-10-13 21:40:59 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using JSON decoding codec LegacyJacksonJson
+2025-10-13 21:40:59 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using XML encoding codec XStreamXml
+2025-10-13 21:40:59 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using XML decoding codec XStreamXml
+2025-10-13 21:40:59 INFO  [ : ] c.n.e.c.PeerEurekaNodes.start -  Replica node URL:  http://localhost:8761/eureka/
+2025-10-13 21:40:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.initRemoteRegionRegistry -  Finished initializing remote region registries. All known remote regions: []
+2025-10-13 21:40:59 INFO  [ : ] c.n.e.DefaultEurekaServerContext.initialize -  Initialized
+2025-10-13 21:40:59 INFO  [ : ] o.s.b.a.e.w.EndpointLinksResolver.<init> -  Exposing 2 endpoint(s) beneath base path '/actuator'
+2025-10-13 21:40:59 INFO  [ : ] o.s.c.n.e.s.EurekaServiceRegistry.register -  Registering application EUREKA-SERVER with eureka with status UP
+2025-10-13 21:40:59 INFO  [ : ] o.s.c.n.e.s.EurekaServerBootstrap.initEurekaEnvironment -  Setting the eureka configuration..
+2025-10-13 21:40:59 INFO  [ : ] o.s.c.n.e.s.EurekaServerBootstrap.initEurekaEnvironment -  Eureka data center value eureka.datacenter is not set, defaulting to default
+2025-10-13 21:40:59 INFO  [ : ] o.s.c.n.e.s.EurekaServerBootstrap.initEurekaEnvironment -  Eureka environment value eureka.environment is not set, defaulting to test
+2025-10-13 21:40:59 INFO  [ : ] o.s.c.n.e.s.EurekaServerBootstrap.isAws -  isAws returned false
+2025-10-13 21:40:59 INFO  [ : ] o.s.c.n.e.s.EurekaServerBootstrap.initEurekaServerContext -  Initialized server context
+2025-10-13 21:40:59 INFO  [ : ] c.n.e.r.PeerAwareInstanceRegistryImpl.openForTraffic -  Got 1 instances from neighboring DS node
+2025-10-13 21:40:59 INFO  [ : ] c.n.e.r.PeerAwareInstanceRegistryImpl.openForTraffic -  Renew threshold is: 1
+2025-10-13 21:40:59 INFO  [ : ] c.n.e.r.PeerAwareInstanceRegistryImpl.openForTraffic -  Changing status to UP
+2025-10-13 21:40:59 INFO  [ : ] o.s.c.n.e.s.EurekaServerInitializerConfiguration.lambda$start$0 -  Started Eureka Server
+2025-10-13 21:40:59 INFO  [ : ] o.s.b.w.e.t.TomcatWebServer.start -  Tomcat started on port(s): 8761 (https) with context path ''
+2025-10-13 21:40:59 INFO  [ : ] o.s.c.n.e.s.EurekaAutoServiceRegistration.onApplicationEvent -  Updating port to 8761
+2025-10-13 21:40:59 INFO  [ : ] o.g.b.n.e.s.EurekaServerApplication.logStarted -  Started EurekaServerApplication in 3.182 seconds (JVM running for 3.679)
+2025-10-13 21:41:15 INFO  [ : ] o.a.c.c.C.[.[.[/].log -  Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-10-13 21:41:15 INFO  [ : ] o.s.w.s.DispatcherServlet.initServletBean -  Initializing Servlet 'dispatcherServlet'
+2025-10-13 21:41:15 INFO  [ : ] o.s.w.s.DispatcherServlet.initServletBean -  Completed initialization in 3 ms
+2025-10-13 21:41:15 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.register -  Registered instance NEXT-MOVE-CLIENT-SERVICE/192.168.1.197:next-move-client-service:8082 with status UP (replication=false)
+2025-10-13 21:41:16 INFO  [ : ] o.a.h.i.c.DefaultHttpClient.tryExecute -  I/O exception (java.net.SocketException) caught when processing request to {}->http://localhost:8761: Broken pipe (Write failed)
+2025-10-13 21:41:16 INFO  [ : ] o.a.h.i.c.DefaultHttpClient.tryExecute -  Retrying request to {}->http://localhost:8761
+2025-10-13 21:41:16 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discovery WorkerThread error
+java.lang.NullPointerException: null
+	at com.netflix.eureka.cluster.ReplicationTaskProcessor.maybeReadTimeOut(ReplicationTaskProcessor.java:196)
+	at com.netflix.eureka.cluster.ReplicationTaskProcessor.process(ReplicationTaskProcessor.java:95)
+	at com.netflix.eureka.util.batcher.TaskExecutors$BatchWorkerRunnable.run(TaskExecutors.java:190)
+	at java.lang.Thread.run(Thread.java:750)
+2025-10-13 21:41:41 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.register -  Registered instance ZERO-SIZE-CONTROL-SERVICE/192.168.1.197:zero-size-control-service:8081 with status UP (replication=false)
+2025-10-13 21:41:41 INFO  [ : ] o.a.h.i.c.DefaultHttpClient.tryExecute -  I/O exception (java.net.SocketException) caught when processing request to {}->http://localhost:8761: Broken pipe (Write failed)
+2025-10-13 21:41:41 INFO  [ : ] o.a.h.i.c.DefaultHttpClient.tryExecute -  Retrying request to {}->http://localhost:8761
+2025-10-13 21:41:41 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discovery WorkerThread error
+java.lang.NullPointerException: null
+	at com.netflix.eureka.cluster.ReplicationTaskProcessor.maybeReadTimeOut(ReplicationTaskProcessor.java:196)
+	at com.netflix.eureka.cluster.ReplicationTaskProcessor.process(ReplicationTaskProcessor.java:95)
+	at com.netflix.eureka.util.batcher.TaskExecutors$BatchWorkerRunnable.run(TaskExecutors.java:190)
+	at java.lang.Thread.run(Thread.java:750)
+2025-10-13 21:41:46 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:41:46 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-5 due to permanent error
+2025-10-13 21:41:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 0ms
+2025-10-13 21:42:11 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:42:11 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 21:42:16 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:42:16 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 21:42:41 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:42:41 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 21:42:46 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:42:46 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 21:42:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 2ms
+2025-10-13 21:43:11 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:43:11 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 21:43:16 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:43:16 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 21:43:41 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:43:41 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 21:43:46 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:43:46 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 21:43:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 1ms
+2025-10-13 21:44:11 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:44:11 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 21:44:16 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:44:16 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 21:44:41 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:44:41 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 21:44:46 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:44:46 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 21:44:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 0ms
+2025-10-13 21:45:11 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:45:11 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 21:45:16 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:45:16 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 21:45:41 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:45:41 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 21:45:46 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:45:46 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 21:45:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 4ms
+2025-10-13 21:46:11 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:46:11 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 21:46:16 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:46:16 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 21:46:41 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:46:41 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 21:46:46 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:46:46 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 21:46:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 2ms
+2025-10-13 21:47:11 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:47:11 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-12 due to permanent error
+2025-10-13 21:47:16 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:47:16 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-11 due to permanent error
+2025-10-13 21:47:41 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:47:41 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-14 due to permanent error
+2025-10-13 21:47:46 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:47:46 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-19 due to permanent error
+2025-10-13 21:47:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 4ms
+2025-10-13 21:48:11 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:48:11 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-4 due to permanent error
+2025-10-13 21:48:16 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:48:16 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-4 due to permanent error
+2025-10-13 21:48:41 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:48:41 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-4 due to permanent error
+2025-10-13 21:48:46 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:48:46 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-4 due to permanent error
+2025-10-13 21:48:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 3ms
+2025-10-13 21:49:12 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:49:12 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-4 due to permanent error
+2025-10-13 21:49:17 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:49:17 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-4 due to permanent error
+2025-10-13 21:49:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:49:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-4 due to permanent error
+2025-10-13 21:49:47 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:49:47 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-4 due to permanent error
+2025-10-13 21:49:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 2ms
+2025-10-13 21:50:12 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:50:12 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-4 due to permanent error
+2025-10-13 21:50:17 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:50:17 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-4 due to permanent error
+2025-10-13 21:50:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:50:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-4 due to permanent error
+2025-10-13 21:50:47 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:50:47 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-4 due to permanent error
+2025-10-13 21:50:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 5ms
+2025-10-13 21:51:12 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:51:12 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-4 due to permanent error
+2025-10-13 21:51:17 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:51:17 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 21:51:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:51:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 21:51:47 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:51:47 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 21:51:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 2ms
+2025-10-13 21:52:12 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:52:12 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 21:52:17 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:52:17 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-5 due to permanent error
+2025-10-13 21:52:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:52:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 21:52:47 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:52:47 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 21:52:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 5ms
+2025-10-13 21:53:12 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:53:12 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 21:53:17 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:53:17 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-8 due to permanent error
+2025-10-13 21:53:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:53:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-19 due to permanent error
+2025-10-13 21:53:47 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:53:47 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-15 due to permanent error
+2025-10-13 21:53:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 5ms
+2025-10-13 21:54:12 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:54:12 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-14 due to permanent error
+2025-10-13 21:54:17 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:54:17 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-14 due to permanent error
+2025-10-13 21:54:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:54:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-15 due to permanent error
+2025-10-13 21:54:47 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:54:47 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-14 due to permanent error
+2025-10-13 21:54:54 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.register -  Registered instance NEXT-MOVE-CLIENT-SERVICE/192.168.1.197:next-move-client-service:8082 with status DOWN (replication=false)
+2025-10-13 21:54:54 INFO  [ : ] o.a.h.i.c.DefaultHttpClient.tryExecute -  I/O exception (java.net.SocketException) caught when processing request to {}->http://localhost:8761: Broken pipe (Write failed)
+2025-10-13 21:54:54 INFO  [ : ] o.a.h.i.c.DefaultHttpClient.tryExecute -  Retrying request to {}->http://localhost:8761
+2025-10-13 21:54:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discovery WorkerThread error
+java.lang.NullPointerException: null
+	at com.netflix.eureka.cluster.ReplicationTaskProcessor.maybeReadTimeOut(ReplicationTaskProcessor.java:196)
+	at com.netflix.eureka.cluster.ReplicationTaskProcessor.process(ReplicationTaskProcessor.java:95)
+	at com.netflix.eureka.util.batcher.TaskExecutors$BatchWorkerRunnable.run(TaskExecutors.java:190)
+	at java.lang.Thread.run(Thread.java:750)
+2025-10-13 21:54:57 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.internalCancel -  Cancelled instance NEXT-MOVE-CLIENT-SERVICE/192.168.1.197:next-move-client-service:8082 (replication=false)
+2025-10-13 21:54:57 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:54:57 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 21:54:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 4ms
+2025-10-13 21:55:07 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.register -  Registered instance NEXT-MOVE-CLIENT-SERVICE/192.168.1.197:next-move-client-service:8082 with status UP (replication=false)
+2025-10-13 21:55:07 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:55:07 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-4 due to permanent error
+2025-10-13 21:55:12 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:55:12 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-15 due to permanent error
+2025-10-13 21:55:37 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:55:37 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 21:55:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:55:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-15 due to permanent error
+2025-10-13 21:55:59 INFO  [ : ] c.n.e.r.PeerAwareInstanceRegistryImpl.updateRenewalThreshold -  Current renewal threshold is : 5
+2025-10-13 21:55:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 5ms
+2025-10-13 21:56:07 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:56:07 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-5 due to permanent error
+2025-10-13 21:56:12 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:56:12 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-15 due to permanent error
+2025-10-13 21:56:37 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:56:38 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-0 due to permanent error
+2025-10-13 21:56:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:56:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-15 due to permanent error
+2025-10-13 21:56:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 4ms
+2025-10-13 21:57:08 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:57:08 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-10 due to permanent error
+2025-10-13 21:57:10 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.register -  Registered instance NEXT-MOVE-CLIENT-SERVICE/192.168.1.197:next-move-client-service:8082 with status DOWN (replication=false)
+2025-10-13 21:57:10 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:57:10 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-2 due to permanent error
+2025-10-13 21:57:12 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:57:12 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-15 due to permanent error
+2025-10-13 21:57:13 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.internalCancel -  Cancelled instance NEXT-MOVE-CLIENT-SERVICE/192.168.1.197:next-move-client-service:8082 (replication=false)
+2025-10-13 21:57:13 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:57:13 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-9 due to permanent error
+2025-10-13 21:57:23 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.register -  Registered instance NEXT-MOVE-CLIENT-SERVICE/192.168.1.197:next-move-client-service:8082 with status UP (replication=false)
+2025-10-13 21:57:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:57:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-18 due to permanent error
+2025-10-13 21:57:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:57:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-15 due to permanent error
+2025-10-13 21:57:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:57:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-9 due to permanent error
+2025-10-13 21:57:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 2ms
+2025-10-13 21:58:12 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:58:12 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 21:58:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:58:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-2 due to permanent error
+2025-10-13 21:58:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:58:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-11 due to permanent error
+2025-10-13 21:58:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:58:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-14 due to permanent error
+2025-10-13 21:58:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 4ms
+2025-10-13 21:59:12 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:59:12 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 21:59:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:59:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-14 due to permanent error
+2025-10-13 21:59:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:59:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-16 due to permanent error
+2025-10-13 21:59:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 21:59:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-14 due to permanent error
+2025-10-13 21:59:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 4ms
+2025-10-13 22:00:12 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:00:12 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-9 due to permanent error
+2025-10-13 22:00:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:00:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-14 due to permanent error
+2025-10-13 22:00:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:00:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-9 due to permanent error
+2025-10-13 22:00:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:00:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-14 due to permanent error
+2025-10-13 22:00:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 1ms
+2025-10-13 22:01:12 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:01:12 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-9 due to permanent error
+2025-10-13 22:01:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:01:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 22:01:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:01:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-9 due to permanent error
+2025-10-13 22:01:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:01:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-0 due to permanent error
+2025-10-13 22:01:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 4ms
+2025-10-13 22:02:12 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:02:12 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-9 due to permanent error
+2025-10-13 22:02:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:02:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 22:02:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:02:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-9 due to permanent error
+2025-10-13 22:02:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:02:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-16 due to permanent error
+2025-10-13 22:02:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 4ms
+2025-10-13 22:03:12 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:03:12 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-9 due to permanent error
+2025-10-13 22:03:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:03:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-19 due to permanent error
+2025-10-13 22:03:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:03:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 22:03:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:03:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-19 due to permanent error
+2025-10-13 22:03:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 3ms
+2025-10-13 22:04:12 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:04:12 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-0 due to permanent error
+2025-10-13 22:04:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:04:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-19 due to permanent error
+2025-10-13 22:04:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:04:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 22:04:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:04:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-19 due to permanent error
+2025-10-13 22:04:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 4ms
+2025-10-13 22:05:12 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:05:12 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-6 due to permanent error
+2025-10-13 22:05:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:05:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-19 due to permanent error
+2025-10-13 22:05:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:05:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-10 due to permanent error
+2025-10-13 22:05:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:05:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-19 due to permanent error
+2025-10-13 22:05:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 4ms
+2025-10-13 22:06:12 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:06:12 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-10 due to permanent error
+2025-10-13 22:06:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:06:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-9 due to permanent error
+2025-10-13 22:06:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:06:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-10 due to permanent error
+2025-10-13 22:06:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:06:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 22:06:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 4ms
+2025-10-13 22:07:12 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:07:12 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-10 due to permanent error
+2025-10-13 22:07:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:07:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 22:07:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:07:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-10 due to permanent error
+2025-10-13 22:07:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:07:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-8 due to permanent error
+2025-10-13 22:07:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 4ms
+2025-10-13 22:08:12 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:08:12 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-19 due to permanent error
+2025-10-13 22:08:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:08:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-18 due to permanent error
+2025-10-13 22:08:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:08:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-15 due to permanent error
+2025-10-13 22:08:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:08:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-6 due to permanent error
+2025-10-13 22:08:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 5ms
+2025-10-13 22:09:12 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:09:12 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-14 due to permanent error
+2025-10-13 22:09:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:09:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-6 due to permanent error
+2025-10-13 22:09:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:09:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-11 due to permanent error
+2025-10-13 22:09:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:09:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-6 due to permanent error
+2025-10-13 22:09:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 4ms
+2025-10-13 22:10:12 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:10:12 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-8 due to permanent error
+2025-10-13 22:10:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:10:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-6 due to permanent error
+2025-10-13 22:10:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:10:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-18 due to permanent error
+2025-10-13 22:10:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:10:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-10 due to permanent error
+2025-10-13 22:10:59 INFO  [ : ] c.n.e.r.PeerAwareInstanceRegistryImpl.updateRenewalThreshold -  Current renewal threshold is : 5
+2025-10-13 22:10:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 1ms
+2025-10-13 22:11:12 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:11:12 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-13 due to permanent error
+2025-10-13 22:11:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:11:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-15 due to permanent error
+2025-10-13 22:11:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:11:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-13 due to permanent error
+2025-10-13 22:11:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:11:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-15 due to permanent error
+2025-10-13 22:11:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 5ms
+2025-10-13 22:12:13 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:12:13 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-13 due to permanent error
+2025-10-13 22:12:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:12:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-5 due to permanent error
+2025-10-13 22:12:43 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:12:43 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-6 due to permanent error
+2025-10-13 22:12:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:12:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-0 due to permanent error
+2025-10-13 22:12:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 4ms
+2025-10-13 22:13:13 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:13:13 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-9 due to permanent error
+2025-10-13 22:13:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:13:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-16 due to permanent error
+2025-10-13 22:13:43 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:13:43 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-19 due to permanent error
+2025-10-13 22:13:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:13:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-18 due to permanent error
+2025-10-13 22:13:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 5ms
+2025-10-13 22:14:13 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:14:13 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-15 due to permanent error
+2025-10-13 22:14:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:14:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-2 due to permanent error
+2025-10-13 22:14:43 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:14:43 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-14 due to permanent error
+2025-10-13 22:14:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:14:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-2 due to permanent error
+2025-10-13 22:14:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 4ms
+2025-10-13 22:15:13 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:15:13 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-0 due to permanent error
+2025-10-13 22:15:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:15:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-13 due to permanent error
+2025-10-13 22:15:43 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:15:43 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 22:15:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:15:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-10 due to permanent error
+2025-10-13 22:15:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 4ms
+2025-10-13 22:16:13 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:16:13 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-18 due to permanent error
+2025-10-13 22:16:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:16:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-4 due to permanent error
+2025-10-13 22:16:43 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:16:43 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-18 due to permanent error
+2025-10-13 22:16:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:16:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-19 due to permanent error
+2025-10-13 22:16:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 1ms
+2025-10-13 22:17:13 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:17:13 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-18 due to permanent error
+2025-10-13 22:17:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:17:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-15 due to permanent error
+2025-10-13 22:17:43 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:17:43 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-2 due to permanent error
+2025-10-13 22:17:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:17:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-14 due to permanent error
+2025-10-13 22:17:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 4ms
+2025-10-13 22:18:13 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:18:13 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-9 due to permanent error
+2025-10-13 22:18:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:18:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-0 due to permanent error
+2025-10-13 22:18:43 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:18:43 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-10 due to permanent error
+2025-10-13 22:18:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:18:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 22:18:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 1ms
+2025-10-13 22:19:13 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:19:13 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-4 due to permanent error
+2025-10-13 22:19:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:19:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 22:19:43 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:19:43 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-4 due to permanent error
+2025-10-13 22:19:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:19:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 22:19:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 2ms
+2025-10-13 22:20:13 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:20:13 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-5 due to permanent error
+2025-10-13 22:20:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:20:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-2 due to permanent error
+2025-10-13 22:20:43 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:20:43 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-14 due to permanent error
+2025-10-13 22:20:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:20:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-10 due to permanent error
+2025-10-13 22:20:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 57ms
+2025-10-13 22:21:13 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:21:13 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-16 due to permanent error
+2025-10-13 22:21:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:21:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-10 due to permanent error
+2025-10-13 22:21:43 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:21:43 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 22:21:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:21:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-10 due to permanent error
+2025-10-13 22:21:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 0ms
+2025-10-13 22:22:13 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:22:13 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 22:22:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:22:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-10 due to permanent error
+2025-10-13 22:22:43 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:22:43 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 22:22:54 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:22:54 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-5 due to permanent error
+2025-10-13 22:22:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 3ms
+2025-10-13 22:23:13 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:23:13 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-13 due to permanent error
+2025-10-13 22:23:24 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:23:24 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-11 due to permanent error
+2025-10-13 22:23:43 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:23:43 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-9 due to permanent error
+2025-10-13 22:23:55 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:23:55 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-16 due to permanent error
+2025-10-13 22:23:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 0ms
+2025-10-13 22:24:13 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:24:13 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-9 due to permanent error
+2025-10-13 22:24:25 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:24:25 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-8 due to permanent error
+2025-10-13 22:24:43 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:24:43 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-9 due to permanent error
+2025-10-13 22:24:55 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:24:55 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 22:24:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 4ms
+2025-10-13 22:25:13 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:25:13 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-9 due to permanent error
+2025-10-13 22:25:25 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:25:25 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-7 due to permanent error
+2025-10-13 22:25:43 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:25:43 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-15 due to permanent error
+2025-10-13 22:25:55 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:25:55 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-6 due to permanent error
+2025-10-13 22:25:59 INFO  [ : ] c.n.e.r.PeerAwareInstanceRegistryImpl.updateRenewalThreshold -  Current renewal threshold is : 5
+2025-10-13 22:25:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 4ms
+2025-10-13 22:26:13 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:26:13 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-11 due to permanent error
+2025-10-13 22:26:25 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:26:25 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-13 due to permanent error
+2025-10-13 22:26:39 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.register -  Registered instance NEXT-MOVE-CLIENT-SERVICE/192.168.1.197:next-move-client-service:8082 with status DOWN (replication=false)
+2025-10-13 22:26:39 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:26:39 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-9 due to permanent error
+2025-10-13 22:26:42 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.register -  Registered instance ZERO-SIZE-CONTROL-SERVICE/192.168.1.197:zero-size-control-service:8081 with status DOWN (replication=false)
+2025-10-13 22:26:42 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.internalCancel -  Cancelled instance NEXT-MOVE-CLIENT-SERVICE/192.168.1.197:next-move-client-service:8082 (replication=false)
+2025-10-13 22:26:42 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 2 replication tasks
+2025-10-13 22:26:42 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 2 tasks of TaskBatchingWorker-target_localhost-16 due to permanent error
+2025-10-13 22:26:43 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:26:43 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-0 due to permanent error
+2025-10-13 22:26:45 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.internalCancel -  Cancelled instance ZERO-SIZE-CONTROL-SERVICE/192.168.1.197:zero-size-control-service:8081 (replication=false)
+2025-10-13 22:26:45 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:26:45 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-0 due to permanent error
+2025-10-13 22:26:55 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.register -  Registered instance NEXT-MOVE-CLIENT-SERVICE/192.168.1.197:next-move-client-service:8082 with status UP (replication=false)
+2025-10-13 22:26:55 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:26:55 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-16 due to permanent error
+2025-10-13 22:26:57 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.register -  Registered instance ZERO-SIZE-CONTROL-SERVICE/192.168.1.197:zero-size-control-service:8081 with status UP (replication=false)
+2025-10-13 22:26:57 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:26:57 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-10 due to permanent error
+2025-10-13 22:26:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 0ms
+2025-10-13 22:27:25 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:27:25 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-16 due to permanent error
+2025-10-13 22:27:28 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:27:28 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-19 due to permanent error
+2025-10-13 22:27:55 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:27:55 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-16 due to permanent error
+2025-10-13 22:27:58 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:27:58 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-15 due to permanent error
+2025-10-13 22:27:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 5ms
+2025-10-13 22:28:25 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:28:25 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 22:28:28 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:28:28 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-11 due to permanent error
+2025-10-13 22:28:55 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:28:55 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 22:28:58 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:28:58 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-0 due to permanent error
+2025-10-13 22:28:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 5ms
+2025-10-13 22:29:25 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:29:25 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-13 due to permanent error
+2025-10-13 22:29:28 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:29:28 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-8 due to permanent error
+2025-10-13 22:29:55 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:29:55 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-13 due to permanent error
+2025-10-13 22:29:58 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:29:58 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-8 due to permanent error
+2025-10-13 22:29:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 3ms
+2025-10-13 22:30:25 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:30:25 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-13 due to permanent error
+2025-10-13 22:30:28 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:30:28 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-8 due to permanent error
+2025-10-13 22:30:55 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:30:55 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-9 due to permanent error
+2025-10-13 22:30:58 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:30:58 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-6 due to permanent error
+2025-10-13 22:30:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 4ms
+2025-10-13 22:31:25 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:31:25 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-4 due to permanent error
+2025-10-13 22:31:28 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:31:28 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-2 due to permanent error
+2025-10-13 22:31:55 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:31:55 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-14 due to permanent error
+2025-10-13 22:31:58 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:31:58 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 22:31:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 1ms
+2025-10-13 22:32:25 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:32:25 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-11 due to permanent error
+2025-10-13 22:32:28 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:32:28 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 22:32:55 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:32:55 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-0 due to permanent error
+2025-10-13 22:32:58 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:32:58 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-13 due to permanent error
+2025-10-13 22:32:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 0ms
+2025-10-13 22:33:25 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:33:25 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-0 due to permanent error
+2025-10-13 22:33:28 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:33:28 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-10 due to permanent error
+2025-10-13 22:33:55 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:33:55 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-16 due to permanent error
+2025-10-13 22:33:58 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:33:58 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-15 due to permanent error
+2025-10-13 22:33:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 6ms
+2025-10-13 22:34:25 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:34:25 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-2 due to permanent error
+2025-10-13 22:34:28 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:34:28 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-11 due to permanent error
+2025-10-13 22:34:55 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:34:55 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-2 due to permanent error
+2025-10-13 22:34:58 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:34:58 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-11 due to permanent error
+2025-10-13 22:34:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 5ms
+2025-10-13 22:35:26 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:35:26 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 22:35:28 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:35:28 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-11 due to permanent error
+2025-10-13 22:35:56 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:35:56 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-13 due to permanent error
+2025-10-13 22:35:58 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:35:58 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-6 due to permanent error
+2025-10-13 22:35:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 5ms
+2025-10-13 22:36:26 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:36:26 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-5 due to permanent error
+2025-10-13 22:36:28 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:36:28 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-18 due to permanent error
+2025-10-13 22:36:56 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:36:56 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-10 due to permanent error
+2025-10-13 22:36:58 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:36:58 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 22:36:59 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 4ms
+2025-10-13 22:37:26 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:37:26 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-15 due to permanent error
+2025-10-13 22:37:28 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 22:37:28 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-3 due to permanent error
+2025-10-13 23:44:43 ERROR [ : ] c.n.e.c.ReplicationTaskProcessor.process -  Batch update failure with HTTP status code 400; discarding 1 replication tasks
+2025-10-13 23:44:43 WARN  [ : ] c.n.e.u.b.TaskExecutors.run -  Discarding 1 tasks of TaskBatchingWorker-target_localhost-14 due to permanent error
+2025-10-13 23:44:44 INFO  [ : ] c.n.e.r.AbstractInstanceRegistry.run -  Running the evict task with compensationTime 4ms

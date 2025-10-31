@@ -1,0 +1,2 @@
+app id,task id,create date,source file path,destination file path,file size,status,error no,error message,retry
+Z001,task_external_1000,20251013215516185,file:/Users/a007626/next_move_test/source/fruit.csv,file:/Users/a007626/next_move_test/dest/fruit.csv,279,SUCCESS,,,

@@ -1,0 +1,221 @@
+taskConfig:
+  tasks:
+#=========== Task 01 : Directly viewfs -> viewfs
+    - id: task-01
+      type: NONE_CONTROL
+      sourceType: HADOOP
+      rootPath:
+        source: viewfs://blendata/src-local-02/main/submain/none-*/<current_date(ddMMyyyy)>
+        #        source: /src-local-02/main/submain/none-src/<current_date(ddMMyyyy)-1>
+        #        source: /src-local-02/main/submain/movethis/zero-2
+        #        source: /src-local-02/main/submain/mov*/zer*
+        destination: viewfs://blendata/dest-local-02/none-dest/<current_date(ddMMyyyy)+1>
+      filesPerRound: 100
+      #      afterDate: '12/08/2024 08:00:00'
+      #      beforeCurrentDateInHours: 5
+      #      beforeCurrentDateInDays: 3
+      srcExtensions:
+        - ctrl
+        - txt
+        #        - txt.gz
+        #        - tar.gz
+        #        - txt
+        #        - zip
+        - Z
+      #        - zip
+      wildcardPatterns:
+        - exam*
+        - ocs*
+      #        - data-1*
+      compression:
+        notExtract: false
+        createTargetDirectory: false
+      overwrite: false
+      checkFileSize: true
+      checkFileDelaySeconds: 10
+      moveType: COPY
+      retry: 1
+      cronExpression: "0/2 * * ? * * *"
+
+#=========== Task 02 : Directly file -> s3a
+    - id: task-02
+      type: NONE_CONTROL
+      sourceType: HADOOP
+      rootPath:
+        source: file:///Users/anucha.r/MyWork/tmp/test-next-move-src-dest/src/direct
+        destination: s3a://sftp/direct
+      filesPerRound: 100
+      #      afterDate: '12/08/2024 08:00:00'
+      #      beforeCurrentDateInHours: 5
+      #      beforeCurrentDateInDays: 3
+      srcExtensions:
+        - ctrl
+        - txt
+        #        - txt.gz
+        #        - tar.gz
+        #        - txt
+        #        - zip
+        - Z
+      #        - zip
+      wildcardPatterns:
+        - exam*
+        - ex*
+      #        - data-1*
+      compression:
+        notExtract: false
+        createTargetDirectory: false
+      overwrite: false
+      checkFileSize: true
+      checkFileDelaySeconds: 10
+      moveType: COPY
+      retry: 1
+      cronExpression: "0/2 * * ? * * *"
+
+#=========== Task 03 : Directly sftp -> s3a
+    - id: task-03
+      type: NONE_CONTROL
+      sourceType: SFTP
+      rootPath:
+        source: /home/blendata/test_cp/src
+        destination: s3a://sftp/direct/from-sftp
+      sourceProperties:
+        host: "49.0.196.113"
+        port: 22
+        username: "blendata"
+        privateKeyPath: "/Users/anucha.r/Documents/Document-ME/KeyPair-DEV.cer"
+        connectionTimeout: 30000
+        readTimeout: 30000
+      filesPerRound: 100
+      #      afterDate: '12/08/2024 08:00:00'
+      #      beforeCurrentDateInHours: 5
+      #      beforeCurrentDateInDays: 3
+      srcExtensions:
+        - txt
+        #        - txt.gz
+        #        - tar.gz
+        #        - txt
+        #        - zip
+        - Z
+      #        - zip
+      wildcardPatterns:
+        - exam*
+        - ex*
+      #        - data-1*
+      compression:
+        notExtract: false
+        createTargetDirectory: false
+      overwrite: false
+      checkFileSize: true
+      checkFileDelaySeconds: 10
+      moveType: COPY
+      retry: 1
+      cronExpression: "0/2 * * ? * * *"
+
+#=========== Task 04 :  sftp -> file (config file)
+    - id: task-04
+      type: NONE_CONTROL
+      sourceType: SFTP
+      rootPath:
+        source: /home/blendata/test_cp/src/sf*
+        destination: /dest-local-02/sftp
+      sourceProperties:
+        host: "49.0.196.113"
+        port: 22
+        username: "blendata"
+        privateKeyPath: "/Users/anucha.r/Documents/Document-ME/KeyPair-DEV.cer"
+        connectionTimeout: 30000
+        readTimeout: 30000
+      filesPerRound: 100
+      #      afterDate: '12/08/2024 08:00:00'
+      #      beforeCurrentDateInHours: 5
+      #      beforeCurrentDateInDays: 3
+      srcExtensions:
+        - txt
+        #        - txt.gz
+        #        - tar.gz
+        #        - txt
+        #        - zip
+        - Z
+      #        - zip
+#      wildcardPatterns:
+#        - exam*
+#        - ex*
+      #        - data-1*
+      compression:
+        notExtract: false
+        createTargetDirectory: false
+      overwrite: false
+      checkFileSize: true
+      checkFileDelaySeconds: 10
+      moveType: COPY
+      retry: 1
+      cronExpression: "0/2 * * ? * * *"
+
+
+#=========== Task 05 : Directly file zip -> s3a
+    - id: task-05
+      type: NONE_CONTROL
+      sourceType: HADOOP
+      rootPath:
+        source: file:///Users/anucha.r/MyWork/tmp/test-next-move-src-dest/src/mai*/sub*/zip
+        destination: s3a://sftp/direct/compress/zip
+      filesPerRound: 100
+      #      afterDate: '12/08/2024 08:00:00'
+      #      beforeCurrentDateInHours: 5
+      #      beforeCurrentDateInDays: 3
+      srcExtensions:
+        - zip
+#        - txt
+        #        - txt.gz
+        #        - tar.gz
+        #        - txt
+        #        - zip
+#        - Z
+#      wildcardPatterns:
+#        - exam*
+#        - ex*
+      #        - data-1*
+      compression:
+        notExtract: false
+        createTargetDirectory: true
+      overwrite: false
+      checkFileSize: true
+      checkFileDelaySeconds: 10
+      moveType: COPY
+      retry: 1
+      cronExpression: "0/2 * * ? * * *"
+
+#=========== Task 06 : viewfs -> s3a
+    - id: task-06
+      type: NONE_CONTROL
+      sourceType: HADOOP
+      rootPath:
+        source: /src-local-02/main/submain/movethis/none-c*l
+        #        source: /src-local-02/main/submain/mov*/zer*
+        #        destination: /minio
+        destination: /minio/viewfs
+      filesPerRound: 100
+      #      afterDate: '12/08/2024 08:00:00'
+      #      beforeCurrentDateInHours: 5
+      #      beforeCurrentDateInDays: 3
+      srcExtensions:
+        - txt
+        #        - txt.gz
+        #        - tar.gz
+        #        - txt
+        #        - zip
+        - Z
+      #        - zip
+      wildcardPatterns:
+        - none-ct*
+        - ex*
+      #        - data-1*
+      compression:
+        notExtract: false
+        createTargetDirectory: false
+      overwrite: false
+      checkFileSize: true
+      checkFileDelaySeconds: 10
+      moveType: COPY
+      retry: 1
+      cronExpression: "0/2 * * ? * * *"

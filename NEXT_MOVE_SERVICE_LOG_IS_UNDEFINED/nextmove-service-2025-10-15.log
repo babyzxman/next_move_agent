@@ -1,0 +1,162 @@
+2025-10-15 00:29:25 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=40m2s495ms).
+2025-10-15 01:40:28 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=1h11m3s69ms).
+2025-10-15 02:14:21 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=33m22s146ms).
+2025-10-15 03:28:08 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=1h13m47s840ms).
+2025-10-15 04:32:36 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=1h4m27s506ms).
+2025-10-15 04:59:11 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=26m34s980ms).
+2025-10-15 06:00:03 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 06:16:53 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=1h17m42s383ms).
+2025-10-15 07:36:47 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=1h19m53s935ms).
+2025-10-15 08:47:25 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=1h10m37s832ms).
+2025-10-15 09:29:28 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=42m3s39ms).
+2025-10-15 09:32:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 09:37:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 09:42:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 09:47:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 09:52:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 09:57:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 10:02:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 10:07:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 10:12:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 10:17:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 10:22:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 10:27:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 10:32:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 10:37:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 10:42:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 10:47:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 10:52:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 10:57:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 11:02:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 11:07:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 11:12:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 11:17:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 11:22:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 11:27:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 11:32:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 11:37:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 11:42:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 11:47:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 11:52:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 11:57:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 12:02:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 12:07:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 12:12:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 12:17:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 12:22:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 12:27:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 12:32:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 12:37:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 12:42:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 12:47:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 12:52:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 12:57:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 13:02:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 13:07:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 13:12:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 13:17:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 13:22:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 13:27:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 13:32:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 13:37:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 13:42:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 13:47:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 13:52:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 13:57:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 14:02:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 14:07:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 14:12:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 14:17:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 14:22:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 14:27:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 14:32:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 14:37:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 14:42:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 14:47:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 14:52:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 14:57:53 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 15:02:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 15:07:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 15:12:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 15:17:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 15:22:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 15:27:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 15:32:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 15:37:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 15:42:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 15:47:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 15:52:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 15:57:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 16:02:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 16:07:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 16:12:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 16:17:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 16:22:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 16:27:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 16:32:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 16:37:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 16:42:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 16:47:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 16:52:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 16:57:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 17:02:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 17:07:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 17:12:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 17:17:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 17:22:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 17:27:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 17:32:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 17:37:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 17:42:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 17:47:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 17:52:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 17:57:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 18:02:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 18:07:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 18:12:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 18:17:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 18:22:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 18:27:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 18:32:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 18:37:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 18:42:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 18:47:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 18:52:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 18:57:54 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 19:02:55 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 19:07:55 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 19:12:55 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 19:17:55 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 19:22:55 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 19:27:55 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 19:32:55 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 19:37:55 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 19:42:55 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 19:47:55 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 19:52:55 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 19:57:55 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 20:02:55 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 20:07:55 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 20:26:39 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=17m33s632ms).
+2025-10-15 20:29:58 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 20:34:58 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 20:55:07 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=16m27s210ms).
+2025-10-15 20:55:56 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 21:07:50 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=9m13s33ms).
+2025-10-15 21:10:03 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=2m12s656ms).
+2025-10-15 21:11:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 21:16:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 21:21:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 21:26:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 21:31:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 21:36:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 21:41:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 21:46:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 21:51:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 21:56:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 22:01:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 22:06:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 22:11:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 22:16:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 22:21:21 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2025-10-15 23:11:04 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=47m30s877ms).

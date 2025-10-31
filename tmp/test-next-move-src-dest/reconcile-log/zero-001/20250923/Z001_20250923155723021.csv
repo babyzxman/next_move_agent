@@ -1,0 +1,2 @@
+app id,task id,create date,source file path,destination file path,file size,status,error no,error message,retry
+Z001,task-003,20250923155722993,file:/Users/a007626/next_move_test/source/fruit.csv,,279,FAILED,Z001-20250923155722-2452c22d,null(org.gable.blendata.nextmove.service.service.NoneCtrlService : lambda$processFileTransfers$3[line 122] ),0

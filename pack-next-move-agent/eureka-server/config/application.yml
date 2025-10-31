@@ -1,0 +1,29 @@
+root:
+  home:
+    path: ${EUREKA_SERVER_HOME}
+server:
+  port: 8761
+  ssl:
+    enabled: true
+    key-store: ${root.home.path}/ssl/eureka-server.p12
+    key-store-password: 'l;ylfu=k;F]d1'
+    key-store-type: PKCS12
+    key-alias: eureka
+eureka:
+  instance:
+    non-secure-port-enabled: false
+    secure-port-enabled: true
+    leaseRenewalIntervalInSeconds: 10
+    leaseExpirationDurationInSeconds: 30
+  server:
+    enable-self-preservation: true
+    wait-time-in-ms-when-sync-empty: 0
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+
+spring:
+  application:
+    name: eureka-server
+logging:
+  config: ${root.home.path}/config/logback.xml

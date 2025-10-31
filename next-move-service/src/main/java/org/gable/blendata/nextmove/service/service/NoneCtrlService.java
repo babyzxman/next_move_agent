@@ -1,0 +1,601 @@
+package org.gable.blendata.nextmove.service.service;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.filefilter.TrueFileFilter;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.FileUtil;
+import org.apache.hadoop.fs.Options;
+import org.apache.hadoop.fs.Path;
+import org.gable.blendata.nextmove.service.adapter.FileSystemAdapter;
+import org.gable.blendata.nextmove.service.config.AppConfig;
+import org.gable.blendata.nextmove.service.config.HadoopConfig;
+import org.gable.blendata.nextmove.service.dto.ReconcileInfoDTO;
+import org.gable.blendata.nextmove.service.service.connection.ConnectionManager;
+import org.gable.blendata.nextmove.service.service.connection.ConnectionManagerFactory;
+import org.gable.blendata.nextmove.shared.constant.AppConst;
+import org.gable.blendata.nextmove.shared.constant.FileStatus;
+import org.gable.blendata.nextmove.shared.constant.TaskConst;
+import org.gable.blendata.nextmove.shared.dto.FileInfoDTO;
+import org.gable.blendata.nextmove.shared.dto.StopTaskRequestWrapper;
+import org.gable.blendata.nextmove.shared.dto.TransferRequestWrapper;
+import org.gable.blendata.nextmove.shared.entity.TransferHistory;
+import org.gable.blendata.nextmove.shared.exception.DuplicateException;
+import org.gable.blendata.nextmove.shared.exception.FileSizeMisMatchException;
+import org.gable.blendata.nextmove.shared.exception.TaskCancelledException;
+import org.gable.blendata.nextmove.shared.util.*;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+
+import java.io.File;
+import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class NoneCtrlService extends MoveService{
+    private final AppConfig appConfig;
+    private final TransferHistoryService transferHistoryService;
+    private final ReconcileLogService reconcileLogService;
+    private final ConnectionManagerFactory connectionManagerFactory;
+
+    private final Map<String, CompletableFuture<Void>> runningTasks = new ConcurrentHashMap<>();
+    private final Map<String, AtomicBoolean> cancellationFlags = new ConcurrentHashMap<>();
+    private final HadoopConfig hadoopConfig;
+    private final Map<String, FileSystem> fileSystems;
+
+    public void moveFiles(TransferRequestWrapper transferRequestWrapper) {
+        String srcRootPath = transferRequestWrapper.getSourceRootPathStr();
+        String taskKey = transferRequestWrapper.getClientId() + "_" + transferRequestWrapper.getTaskId() + "_" + StringUtil.getRandomAlphanumericString(8);
+        log.info("{} Starting task {} with source path {}", AppConst.PREFIX_LOG, taskKey, srcRootPath);
+
+        //...P'Ban Request
+        if(CollectionUtils.isNotEmpty(transferRequestWrapper.getFilePathStrs())) {
+            transferRequestWrapper.getFilePathStrs().parallelStream().forEach(filePathStr -> {
+                log.info("{} Task ID({}) Request to move file {} to {}", AppConst.PREFIX_LOG
+                        , transferRequestWrapper.getTaskId()
+                        , filePathStr
+                        , transferRequestWrapper.getDestinationRootPathStr());
+            });
+        }
+
+        hadoopConfig.registerFileSystem(fileSystems, FileSystemUtil.getFileSystemKey(transferRequestWrapper.getSourceRootPathStr()));
+        hadoopConfig.registerFileSystem(fileSystems, FileSystemUtil.getFileSystemKey(transferRequestWrapper.getDestinationRootPathStr()));
+
+        //...Save into table and mark them to processing status
+        List<TransferHistory> transferHistories = transferHistoryService.saveProcessing(transferRequestWrapper);
+        final List<Long> transferHistoryIds = transferHistories.stream().map(TransferHistory::getId).collect(Collectors.toList());
+
+        AtomicBoolean cancellationFlag = new AtomicBoolean(false);
+        synchronized (runningTasks) {
+            cancellationFlags.put(taskKey, cancellationFlag);
+        }
+
+        CompletableFuture<Void> future = CompletableFuture.supplyAsync(
+                processFileTransfers(transferHistoryIds, transferRequestWrapper, cancellationFlag, taskKey));
+        runningTasks.put(taskKey, future);
+    }
+
+    private Supplier<Void> processFileTransfers(List<Long> transferHistoryIds, TransferRequestWrapper transferRequestWrapper, AtomicBoolean cancellationFlag, String taskKey) {
+        return () -> {
+            List<ReconcileInfoDTO> reconcileInfos = new ArrayList<>();
+            List<TransferHistory> transferHistories = new ArrayList<>();
+            ConnectionManager connectionManager = null;
+            FileSystemAdapter adapter = null;
+            try {
+
+                String destRootPathStr = transferRequestWrapper.getDestinationRootPathStr();
+                boolean isDeleteSrc = TaskConst.MoveType.MOVE.name().equalsIgnoreCase(transferRequestWrapper.getMoveType());
+
+                connectionManager = connectionManagerFactory.createConnectionManager(transferRequestWrapper.getSourceType()
+                        , transferRequestWrapper.getSourceRootPathStr()
+                        , transferRequestWrapper.getDestinationRootPathStr()
+                        , transferRequestWrapper.getSourceProperties());
+
+                adapter = connectionManager.createConnection();
+                transferHistories = transferHistoryService.findByIdIn(transferHistoryIds);
+                Map<String, Long> modifiedCheckerMap = new HashMap<>();
+                if(transferRequestWrapper.isCheckFileSize()){
+                    modifiedCheckerMap = keepFileSize(transferHistories, adapter);
+                }else {
+                    modifiedCheckerMap = keepModifiedTime(transferHistories, adapter);
+                }
+                if (cancellationFlag.get() || Thread.currentThread().isInterrupted()) {
+                    log.info("{} Task {} cancelled before sleep, interrupt status: {}", AppConst.PREFIX_LOG, taskKey, Thread.currentThread().isInterrupted());
+                    throw new TaskCancelledException("Task was cancelled or interrupted before sleep");
+                }
+
+                //...Delay for checking files
+//                Thread.sleep(transferRequestWrapper.getCheckFileDelaySeconds()*1000);
+                try {
+                    interruptibleSleep(transferRequestWrapper.getCheckFileDelaySeconds() * 1000, cancellationFlag, taskKey);
+                } catch (InterruptedException e) {
+                    log.info("{} Task {} interrupted during sleep, interrupt status: {}", AppConst.PREFIX_LOG, taskKey, Thread.currentThread().isInterrupted());
+                    Thread.currentThread().interrupt(); // คืนสถานะ interrupt
+                    throw new TaskCancelledException("Task was interrupted during sleep");
+                }
+                if (cancellationFlag.get() || Thread.currentThread().isInterrupted()) {
+                    log.info("{} Task {} cancelled after sleep, interrupt status: {}", AppConst.PREFIX_LOG, taskKey, Thread.currentThread().isInterrupted());
+                    throw new TaskCancelledException("Task was cancelled or interrupted after sleep");
+                }
+                int maxRetry = Objects.isNull(transferRequestWrapper.getRetry())? 1 : transferRequestWrapper.getRetry() +1; //...normal + retry
+                int retry = 0;
+                boolean hasError = true;
+                do {
+                    if (cancellationFlag.get() || Thread.currentThread().isInterrupted()) {
+                        log.info("{} Task {} cancelled during retry loop", AppConst.PREFIX_LOG, taskKey);
+                        throw new TaskCancelledException("Task was cancelled or interrupted during retry loop");
+                    }
+
+                    for (TransferHistory transferHistory : transferHistories) {
+                        if (cancellationFlag.get() || Thread.currentThread().isInterrupted()) {
+                            log.info("{} Task {} cancelled while processing files", AppConst.PREFIX_LOG, taskKey);
+                            throw new TaskCancelledException("Task was cancelled or interrupted while processing files");
+                        }
+                        if(FileStatus.SUCCESS.name().equals(transferHistory.getStatus())){
+                            continue;
+                        }
+                        if(retry > 0){
+                            transferHistory.setRetry(retry);
+                        }
+                        FileInfoDTO srcFile = adapter.getSourceFileInfo(transferHistory.getFilePath(), transferRequestWrapper.getSourceRootPathStr());
+                        boolean isCompressFile = CompressFileUtil.isSupportedFormat(srcFile.getFileName());
+                        transferHistory.setFileSize(srcFile.getSize());
+
+                        //...Check connection is alive or not for SFTP source
+                        adapter = connectionManager.ensureConnectionAlive(adapter, adapter.getSourceFileSystem(), taskKey);
+
+                        if (!transferRequestWrapper.isNotExtract() && isCompressFile) {
+                            processCompressFile(reconcileInfos, transferHistory, destRootPathStr, isDeleteSrc
+                                    , srcFile, modifiedCheckerMap, retry==0? null : retry
+                                    , transferRequestWrapper.isCreateTargetZipBaseDir()
+                                    , transferRequestWrapper.isCheckFileSize()
+                                    , transferRequestWrapper.isOverwrite()
+                                    , cancellationFlag
+                                    , adapter);
+
+                        } else {  //...Regular File
+                            processRegularFile(reconcileInfos, transferHistory, destRootPathStr, isDeleteSrc
+                                    , srcFile, modifiedCheckerMap, retry==0? null : retry
+                                    , transferRequestWrapper.isCheckFileSize()
+                                    , transferRequestWrapper.isOverwrite()
+                                    , cancellationFlag
+                                    , adapter);
+                        }
+                    }
+                    hasError = transferHistories.stream().anyMatch(transferHistory -> !FileStatus.SUCCESS.name().equals(transferHistory.getStatus()));
+                    retry++;
+                }while (retry < maxRetry && hasError && !cancellationFlag.get() && !Thread.currentThread().isInterrupted());
+
+            }catch (Exception e) {
+                String errorNo = ErrorUtil.generateErrorNo(appConfig.getAppId());
+                if(e instanceof TaskCancelledException){
+                    log.error("{} !!!ErrorNo({}) : Task {} was cancelled: {}, interrupt status: {}", AppConst.PREFIX_LOG, errorNo, taskKey, e.getMessage(), Thread.currentThread().isInterrupted());
+                }else {
+                    log.error("{} !!!ErrorNo({}) : Task {} error : {} ", AppConst.PREFIX_LOG, errorNo, taskKey, e.getMessage(), e);
+                }
+                List<TransferHistory> processingTransferHistories = transferHistories.stream()
+                        .filter(t -> t.getStatus().equalsIgnoreCase(FileStatus.PROCESSING.name()))
+                        .collect(Collectors.toList());
+                markTransferHistoriesAsFailed(processingTransferHistories, errorNo);
+                addRemainingReconciledInfo(adapter, processingTransferHistories, reconcileInfos
+                        , errorNo, ErrorUtil.getErrorMessage(e), transferRequestWrapper.getSourceRootPathStr());
+            } finally {
+                if(connectionManager != null){
+                    try {
+                        connectionManager.closeConnection(adapter);
+                    } catch (IOException e) {
+                        log.error("{} !!!Error cannot close connection : {}", AppConst.PREFIX_LOG, e.getMessage(), e);
+                    }
+                }
+                saveFinish(transferHistories);
+                //...Write log file
+                if(!reconcileInfos.isEmpty()) {
+                    reconcileLogService.writeLogFile(reconcileInfos, transferRequestWrapper.getSourceRootPathStr(), transferRequestWrapper.getTaskId());
+                }
+            }
+            return null;
+        };
+    }
+
+    private void addRemainingReconciledInfo(FileSystemAdapter adapter, List<TransferHistory> processingTransferHistories, List<ReconcileInfoDTO> reconcileInfos, String errorNo, String errorMsg, String sourceRootPath) {
+        for(TransferHistory processingTransferHistory : processingTransferHistories){
+            FileInfoDTO srcFile = FileInfoUtil.getFileInfo(adapter.getSourceFileSystem(), processingTransferHistory.getFilePath(), sourceRootPath);
+            reconcileInfos.add( ReconcileInfoDTO.builder()
+                    .createDate(DateUtil.convertToString(LocalDateTime.now(), DateUtil.YYYYMMDDHHmmssSSS))
+                    .fileSizeInBytes(srcFile.getSize())
+                    .srcAbsoluteFilePathStr(srcFile.getAbsoluteFilePath())
+                    .status(FileStatus.FAILED.name())
+                    .retry(0)
+                    .errorNo(errorNo)
+                    .errMsg(errorMsg)
+                    .build());
+        }
+    }
+
+    private void interruptibleSleep(long totalMillis, AtomicBoolean cancellationFlag, String taskKey) throws InterruptedException, TaskCancelledException {
+        long startTime = System.currentTimeMillis();
+        long sleepInterval = 100; //...Sleep interval of 100 milliseconds
+        while (System.currentTimeMillis() - startTime < totalMillis) {
+            if (cancellationFlag.get() || Thread.currentThread().isInterrupted()) {
+                log.info("{} Task {} detected cancellation or interrupt during sleep, interrupt status: {}", AppConst.PREFIX_LOG, taskKey, Thread.currentThread().isInterrupted());
+                throw new TaskCancelledException("Task was cancelled or interrupted during sleep");
+            }
+            Thread.sleep(Math.min(sleepInterval, totalMillis - (System.currentTimeMillis() - startTime)));
+        }
+    }
+
+    private void processCompressFile(List<ReconcileInfoDTO> reconcileInfos, TransferHistory transferHistory
+            , String destRootPathStr, boolean isDeleteSrc, FileInfoDTO srcFile
+            , Map<String, Long> modifiedCheckerMap, Integer retry
+            , boolean isCreateTargetZipBaseDir, boolean checkFileSize, boolean overwrite, AtomicBoolean cancellationFlag
+            , FileSystemAdapter adapter) throws IOException {
+        LocalDateTime startTime = LocalDateTime.now();
+        //...Define decompress directory
+        String uniqueId = UUID.randomUUID().toString();
+        String parentDecompressDir = appConfig.getDecompressDir() + "/" + appConfig.getAppId() + "_" +
+                DateUtil.convertToString(DateUtil.getCurrentDateWithTime(), DateUtil.YYYYMMDDHHmmssSSS) + "_" +
+                uniqueId;
+        boolean isMoveSuccess = true;
+        try {
+            if (cancellationFlag.get() || Thread.currentThread().isInterrupted()) {
+                log.info("{} Task cancelled before processing compress file", AppConst.PREFIX_LOG);
+                throw new TaskCancelledException("Task was cancelled or interrupted before processing compress file");
+            }
+            validateFileChanged(srcFile, modifiedCheckerMap, checkFileSize, adapter);
+
+            String compressDirPath = parentDecompressDir + "/compress";
+            String compressSrcFilePath = srcFile.getRelativeFilePath();
+            String compressSrcFileName = srcFile.getFileName();
+            String tempDestinationCompressFilePath = compressDirPath + "/" + compressSrcFileName;
+            long srcFileSize = adapter.getFileSize(adapter.getSourceFileSystem(), compressSrcFilePath);
+
+            if (cancellationFlag.get() || Thread.currentThread().isInterrupted()) {
+                log.info("{} Task cancelled before copying compress file", AppConst.PREFIX_LOG);
+                throw new TaskCancelledException("Task was cancelled or interrupted before copying compress file");
+            }
+
+            //...Copy compress file to local
+            adapter.copyToLocal(compressSrcFilePath, tempDestinationCompressFilePath);
+
+            long destinationFileSize = FileUtils.sizeOf(new File(tempDestinationCompressFilePath.toString()));
+            if(srcFileSize != destinationFileSize){
+                throw new FileSizeMisMatchException(new Path(tempDestinationCompressFilePath)
+                        , String.format("Source and target file sizes do not match. "
+                        + "Source: %s bytes, Target: %s bytes", srcFileSize+"", destinationFileSize+""));
+            }
+
+            if (cancellationFlag.get() || Thread.currentThread().isInterrupted()) {
+                log.info("{} Task cancelled before decompressing file", AppConst.PREFIX_LOG);
+                throw new TaskCancelledException("Task was cancelled or interrupted before decompressing file");
+            }
+
+            //...Decompress file into local
+            String uncompressDirPath = parentDecompressDir + "/uncompress";
+            FileUtils.forceMkdir(new File(uncompressDirPath));
+            CompressFileUtil.decompressFile(compressDirPath + "/" + compressSrcFileName, uncompressDirPath);
+            log.info("{} : compressSrcFilePath = {}, srcFile.getRoothPathStr = {}", AppConst.PREFIX_LOG, compressSrcFilePath, srcFile.getRootPathStr());
+            Path destDir = new Path(destRootPathStr );
+//                    FilenameUtils.getFullPathNoEndSeparator(compressSrcFilePath.toString().replaceAll(srcFile.getRootPathStr(), "")));
+//                    FilenameUtils.getFullPathNoEndSeparator(compressSrcFilePath.toString().replaceFirst(StringUtil.convertWildcardToRegex(srcFile.getRootPathStr()), "")));
+            log.info("{} : Source file path: {}, Uncompress directory : {}, Destination directory: {}", AppConst.PREFIX_LOG, compressSrcFilePath, uncompressDirPath, destDir);
+
+            //...Move file one by one
+            Collection<File> files = FileUtils.listFiles(new File(uncompressDirPath), TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
+            log.info("{} : Total {} files in compress file({})", AppConst.PREFIX_LOG, files.size(), uncompressDirPath);
+            for(File file : files){
+                LocalDateTime subStartTime = LocalDateTime.now();
+                String absoluteFilePath = file.getAbsolutePath();
+//                String relativeFilePath = absoluteFilePath.replaceAll(uncompressDirPath, "");
+                log.debug("{} absolute file path = {}, uncompress dir path = {}", AppConst.PREFIX_LOG, absoluteFilePath, uncompressDirPath);
+//                log.debug("{} absolute file path = {}, uncompress dir path = {}, relative file path = {}", AppConst.PREFIX_LOG, absoluteFilePath, uncompressDirPath, relativeFilePath);
+                ReconcileInfoDTO reconcileInfo = ReconcileInfoDTO.builder()
+                        .createDate(DateUtil.convertToString(LocalDateTime.now(), DateUtil.YYYYMMDDHHmmssSSS))
+                        .fileSizeInBytes(file.length())
+                        .srcAbsoluteFilePathStr(adapter.resolvePath(adapter.getSourceFileSystem(), compressSrcFilePath))
+                        .build();
+                reconcileInfos.add(reconcileInfo);
+                try {
+//                    Path destFilePath = new Path(destDir
+//                            + (isCreateTargetZipBaseDir? "/"+FilenameUtils.getBaseName(compressSrcFileName) : "")
+//                            + relativeFilePath);
+                    Path destFilePath = new Path(destDir
+                            + (isCreateTargetZipBaseDir? "/" + FilenameUtils.getBaseName(compressSrcFileName) : "")
+                            + "/" + FilenameUtils.getName(file.getAbsolutePath()));
+                    Path destFilePathProcessing = new Path(destFilePath.toString() + AppConst.PROCESSING_SUFFIX);
+                    if(!overwrite && adapter.exists(adapter.getDestFileSystem(), destFilePath.toString())){
+                        throw new DuplicateException(String.format("Target file %s already exists", destFilePath.toString()));
+                    }
+                    adapter.copyFromLocalFile(false, overwrite, new Path("file://"+absoluteFilePath), destFilePathProcessing);
+                    FileUtil.rename(adapter.getDestFileSystem()
+                            , destFilePathProcessing
+                            , destFilePath
+                            , overwrite? Options.Rename.OVERWRITE : Options.Rename.NONE);
+                    reconcileInfo.setDestAbsoluteFilePathStr(adapter.getDestFileSystem().resolvePath(destFilePath).toString());
+                    reconcileInfo.setStatus(FileStatus.SUCCESS.name());
+                }catch(Exception e){
+                    isMoveSuccess = false;
+                    String errorNo = ErrorUtil.generateErrorNo(appConfig.getAppId());
+                    log.error("{} !!!ErrorNo({}) cannot copy compress file '{}' to destination", AppConst.PREFIX_LOG, errorNo, file.getAbsolutePath(), e);
+                    reconcileInfo.setStatus(FileStatus.FAILED.name());
+                    reconcileInfo.setErrorNo(errorNo);
+                    reconcileInfo.setErrMsg(ErrorUtil.getErrorMessage(e));
+                }finally{
+                    reconcileInfo.setRetry(retry);
+                    reconcileInfo.setProcessTimeInMilliseconds(Duration.between(subStartTime, LocalDateTime.now()).toMillis());
+                }
+            }
+//            transferHistory.setDestination(destDir.toString() + "/" + compressSrcFileName);
+            transferHistory.setDestination(destDir.toString()
+                    + (isCreateTargetZipBaseDir? "/"+FilenameUtils.getBaseName(compressSrcFileName) : "")
+                    + "/" + compressSrcFileName);
+            transferHistory.setStatus(isMoveSuccess? FileStatus.SUCCESS.name() : FileStatus.FAILED.name());
+            if(isMoveSuccess){
+                transferHistory.setErrorNo(null);
+            }else{
+                String errorNo = ErrorUtil.generateErrorNo(appConfig.getAppId()) + "<FILES IN COMPRESS FILE>";
+                log.error("{} !!!ErrorNo({}) : Some files in compress file cannot move '{}'", AppConst.PREFIX_LOG, errorNo, transferHistory.getFilePath());
+                transferHistory.setErrorNo(errorNo);
+            }
+
+        } catch (TaskCancelledException e) {
+            String errorNo = ErrorUtil.generateErrorNo(appConfig.getAppId());
+            log.error("{} !!!ErrorNo({}) : Task cancelled '{}'", AppConst.PREFIX_LOG, errorNo, transferHistory.getFilePath(), e);
+            transferHistory.setErrorNo(errorNo);
+            transferHistory.setStatus(FileStatus.FAILED.name());
+            reconcileInfos.add(ReconcileInfoDTO.builder()
+                    .createDate(DateUtil.convertToString(LocalDateTime.now(), DateUtil.YYYYMMDDHHmmssSSS))
+                    .fileSizeInBytes(srcFile.getSize())
+                    .srcAbsoluteFilePathStr(srcFile.getAbsoluteFilePath())
+                    .errorNo(errorNo)
+                    .errMsg(ErrorUtil.getErrorMessage(e))
+                    .retry(retry)
+                    .status(FileStatus.FAILED.name())
+                    .build());
+            throw e;
+        }catch(Exception e) {       //...Error out of loop files
+            handleFileSizeMisMatchException(adapter.getDestFileSystem(), e);
+            String errorNo = ErrorUtil.generateErrorNo(appConfig.getAppId());
+            log.error("{} !!!ErrorNo({}) cannot copy or extract compress file '{}' to local", AppConst.PREFIX_LOG, errorNo, srcFile.getRelativeFilePath(), e);
+            transferHistory.setErrorNo(errorNo);
+            transferHistory.setStatus(FileStatus.FAILED.name());
+            reconcileInfos.add(ReconcileInfoDTO.builder()
+                    .createDate(DateUtil.convertToString(LocalDateTime.now(), DateUtil.YYYYMMDDHHmmssSSS))
+                    .fileSizeInBytes(srcFile.getSize())
+                    .srcAbsoluteFilePathStr(srcFile.getAbsoluteFilePath())
+                    .errorNo(errorNo)
+                    .errMsg(ErrorUtil.getErrorMessage(e))
+                    .retry(retry)
+                    .status(FileStatus.FAILED.name())
+                    .build());
+        }finally{
+            transferHistory.setProcessTime(Duration.between(startTime, LocalDateTime.now()).toMillis());
+            //... Delete temporary compress and uncompress directory
+            FileUtils.deleteQuietly(new File(parentDecompressDir));
+            if(isMoveSuccess && isDeleteSrc) {           //...Waiting for asking : when some file in compress cannot move
+                adapter.delete(adapter.getSourceFileSystem(), srcFile.getRelativeFilePath());
+            }
+        }
+    }
+
+    private void validateFileChanged(FileInfoDTO srcFile, Map<String, Long> modifiedCheckerMap, boolean isCheckFileSize, FileSystemAdapter adapter) throws Exception {
+        if(isCheckFileSize){
+            Long currentFileSize = adapter.getFileSize(adapter.getSourceFileSystem(), srcFile.getRelativeFilePath());
+            log.debug("{} Compare File Size for {}: current {}, old {}",
+                    AppConst.PREFIX_LOG, srcFile.getRelativeFilePath(), currentFileSize, modifiedCheckerMap.get(srcFile.getRelativeFilePath()));
+            if (currentFileSize > modifiedCheckerMap.get(srcFile.getRelativeFilePath())) {
+                throw new Exception("File has changed.");
+            }
+        }else {
+            Long currentModifiedTime = adapter.getModifiedTime(adapter.getSourceFileSystem(), srcFile.getRelativeFilePath());
+            log.debug("{} Compare MOD TIME for {}: current {}, old {}",
+                    AppConst.PREFIX_LOG, srcFile.getRelativeFilePath(), currentModifiedTime, modifiedCheckerMap.get(srcFile.getRelativeFilePath()));
+            if (currentModifiedTime > modifiedCheckerMap.get(srcFile.getRelativeFilePath())) {
+                throw new Exception("File has changed.");
+            }
+        }
+    }
+
+    private void processRegularFile(List<ReconcileInfoDTO> reconcileInfos, TransferHistory transferHistory
+            , String destRootPathStr, boolean isDeleteSrc, FileInfoDTO srcFile
+            , Map<String, Long> modifiedCheckerMap, Integer retry, boolean checkFileSize
+            , boolean overwrite, AtomicBoolean cancellationFlag, FileSystemAdapter adapter) throws IOException {
+        boolean isSuccess = false;
+        LocalDateTime startTime = LocalDateTime.now();
+        long srcFileSize = srcFile.getSize();
+        ReconcileInfoDTO reconcileInfo = ReconcileInfoDTO.builder()
+                .createDate(DateUtil.convertToString(LocalDateTime.now(), DateUtil.YYYYMMDDHHmmssSSS))
+                .fileSizeInBytes(srcFileSize)
+                .srcAbsoluteFilePathStr(srcFile.getAbsoluteFilePath())
+                .build();
+        reconcileInfos.add(reconcileInfo);
+        try {
+            if (cancellationFlag.get() || Thread.currentThread().isInterrupted()) {
+                log.info("{} Task cancelled before processing regular file", AppConst.PREFIX_LOG);
+                throw new TaskCancelledException("Task was cancelled or interrupted before processing regular file");
+            }
+            validateFileChanged(srcFile, modifiedCheckerMap, checkFileSize, adapter);
+            String destinationFilePath = destRootPathStr + "/" + srcFile.getFileName();
+            String destinationFilePathProcessing = destRootPathStr + "/" + srcFile.getFileName() + AppConst.PROCESSING_SUFFIX;
+            String srcFilePath = FileSystemUtil.getSchemeAndAuthority(srcFile.getRootPathStr()) + srcFile.getRelativeFilePath();
+//            String destinationFilePath = destRootPathStr +
+//                    srcFile.getRelativeFilePath().replaceFirst(StringUtil.convertWildcardToRegex(srcFile.getRootPathStr()), "");
+//
+//            String destinationFilePathProcessing = destRootPathStr +
+//                    srcFile.getRelativeFilePath().replaceFirst(StringUtil.convertWildcardToRegex(srcFile.getRootPathStr()), "") + AppConst.PROCESSING_SUFFIX;
+//
+//            String srcFilePath = srcFile.getRelativeFilePath();
+
+//            long srcFileSize = adapter.getFileSize(adapter.getSourceFileSystem(), srcFilePath);
+            log.debug(">>> Exists {}: {}", destinationFilePath, adapter.exists(adapter.getDestFileSystem(), destinationFilePath));
+            if(!overwrite && adapter.exists(adapter.getDestFileSystem(), destinationFilePath)){
+                throw new DuplicateException(String.format("Target file %s already exists", destinationFilePath));
+            }
+            if (cancellationFlag.get() || Thread.currentThread().isInterrupted()) {
+                log.info("{} Task cancelled before copying regular file", AppConst.PREFIX_LOG);
+                throw new TaskCancelledException("Task was cancelled or interrupted before copying regular file");
+            }
+            adapter.copy(adapter.getDestFileSystem(), srcFilePath, destinationFilePathProcessing, isDeleteSrc, overwrite);
+            long destinationFileSize = adapter.getDestFileSystem().getFileStatus(new Path(destinationFilePathProcessing)).getLen();
+            if(srcFileSize != destinationFileSize){
+                throw new FileSizeMisMatchException(new Path(destinationFilePathProcessing)
+                        , String.format("Source and target file sizes do not match. "
+                        + "Source: %s bytes, Target: %s bytes", srcFileSize+"", destinationFileSize+""));
+            }
+            FileUtil.rename(adapter.getDestFileSystem()
+                    , new Path(destinationFilePathProcessing)
+                    , new Path(destinationFilePath)
+                    , overwrite? Options.Rename.OVERWRITE : Options.Rename.NONE);
+            reconcileInfo.setDestAbsoluteFilePathStr(adapter.getDestFileSystem().resolvePath(new Path(destinationFilePath)).toString());
+            transferHistory.setDestination(destinationFilePath.toString());
+            transferHistory.setErrorNo(null);
+            isSuccess = true;
+        } catch (TaskCancelledException e) {
+            String errorNo = ErrorUtil.generateErrorNo(appConfig.getAppId());
+            log.error("{} !!!ErrorNo({}) : Task cancelled '{}'", AppConst.PREFIX_LOG, errorNo, transferHistory.getFilePath(), e);
+            transferHistory.setErrorNo(errorNo);
+            reconcileInfo.setErrorNo(errorNo);
+            reconcileInfo.setErrMsg(e.getMessage() + "(" + ErrorUtil.getCauseClassInfo(e.getStackTrace()) + ")");
+            throw e;
+        } catch(Exception e){
+            handleFileSizeMisMatchException(adapter.getDestFileSystem(), e);
+            String errorNo = ErrorUtil.generateErrorNo(appConfig.getAppId());
+            log.error("{} !!!ErrorNo({}) : Cannot move/copy file '{}'", AppConst.PREFIX_LOG, errorNo, transferHistory.getFilePath(), e);
+            transferHistory.setErrorNo(errorNo);
+            reconcileInfo.setErrorNo(errorNo);
+            reconcileInfo.setErrMsg(e.getMessage() + "(" + ErrorUtil.getCauseClassInfo(e.getStackTrace()) + ")");
+        }finally {
+            transferHistory.setProcessTime(Duration.between(startTime, LocalDateTime.now()).toMillis());
+            transferHistory.setStatus(isSuccess ? FileStatus.SUCCESS.name() :FileStatus.FAILED.name());
+            reconcileInfo.setStatus(isSuccess ? FileStatus.SUCCESS.name() :FileStatus.FAILED.name());
+            reconcileInfo.setRetry(retry);
+            if(isSuccess && isDeleteSrc) {
+                adapter.delete(adapter.getSourceFileSystem(), srcFile.getRelativeFilePath());
+            }
+        }
+    }
+
+    private void markTransferHistoriesAsFailed(List<TransferHistory> transferHistories, String errorNo) {
+        for (TransferHistory transferHistory : transferHistories) {
+            if (!FileStatus.SUCCESS.name().equals(transferHistory.getStatus())) {
+                transferHistory.setStatus(FileStatus.FAILED.name());
+                if(StringUtils.isEmpty(transferHistory.getErrorNo())){
+                    transferHistory.setErrorNo(errorNo);
+                }
+            }
+        }
+    }
+
+    private void saveFinish(List<TransferHistory> transferHistories) {
+        for (TransferHistory transferHistory : transferHistories) {
+            transferHistory.setModifiedBy(appConfig.getAppId());
+            transferHistory.setModifiedDate(DateUtil.getCurrentDateWithTime());
+            transferHistoryService.save(transferHistory);
+        }
+    }
+
+    private Map<String, Long> keepModifiedTime(List<TransferHistory> transferHistories, FileSystemAdapter adapter) throws IOException {
+        Map<String, Long> modTimeInMilliSecondsMap = new HashMap<>();
+        for(TransferHistory transferHistory : transferHistories){
+            String sourceFilePath = FileInfoUtil.extractRelativeSourcePath(transferHistory.getFilePath());
+            Long modificationTime = adapter.getModifiedTime(adapter.getSourceFileSystem(), sourceFilePath);
+            modTimeInMilliSecondsMap.put(sourceFilePath.toString(), modificationTime);
+            log.debug("{} sourceFilePath = {}, modTime = {}", AppConst.PREFIX_LOG, sourceFilePath.toString(), modificationTime);
+        }
+        return modTimeInMilliSecondsMap;
+    }
+
+    private Map<String, Long> keepFileSize(List<TransferHistory> transferHistories, FileSystemAdapter adapter) throws IOException {
+        Map<String, Long> fileSizeMap = new HashMap<>();
+        for(TransferHistory transferHistory : transferHistories){
+            String sourceFilePath = FileInfoUtil.extractRelativeSourcePath(transferHistory.getFilePath());
+            Long fileSize = adapter.getFileSize(adapter.getSourceFileSystem(), sourceFilePath);
+            fileSizeMap.put(sourceFilePath.toString(), fileSize);
+            log.debug("{} sourceFilePath = {}, file size = {}", AppConst.PREFIX_LOG, sourceFilePath.toString(), fileSize);
+        }
+        return fileSizeMap;
+    }
+
+    public Map<String, String> stopMoveFiles(List<StopTaskRequestWrapper> stopTaskRequestWrappers) {
+        Map<String, String> taskStatusSummary = new HashMap<>();
+        if (stopTaskRequestWrappers == null) {
+            log.info("{}[Stop Transfer] No tasks provided to stop.", AppConst.PREFIX_LOG);
+            return taskStatusSummary;
+        }
+        for (StopTaskRequestWrapper stopTaskRequestWrapper : stopTaskRequestWrappers) {
+            String keyPrefix = stopTaskRequestWrapper.getClientId() + "_" + stopTaskRequestWrapper.getTaskId();
+            List<String> matchedKeys = runningTasks.keySet().stream()
+                    .filter(k -> k.startsWith(keyPrefix))
+                    .collect(Collectors.toList());
+
+            if (matchedKeys.isEmpty()) {
+                log.info("{}[Stop Transfer] No running task found for key prefix {}", AppConst.PREFIX_LOG, keyPrefix);
+                continue;
+            }
+
+            for (String matchedKey : matchedKeys) {
+                synchronized (runningTasks) {
+                    AtomicBoolean cancellationFlag = cancellationFlags.get(matchedKey);
+                    if (cancellationFlag != null) {
+                        cancellationFlag.set(true);
+                        log.info("{}[Stop Transfer] Cancellation flag set for task {}", AppConst.PREFIX_LOG, matchedKey);
+                    }
+                    runningTasks.computeIfPresent(matchedKey, (key, future) -> {
+                        future.cancel(true); // Send interrupt signal to thread
+                        try {
+                            future.get(TASK_CANCELLATION_TIMEOUT_SECONDS, TimeUnit.SECONDS); // Wait for cancellation
+                            taskStatusSummary.put(matchedKey, "COMPLETED");
+                            log.info("{}[Stop Transfer] Task {} completed", AppConst.PREFIX_LOG, matchedKey);
+                        } catch (CancellationException e) {
+                            taskStatusSummary.put(matchedKey, "CANCELLED");
+                            log.info("{}[Stop Transfer] Task {} was cancelled", AppConst.PREFIX_LOG, matchedKey);
+                        } catch (TimeoutException e) {
+                            log.error("{}[Stop Transfer] Timeout! Task {} is still running after 5 seconds.", AppConst.PREFIX_LOG, matchedKey);
+                            taskStatusSummary.put(matchedKey, "TIMEOUT");
+                        } catch (InterruptedException e) {
+                            log.info("{}[Stop Transfer] Task {} was interrupted, interrupt status: {}", AppConst.PREFIX_LOG, matchedKey, Thread.currentThread().isInterrupted());
+                            taskStatusSummary.put(matchedKey, "INTERRUPTED");
+                            Thread.currentThread().interrupt(); // Restore interrupt status
+                        } catch (ExecutionException e) {
+                            log.info("{}[Stop Transfer] Task {} failed: {}", AppConst.PREFIX_LOG, matchedKey, e.getCause().getMessage());
+                            taskStatusSummary.put(matchedKey, "FAILED");
+                        }
+                        return null;
+                    });
+                    cancellationFlags.remove(matchedKey);
+                }
+            }
+        }
+        log.info("{}[Stop Transfer] Summary: {}", AppConst.PREFIX_LOG, taskStatusSummary);
+        return taskStatusSummary;
+    }
+
+    @Scheduled(fixedDelay = CLEANUP_INTERVAL_MS) // Every 5 minutes
+    public void cleanupCompletedTasks() {
+        synchronized (runningTasks) {
+            Iterator<Map.Entry<String, CompletableFuture<Void>>> iterator = runningTasks.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, CompletableFuture<Void>> entry = iterator.next();
+                CompletableFuture<Void> future = entry.getValue();
+
+                if (future.isDone()) {
+                    String taskKey = entry.getKey();
+                    iterator.remove();
+                    cancellationFlags.remove(taskKey);
+                    log.trace("{} Cleaned up completed task: {}", AppConst.PREFIX_LOG, taskKey);
+                }
+            }
+        }
+    }
+}

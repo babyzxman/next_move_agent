@@ -1,0 +1,97 @@
+server:
+  port: 8082
+  ssl:
+    key-store: /Users/a007626/IdeaProjects/beg-move-file-agent/shared/src/main/resources/eureka-client.p12
+    key-store-password: 'l;ylfu=k;F]d1'
+    key-store-type: PKCS12
+    key-alias: client
+    trust-store: /Users/a007626/IdeaProjects/beg-move-file-agent/shared/src/main/resources/client-truststore.jks
+    trust-store-password: 'l;ylfu=k;F]d1'
+eureka:
+  client:
+    tls:
+      enabled: true
+      key-store: file:/Users/a007626/IdeaProjects/beg-move-file-agent/shared/src/main/resources/eureka-client.p12
+      key-store-type: PKCS12
+      key-store-password: 'l;ylfu=k;F]d1'
+      key-password: 'l;ylfu=k;F]d1'
+      trust-store: file:/Users/a007626/IdeaProjects/beg-move-file-agent/shared/src/main/resources/client-truststore.jks
+      trust-store-type: JKS
+      trust-store-password: 'l;ylfu=k;F]d1'
+    service-url:
+      defaultZone: https://127.0.0.1:8761/eureka/
+spring:
+  application:
+    name: next-move-client-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/next_move
+    username: root
+    password:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      minimum-idle: 5  # Minimum number of idle connections that HikariCP tries to maintain in the pool. Default is 10.
+      maximum-pool-size: 20  # Maximum number of connections that HikariCP will keep in the pool, including both idle and in-use connections. Default is 10.
+      idle-timeout: 30000  # Maximum amount of time (in milliseconds) that a connection is allowed to sit idle in the pool. Default is 600000 (10 minutes).
+      max-lifetime: 1800000  # Maximum lifetime (in milliseconds) of a connection in the pool. Connections older than this are closed and removed from the pool. Default is 1800000 (30 minutes).
+      connection-timeout: 30000  # Maximum number of milliseconds that a client will wait for a connection from the pool. Default is 30000 (30 seconds).
+      pool-name: HikariCP  # User-defined name for the connection pool for logging and JMX management purposes.
+      auto-commit: true  # Controls the default auto-commit behavior of connections returned from the pool. Default is true.
+      leak-detection-threshold: 2000  # Amount of time (in milliseconds) a connection can be out of the pool before a message is logged indicating a possible connection leak. Default is 0 (disabled).
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+  cloud:
+    loadbalancer:
+      ribbon:
+        NFLoadBalancerRuleClassName: com.netflix.loadbalancer.BestAvailableRule
+  quartz:
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: always  #...never
+    threadPool:
+      class: org.quartz.threadPool.ExecutorThreadPool
+      threadCount: 20
+      priority: 5
+      jobStore:
+        misfireThreshold: 60000  # 1 minute misfire tolerance
+        concurrentFireAndRun: false  # Disable concurrent execution
+    properties:
+      org:
+        quartz:
+          jobStore:
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            tablePrefix: QRTZ_
+app:
+  id: C001
+  scheduler:
+    retention:
+      enabled : false
+      keep-days: 2
+      cron: 0 0 0 ? * *      # Seconds | Minutes | Hours | Day of Month | Month | Day of Week
+client:
+  url-scheme: https
+const:
+  pattern-variable:
+    current-date : current_date
+  path:
+    config:
+      license: /Users/a007626/IdeaProjects/beg-move-file-agent/license/src/main/resources/license_off.lic
+      hadoop-core-site: classpath:/core-site.xml
+      task: /Users/a007626/IdeaProjects/beg-move-file-agent/next-move-client-service/src/main/resources
+#      task: /Users/anucha.r/MyWork/research/next-move-agent/next-move-client-service/src/main/resources/task-configure-none-control.yml
+logging:
+  config: file:/Users/a007626/IdeaProjects/beg-move-file-agent/next-move-client-service/src/main/resources/logback.xml
+  level:
+    org:
+      springframework:
+        boot:
+          context:
+            logging: DEBUG
+#  level:
+#    org.springframework.cloud.netflix.eureka: DEBUG
+#    org.springframework.web.client: DEBUG
+
