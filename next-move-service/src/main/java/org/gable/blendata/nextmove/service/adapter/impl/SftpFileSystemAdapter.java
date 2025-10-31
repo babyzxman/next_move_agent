@@ -12,7 +12,6 @@ import org.gable.blendata.nextmove.shared.dto.FileInfoDTO;
 import org.gable.blendata.nextmove.shared.util.FileInfoUtil;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -156,11 +155,17 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
         Path destPath = Paths.get(destFilePath);
         Files.createDirectories(destPath.getParent());
 
-        try (java.io.InputStream sftpStream = sftpClient.read(srcFilePath, 64 * 1024, EnumSet.of(OpenMode.Read));
-             OutputStream outputStream = Files.newOutputStream(destPath)) {
+        try (SftpClient.CloseableHandle handle = sftpClient.open(srcFilePath, OpenMode.Read);
+             java.io.OutputStream outputStream = Files.newOutputStream(destPath)) {
 
-            byte[] buffer = new byte[64 * 1024];
-            IOUtils.copyLarge(sftpStream, outputStream, buffer);
+            byte[] buffer = new byte[32 * 1024];
+            long offset = 0;
+            int bytesRead;
+
+            while ((bytesRead = sftpClient.read(handle, offset, buffer, 0, buffer.length)) > 0) {
+                outputStream.write(buffer, 0, bytesRead);
+                offset += bytesRead;
+            }
         }
     }
 
