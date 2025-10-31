@@ -25,6 +25,7 @@ import java.util.EnumSet;
 public class SftpFileSystemAdapter implements FileSystemAdapter {
 
     private static final int COPY_BUFFER_SIZE = 8 * 1024 * 1024; // 8 MiB blocks to reduce round trips
+    private static final int LOCAL_COPY_BUFFER_SIZE = 512 * 1024;
 
     private final SftpClient sftpClient;
     private final FileSystem destFileSystem;
@@ -158,7 +159,7 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
         try (SftpClient.CloseableHandle handle = sftpClient.open(srcFilePath, OpenMode.Read);
              java.io.OutputStream outputStream = Files.newOutputStream(destPath)) {
 
-            byte[] buffer = new byte[32 * 1024];
+            byte[] buffer = new byte[LOCAL_COPY_BUFFER_SIZE];
             long offset = 0;
             int bytesRead;
 
