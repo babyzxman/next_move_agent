@@ -1,10 +1,12 @@
 package org.gable.blendata.nextmove.service.adapter.impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.sshd.sftp.client.SftpClient;
+import org.apache.sshd.sftp.client.SftpClient.OpenMode;
 import org.gable.blendata.nextmove.service.adapter.FileSystemAdapter;
 import org.gable.blendata.nextmove.shared.dto.FileInfoDTO;
 import org.gable.blendata.nextmove.shared.util.FileInfoUtil;
@@ -14,6 +16,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.EnumSet;
 
 /**
  * Adapter for SFTP file system operations.
@@ -22,7 +25,7 @@ import java.nio.file.Paths;
 @Slf4j
 public class SftpFileSystemAdapter implements FileSystemAdapter {
 
-    private static final int COPY_BUFFER_SIZE = 4 * 1024 * 1024; // 4 MiB blocks to reduce round trips
+    private static final int COPY_BUFFER_SIZE = 8 * 1024 * 1024; // 8 MiB blocks to reduce round trips
 
     private final SftpClient sftpClient;
     private final FileSystem destFileSystem;
@@ -86,39 +89,17 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
             destFileSystem.delete(destPath, false);
         }
 
-        try (SftpClient.CloseableHandle handle = sftpClient.open(srcFilePath, SftpClient.OpenMode.Read);
+        try (java.io.InputStream sftpStream = sftpClient.read(srcFilePath, COPY_BUFFER_SIZE, EnumSet.of(OpenMode.Read));
              FSDataOutputStream hdfsOutputStream = destFileSystem.create(destPath, true)) {
 
-            log.info("hadoop file = {}",destFileSystem.getConf());
-            Configuration c = destFileSystem.getConf();
-            log.info("fast.upload=" + c.get("fs.s3a.fast.upload"));
-            log.info("fast.upload.buffer=" + c.get("fs.s3a.fast.upload.buffer"));
-            log.info("active.blocks=" + c.get("fs.s3a.fast.upload.active.blocks"));
-            log.info("multipart.size=" + c.get("fs.s3a.multipart.size"));
-            log.info("conn.max=" + c.get("fs.s3a.connection.maximum"));
-            log.info("threads.max=" + c.get("fs.s3a.threads.max"));
-            log.info("current hadoop file = {}",this.destFileSystem.getConf());
-            Configuration cn = this.destFileSystem.getConf();
-            log.info("fast.upload=" + cn.get("fs.s3a.fast.upload"));
-            log.info("fast.upload.buffer=" + cn.get("fs.s3a.fast.upload.buffer"));
-            log.info("active.blocks=" + cn.get("fs.s3a.fast.upload.active.blocks"));
-            log.info("multipart.size=" + cn.get("fs.s3a.multipart.size"));
-            log.info("conn.max=" + cn.get("fs.s3a.connection.maximum"));
-            log.info("threads.max=" + cn.get("fs.s3a.threads.max"));
-            log.info("current hadoop file = {}",this.destFileSystem.getConf());
-            // Stream copy with buffer
+            Configuration configuration = destFileSystem.getConf();
+            log.debug("Using Hadoop configuration {} for destination {}", configuration, destFilePath);
+
+            // Stream copy with shared buffer to minimize JNI transitions
             byte[] buffer = new byte[COPY_BUFFER_SIZE];
-            int bytesRead;
-            long fileOffset = 0;
-            while ((bytesRead = sftpClient.read(handle, fileOffset, buffer, 0, buffer.length)) > 0) {
-                hdfsOutputStream.write(buffer, 0, bytesRead);
-                fileOffset += bytesRead;
-            }
+            IOUtils.copyLarge(sftpStream, hdfsOutputStream, buffer);
 
-            // Flush and sync
             hdfsOutputStream.hflush();
-
-
         } catch (Exception e) {
             throw new IOException("Error copying from SFTP to Hadoop", e);
         }
@@ -175,17 +156,11 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
         Path destPath = Paths.get(destFilePath);
         Files.createDirectories(destPath.getParent());
 
-        try (SftpClient.CloseableHandle handle = sftpClient.open(srcFilePath, SftpClient.OpenMode.Read);
+        try (java.io.InputStream sftpStream = sftpClient.read(srcFilePath, 64 * 1024, EnumSet.of(OpenMode.Read));
              OutputStream outputStream = Files.newOutputStream(destPath)) {
 
-            byte[] buffer = new byte[32768]; // 32KB buffer
-            long offset = 0;
-            int bytesRead;
-
-            while ((bytesRead = sftpClient.read(handle, offset, buffer, 0, buffer.length)) > 0) {
-                outputStream.write(buffer, 0, bytesRead);
-                offset += bytesRead;
-            }
+            byte[] buffer = new byte[64 * 1024];
+            IOUtils.copyLarge(sftpStream, outputStream, buffer);
         }
     }
 
