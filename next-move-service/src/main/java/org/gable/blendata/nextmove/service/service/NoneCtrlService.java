@@ -8,8 +8,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.FileUtil;
-import org.apache.hadoop.fs.Options;
 import org.apache.hadoop.fs.Path;
 import org.gable.blendata.nextmove.service.adapter.FileSystemAdapter;
 import org.gable.blendata.nextmove.service.config.AppConfig;
@@ -313,15 +311,16 @@ public class NoneCtrlService extends MoveService{
                     Path destFilePath = new Path(destDir
                             + (isCreateTargetZipBaseDir? "/" + FilenameUtils.getBaseName(compressSrcFileName) : "")
                             + "/" + FilenameUtils.getName(file.getAbsolutePath()));
-                    Path destFilePathProcessing = new Path(destFilePath.toString() + AppConst.PROCESSING_SUFFIX);
                     if(!overwrite && adapter.exists(adapter.getDestFileSystem(), destFilePath.toString())){
                         throw new DuplicateException(String.format("Target file %s already exists", destFilePath.toString()));
                     }
-                    adapter.copyFromLocalFile(false, overwrite, new Path("file://"+absoluteFilePath), destFilePathProcessing);
-                    FileUtil.rename(adapter.getDestFileSystem()
-                            , destFilePathProcessing
-                            , destFilePath
-                            , overwrite? Options.Rename.OVERWRITE : Options.Rename.NONE);
+                    adapter.copyFromLocalFile(false, overwrite, new Path("file://"+absoluteFilePath), destFilePath);
+                    long destinationFileSize = adapter.getDestFileSystem().getFileStatus(destFilePath).getLen();
+                    if(file.length() != destinationFileSize){
+                        throw new FileSizeMisMatchException(destFilePath
+                                , String.format("Source and target file sizes do not match. "
+                                + "Source: %s bytes, Target: %s bytes", file.length()+"", destinationFileSize+""));
+                    }
                     reconcileInfo.setDestAbsoluteFilePathStr(adapter.getDestFileSystem().resolvePath(destFilePath).toString());
                     reconcileInfo.setStatus(FileStatus.SUCCESS.name());
                 }catch(Exception e){
@@ -427,17 +426,7 @@ public class NoneCtrlService extends MoveService{
             }
             validateFileChanged(srcFile, modifiedCheckerMap, checkFileSize, adapter);
             String destinationFilePath = destRootPathStr + "/" + srcFile.getFileName();
-            String destinationFilePathProcessing = destRootPathStr + "/" + srcFile.getFileName() + AppConst.PROCESSING_SUFFIX;
             String srcFilePath = FileSystemUtil.getSchemeAndAuthority(srcFile.getRootPathStr()) + srcFile.getRelativeFilePath();
-//            String destinationFilePath = destRootPathStr +
-//                    srcFile.getRelativeFilePath().replaceFirst(StringUtil.convertWildcardToRegex(srcFile.getRootPathStr()), "");
-//
-//            String destinationFilePathProcessing = destRootPathStr +
-//                    srcFile.getRelativeFilePath().replaceFirst(StringUtil.convertWildcardToRegex(srcFile.getRootPathStr()), "") + AppConst.PROCESSING_SUFFIX;
-//
-//            String srcFilePath = srcFile.getRelativeFilePath();
-
-//            long srcFileSize = adapter.getFileSize(adapter.getSourceFileSystem(), srcFilePath);
             log.debug(">>> Exists {}: {}", destinationFilePath, adapter.exists(adapter.getDestFileSystem(), destinationFilePath));
             if(!overwrite && adapter.exists(adapter.getDestFileSystem(), destinationFilePath)){
                 throw new DuplicateException(String.format("Target file %s already exists", destinationFilePath));
@@ -447,17 +436,6 @@ public class NoneCtrlService extends MoveService{
                 throw new TaskCancelledException("Task was cancelled or interrupted before copying regular file");
             }
             adapter.copy(adapter.getDestFileSystem(), srcFilePath, destinationFilePath, isDeleteSrc, overwrite);
-            log.info("skip renamed file");
-//            long destinationFileSize = adapter.getDestFileSystem().getFileStatus(new Path(destinationFilePathProcessing)).getLen();
-//            if(srcFileSize != destinationFileSize){
-//                throw new FileSizeMisMatchException(new Path(destinationFilePathProcessing)
-//                        , String.format("Source and target file sizes do not match. "
-//                        + "Source: %s bytes, Target: %s bytes", srcFileSize+"", destinationFileSize+""));
-//            }
-//            FileUtil.rename(adapter.getDestFileSystem()
-//                    , new Path(destinationFilePathProcessing)
-//                    , new Path(destinationFilePath)
-//                    , overwrite? Options.Rename.OVERWRITE : Options.Rename.NONE);
             reconcileInfo.setDestAbsoluteFilePathStr(adapter.getDestFileSystem().resolvePath(new Path(destinationFilePath)).toString());
             transferHistory.setDestination(destinationFilePath.toString());
             transferHistory.setErrorNo(null);
