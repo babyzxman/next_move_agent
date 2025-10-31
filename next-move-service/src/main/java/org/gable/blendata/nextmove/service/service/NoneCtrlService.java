@@ -8,8 +8,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.FileUtil;
-import org.apache.hadoop.fs.Options;
 import org.apache.hadoop.fs.Path;
 import org.gable.blendata.nextmove.service.adapter.FileSystemAdapter;
 import org.gable.blendata.nextmove.service.config.AppConfig;
@@ -105,12 +103,20 @@ public class NoneCtrlService extends MoveService{
 
                 adapter = connectionManager.createConnection();
                 transferHistories = transferHistoryService.findByIdIn(transferHistoryIds);
+                long metadataStart = System.nanoTime();
                 Map<String, Long> modifiedCheckerMap = new HashMap<>();
                 if(transferRequestWrapper.isCheckFileSize()){
                     modifiedCheckerMap = keepFileSize(transferHistories, adapter);
                 }else {
                     modifiedCheckerMap = keepModifiedTime(transferHistories, adapter);
                 }
+                long metadataDurationMillis = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - metadataStart);
+                log.info("{} Task {} collected source metadata for {} files in {} ms (checkFileSize={})",
+                        AppConst.PREFIX_LOG,
+                        taskKey,
+                        transferHistories.size(),
+                        metadataDurationMillis,
+                        transferRequestWrapper.isCheckFileSize());
                 if (cancellationFlag.get() || Thread.currentThread().isInterrupted()) {
                     log.info("{} Task {} cancelled before sleep, interrupt status: {}", AppConst.PREFIX_LOG, taskKey, Thread.currentThread().isInterrupted());
                     throw new TaskCancelledException("Task was cancelled or interrupted before sleep");
@@ -119,7 +125,17 @@ public class NoneCtrlService extends MoveService{
                 //...Delay for checking files
 //                Thread.sleep(transferRequestWrapper.getCheckFileDelaySeconds()*1000);
                 try {
+                    long waitStart = System.nanoTime();
+                    log.info("{} Task {} waiting {} ms before transfer as configured by checkFileDelaySeconds",
+                            AppConst.PREFIX_LOG,
+                            taskKey,
+                            transferRequestWrapper.getCheckFileDelaySeconds() * 1000);
                     interruptibleSleep(transferRequestWrapper.getCheckFileDelaySeconds() * 1000, cancellationFlag, taskKey);
+                    long waitDurationMillis = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - waitStart);
+                    log.info("{} Task {} finished pre-transfer wait in {} ms",
+                            AppConst.PREFIX_LOG,
+                            taskKey,
+                            waitDurationMillis);
                 } catch (InterruptedException e) {
                     log.info("{} Task {} interrupted during sleep, interrupt status: {}", AppConst.PREFIX_LOG, taskKey, Thread.currentThread().isInterrupted());
                     Thread.currentThread().interrupt(); // คืนสถานะ interrupt
@@ -313,15 +329,16 @@ public class NoneCtrlService extends MoveService{
                     Path destFilePath = new Path(destDir
                             + (isCreateTargetZipBaseDir? "/" + FilenameUtils.getBaseName(compressSrcFileName) : "")
                             + "/" + FilenameUtils.getName(file.getAbsolutePath()));
-                    Path destFilePathProcessing = new Path(destFilePath.toString() + AppConst.PROCESSING_SUFFIX);
                     if(!overwrite && adapter.exists(adapter.getDestFileSystem(), destFilePath.toString())){
                         throw new DuplicateException(String.format("Target file %s already exists", destFilePath.toString()));
                     }
-                    adapter.copyFromLocalFile(false, overwrite, new Path("file://"+absoluteFilePath), destFilePathProcessing);
-                    FileUtil.rename(adapter.getDestFileSystem()
-                            , destFilePathProcessing
-                            , destFilePath
-                            , overwrite? Options.Rename.OVERWRITE : Options.Rename.NONE);
+                    adapter.copyFromLocalFile(false, overwrite, new Path("file://"+absoluteFilePath), destFilePath);
+                    long destinationFileSize = adapter.getDestFileSystem().getFileStatus(destFilePath).getLen();
+                    if(file.length() != destinationFileSize){
+                        throw new FileSizeMisMatchException(destFilePath
+                                , String.format("Source and target file sizes do not match. "
+                                + "Source: %s bytes, Target: %s bytes", file.length()+"", destinationFileSize+""));
+                    }
                     reconcileInfo.setDestAbsoluteFilePathStr(adapter.getDestFileSystem().resolvePath(destFilePath).toString());
                     reconcileInfo.setStatus(FileStatus.SUCCESS.name());
                 }catch(Exception e){
@@ -427,17 +444,7 @@ public class NoneCtrlService extends MoveService{
             }
             validateFileChanged(srcFile, modifiedCheckerMap, checkFileSize, adapter);
             String destinationFilePath = destRootPathStr + "/" + srcFile.getFileName();
-            String destinationFilePathProcessing = destRootPathStr + "/" + srcFile.getFileName() + AppConst.PROCESSING_SUFFIX;
             String srcFilePath = FileSystemUtil.getSchemeAndAuthority(srcFile.getRootPathStr()) + srcFile.getRelativeFilePath();
-//            String destinationFilePath = destRootPathStr +
-//                    srcFile.getRelativeFilePath().replaceFirst(StringUtil.convertWildcardToRegex(srcFile.getRootPathStr()), "");
-//
-//            String destinationFilePathProcessing = destRootPathStr +
-//                    srcFile.getRelativeFilePath().replaceFirst(StringUtil.convertWildcardToRegex(srcFile.getRootPathStr()), "") + AppConst.PROCESSING_SUFFIX;
-//
-//            String srcFilePath = srcFile.getRelativeFilePath();
-
-//            long srcFileSize = adapter.getFileSize(adapter.getSourceFileSystem(), srcFilePath);
             log.debug(">>> Exists {}: {}", destinationFilePath, adapter.exists(adapter.getDestFileSystem(), destinationFilePath));
             if(!overwrite && adapter.exists(adapter.getDestFileSystem(), destinationFilePath)){
                 throw new DuplicateException(String.format("Target file %s already exists", destinationFilePath));
@@ -446,18 +453,15 @@ public class NoneCtrlService extends MoveService{
                 log.info("{} Task cancelled before copying regular file", AppConst.PREFIX_LOG);
                 throw new TaskCancelledException("Task was cancelled or interrupted before copying regular file");
             }
+            long copyStart = System.nanoTime();
             adapter.copy(adapter.getDestFileSystem(), srcFilePath, destinationFilePath, isDeleteSrc, overwrite);
-            log.info("skip renamed file");
-//            long destinationFileSize = adapter.getDestFileSystem().getFileStatus(new Path(destinationFilePathProcessing)).getLen();
-//            if(srcFileSize != destinationFileSize){
-//                throw new FileSizeMisMatchException(new Path(destinationFilePathProcessing)
-//                        , String.format("Source and target file sizes do not match. "
-//                        + "Source: %s bytes, Target: %s bytes", srcFileSize+"", destinationFileSize+""));
-//            }
-//            FileUtil.rename(adapter.getDestFileSystem()
-//                    , new Path(destinationFilePathProcessing)
-//                    , new Path(destinationFilePath)
-//                    , overwrite? Options.Rename.OVERWRITE : Options.Rename.NONE);
+            long copyDurationMillis = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - copyStart);
+            log.info("{} Copied {} bytes from {} to {} in {} ms",
+                    AppConst.PREFIX_LOG,
+                    srcFileSize,
+                    srcFilePath,
+                    destinationFilePath,
+                    copyDurationMillis);
             reconcileInfo.setDestAbsoluteFilePathStr(adapter.getDestFileSystem().resolvePath(new Path(destinationFilePath)).toString());
             transferHistory.setDestination(destinationFilePath.toString());
             transferHistory.setErrorNo(null);

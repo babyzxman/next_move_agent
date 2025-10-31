@@ -61,8 +61,8 @@
 
     <property>
         <name>fs.s3a.fast.upload.buffer</name>
-        <value>disk</value>
-        <description>Buffer type: disk (recommended for large files), array, or bytebuffer</description>
+        <value>bytebuffer</value>
+        <description>Use direct buffers to stream uploads without spooling to disk</description>
     </property>
 
     <property>
@@ -79,13 +79,13 @@
 
     <!-- Threshold: เริ่ม multipart ที่ 128MB -->
     <property>
-        <n>fs.s3a.multipart.threshold</n>
+        <name>fs.s3a.multipart.threshold</name>
         <value>134217728</value>
     </property>
 
     <!-- Part Size: ปรับตามขนาดไฟล์ที่คาดว่าจะใหญ่ที่สุด -->
     <property>
-        <n>fs.s3a.multipart.size</n>
+        <name>fs.s3a.multipart.size</name>
         <value>536870912</value> <!-- 512MB สำหรับไฟล์ TB -->
     </property>
 
