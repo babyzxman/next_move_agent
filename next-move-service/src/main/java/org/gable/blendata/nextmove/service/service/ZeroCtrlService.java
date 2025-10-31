@@ -279,7 +279,7 @@ public class ZeroCtrlService extends MoveService{
                         throw new DuplicateException(String.format("Target file %s already exists", destFilePath.toString()));
                     }
                     adapter.copyFromLocalFile(false, overwrite, new Path("file://"+absoluteFilePath), destFilePath);
-                    long destinationFileSize = adapter.getDestFileSystem().getFileStatus(destFilePath).getLen();
+                    destinationFileSize = adapter.getDestFileSystem().getFileStatus(destFilePath).getLen();
                     if(file.length() != destinationFileSize){
                         throw new FileSizeMisMatchException(destFilePath
                                 , String.format("Source and target file sizes do not match. "
