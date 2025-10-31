@@ -4,10 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.sshd.client.SshClient;
 import org.apache.sshd.client.session.ClientSession;
+import org.apache.sshd.common.PropertyResolver;
 import org.apache.sshd.common.keyprovider.FileKeyPairProvider;
 import org.apache.sshd.core.CoreModuleProperties;
 import org.apache.sshd.sftp.client.SftpClient;
 import org.apache.sshd.sftp.client.SftpClientFactory;
+import org.apache.sshd.sftp.SftpModuleProperties;
 import org.gable.blendata.nextmove.service.adapter.FileSystemAdapter;
 import org.gable.blendata.nextmove.service.adapter.factory.FileSystemAdapterFactory;
 import org.gable.blendata.nextmove.service.config.SftpConnectionProperties;
@@ -27,10 +29,14 @@ public class SftpConnectionManager implements ConnectionManager {
     private final FileSystem destFileSystem;
     private final FileSystemAdapterFactory adapterFactory;
     private static final SshClient client;
+    private static final long SFTP_WINDOW_BYTES = 32L * 1024 * 1024;
+    private static final long SFTP_PACKET_BYTES = 512L * 1024;
+    private static final int SFTP_READ_PACKET_BYTES = 512 * 1024;
 
     // Static initializer to set up the SshClient once
     static {
         client = SshClient.setUpDefaultClient();
+        configureSftpFlowControl(client);
         client.start();
         // Optional: Register a shutdown hook to stop the client when the JVM exits
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -60,6 +66,7 @@ public class SftpConnectionManager implements ConnectionManager {
                         properties.getPort())
                 .verify(properties.getConnectionTimeout())
                 .getSession();
+        configureSftpFlowControl(session);
         if (properties.getPrivateKeyPath() != null) {
             Path keyPath = Paths.get(properties.getPrivateKeyPath());
             FileKeyPairProvider provider = new FileKeyPairProvider(keyPath);
@@ -74,6 +81,15 @@ public class SftpConnectionManager implements ConnectionManager {
 
         SftpClient sftpClient = SftpClientFactory.instance().createSftpClient(session);
         return adapterFactory.createSftpAdapter(sftpClient, destFileSystem);
+    }
+
+    private static void configureSftpFlowControl(PropertyResolver resolver) {
+        CoreModuleProperties.WINDOW_SIZE.set(resolver, SFTP_WINDOW_BYTES);
+        CoreModuleProperties.MAX_PACKET_SIZE.set(resolver, SFTP_PACKET_BYTES);
+        SftpModuleProperties.MAX_READDATA_PACKET_LENGTH.set(resolver, SFTP_READ_PACKET_BYTES);
+        SftpModuleProperties.MAX_WRITEDATA_PACKET_LENGTH.set(resolver, SFTP_READ_PACKET_BYTES);
+        SftpModuleProperties.COPY_BUF_SIZE.set(resolver, SFTP_READ_PACKET_BYTES);
+        SftpModuleProperties.WRITE_CHUNK_SIZE.set(resolver, SFTP_READ_PACKET_BYTES);
     }
 
     public FileSystemAdapter ensureConnectionAlive(FileSystemAdapter currentAdapter, FileSystem fs, String taskKey) throws IOException {

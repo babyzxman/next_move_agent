@@ -103,12 +103,20 @@ public class NoneCtrlService extends MoveService{
 
                 adapter = connectionManager.createConnection();
                 transferHistories = transferHistoryService.findByIdIn(transferHistoryIds);
+                long metadataStart = System.nanoTime();
                 Map<String, Long> modifiedCheckerMap = new HashMap<>();
                 if(transferRequestWrapper.isCheckFileSize()){
                     modifiedCheckerMap = keepFileSize(transferHistories, adapter);
                 }else {
                     modifiedCheckerMap = keepModifiedTime(transferHistories, adapter);
                 }
+                long metadataDurationMillis = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - metadataStart);
+                log.info("{} Task {} collected source metadata for {} files in {} ms (checkFileSize={})",
+                        AppConst.PREFIX_LOG,
+                        taskKey,
+                        transferHistories.size(),
+                        metadataDurationMillis,
+                        transferRequestWrapper.isCheckFileSize());
                 if (cancellationFlag.get() || Thread.currentThread().isInterrupted()) {
                     log.info("{} Task {} cancelled before sleep, interrupt status: {}", AppConst.PREFIX_LOG, taskKey, Thread.currentThread().isInterrupted());
                     throw new TaskCancelledException("Task was cancelled or interrupted before sleep");
@@ -117,7 +125,17 @@ public class NoneCtrlService extends MoveService{
                 //...Delay for checking files
 //                Thread.sleep(transferRequestWrapper.getCheckFileDelaySeconds()*1000);
                 try {
+                    long waitStart = System.nanoTime();
+                    log.info("{} Task {} waiting {} ms before transfer as configured by checkFileDelaySeconds",
+                            AppConst.PREFIX_LOG,
+                            taskKey,
+                            transferRequestWrapper.getCheckFileDelaySeconds() * 1000);
                     interruptibleSleep(transferRequestWrapper.getCheckFileDelaySeconds() * 1000, cancellationFlag, taskKey);
+                    long waitDurationMillis = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - waitStart);
+                    log.info("{} Task {} finished pre-transfer wait in {} ms",
+                            AppConst.PREFIX_LOG,
+                            taskKey,
+                            waitDurationMillis);
                 } catch (InterruptedException e) {
                     log.info("{} Task {} interrupted during sleep, interrupt status: {}", AppConst.PREFIX_LOG, taskKey, Thread.currentThread().isInterrupted());
                     Thread.currentThread().interrupt(); // คืนสถานะ interrupt
@@ -435,7 +453,15 @@ public class NoneCtrlService extends MoveService{
                 log.info("{} Task cancelled before copying regular file", AppConst.PREFIX_LOG);
                 throw new TaskCancelledException("Task was cancelled or interrupted before copying regular file");
             }
+            long copyStart = System.nanoTime();
             adapter.copy(adapter.getDestFileSystem(), srcFilePath, destinationFilePath, isDeleteSrc, overwrite);
+            long copyDurationMillis = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - copyStart);
+            log.info("{} Copied {} bytes from {} to {} in {} ms",
+                    AppConst.PREFIX_LOG,
+                    srcFileSize,
+                    srcFilePath,
+                    destinationFilePath,
+                    copyDurationMillis);
             reconcileInfo.setDestAbsoluteFilePathStr(adapter.getDestFileSystem().resolvePath(new Path(destinationFilePath)).toString());
             transferHistory.setDestination(destinationFilePath.toString());
             transferHistory.setErrorNo(null);
