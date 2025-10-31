@@ -395,18 +395,19 @@ public class ZeroCtrlService extends MoveService{
                 log.info("{} Task cancelled before copying regular file", AppConst.PREFIX_LOG);
                 throw new TaskCancelledException("Task was cancelled or interrupted before copying regular file");
             }
-            adapter.copy(adapter.getDestFileSystem(), srcFilePath, destinationFilePathProcessing, isDeleteSrc, overwrite);
-            long destinationFileSize = adapter.getDestFileSystem().getFileStatus(new Path(destinationFilePathProcessing)).getLen();
-            if(srcFileSize != destinationFileSize){
-                throw new FileSizeMisMatchException(new Path(destinationFilePathProcessing)
-                        , String.format("Source and target file sizes do not match. "
-                        + "Source: %s bytes, Target: %s bytes", srcFileSize+"", destinationFileSize+""));
-            }
+            adapter.copy(adapter.getDestFileSystem(), srcFilePath, destinationFilePath, isDeleteSrc, overwrite);
+            log.info("skip renamed file");
+//            long destinationFileSize = adapter.getDestFileSystem().getFileStatus(new Path(destinationFilePathProcessing)).getLen();
+//            if(srcFileSize != destinationFileSize){
+//                throw new FileSizeMisMatchException(new Path(destinationFilePathProcessing)
+//                        , String.format("Source and target file sizes do not match. "
+//                        + "Source: %s bytes, Target: %s bytes", srcFileSize+"", destinationFileSize+""));
+//            }
 
-            FileUtil.rename(adapter.getDestFileSystem()
-                    , new Path(destinationFilePathProcessing)
-                    , new Path(destinationFilePath)
-                    , overwrite? Options.Rename.OVERWRITE : Options.Rename.NONE);
+//            FileUtil.rename(adapter.getDestFileSystem()
+//                    , new Path(destinationFilePathProcessing)
+//                    , new Path(destinationFilePath)
+//                    , overwrite? Options.Rename.OVERWRITE : Options.Rename.NONE);
             reconcileInfo.setDestAbsoluteFilePathStr(adapter.getDestFileSystem().resolvePath(new Path(destinationFilePath)).toString());
             transferHistory.setDestination(destinationFilePath.toString());
             transferHistory.setErrorNo(null);
