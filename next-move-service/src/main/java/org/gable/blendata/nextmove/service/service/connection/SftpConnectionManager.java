@@ -34,11 +34,10 @@ public class SftpConnectionManager implements ConnectionManager {
 
         // Performance tuning for high-throughput SFTP
         // Increase the window size to allow more data to be in-flight.
-        CoreModuleProperties.WINDOW_SIZE.set(client, 4 * 1024 * 1024); // 4 MB
+        CoreModuleProperties.WINDOW_SIZE.set(client, (long) (4 * 1024 * 1024)); // 4 MB
         // Increase the packet size for data channels.
-        CoreModuleProperties.MAX_PACKET_SIZE.set(client, 256 * 1024); // 256 KB
+        CoreModuleProperties.MAX_PACKET_SIZE.set(client,(long)  (256 * 1024)); // 256 KB
         // Use a larger buffer for reading incoming data.
-        CoreModuleProperties.TCP_RECEIVE_BUFFER_SIZE.set(client, 512 * 1024); // 512 KB
 
 
         client.start();

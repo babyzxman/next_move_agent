@@ -9,6 +9,7 @@ import org.gable.blendata.nextmove.service.adapter.FileSystemAdapter;
 import org.gable.blendata.nextmove.shared.dto.FileInfoDTO;
 import org.gable.blendata.nextmove.shared.util.FileInfoUtil;
 
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
@@ -94,7 +95,7 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
             copyWithBuffer(sftpClient, srcFilePath, tempFilePath);
 
             // Upload from temporary file to S3
-            destFileSystem.copyFromLocalFile(false, overwrite, new org.apache.hadoop.fs.Path(tempFile.toUri()), destPath);
+            this.destFileSystem.copyFromLocalFile(false, overwrite, new org.apache.hadoop.fs.Path(tempFile.toUri()), destPath);
 
         } catch (Exception e) {
             throw new IOException("Error copying from SFTP to Hadoop", e);
