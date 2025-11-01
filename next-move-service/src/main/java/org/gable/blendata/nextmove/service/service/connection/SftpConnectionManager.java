@@ -31,6 +31,16 @@ public class SftpConnectionManager implements ConnectionManager {
     // Static initializer to set up the SshClient once
     static {
         client = SshClient.setUpDefaultClient();
+
+        // Performance tuning for high-throughput SFTP
+        // Increase the window size to allow more data to be in-flight.
+        CoreModuleProperties.WINDOW_SIZE.set(client, 4 * 1024 * 1024); // 4 MB
+        // Increase the packet size for data channels.
+        CoreModuleProperties.MAX_PACKET_SIZE.set(client, 256 * 1024); // 256 KB
+        // Use a larger buffer for reading incoming data.
+        CoreModuleProperties.TCP_RECEIVE_BUFFER_SIZE.set(client, 512 * 1024); // 512 KB
+
+
         client.start();
         // Optional: Register a shutdown hook to stop the client when the JVM exits
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
