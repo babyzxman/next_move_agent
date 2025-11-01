@@ -68,10 +68,8 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
 
     @Override
     public void copy(FileSystem destFileSystem, String srcFilePath, String destFilePath, boolean isDeleteSrc, boolean overwrite) throws IOException {
-        FSDataOutputStream hdfsOutputStream = null;
-        SftpClient.CloseableHandle handle = null;
+        Path tempFile = null;
         try {
-
             // Check if source file exists
             SftpClient.Attributes srcAttrs = sftpClient.stat(srcFilePath);
             if (srcAttrs == null) {
@@ -88,50 +86,26 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
                 destFileSystem.delete(destPath, false);
             }
 
-            // Open SFTP file for reading (streaming)
-            handle = sftpClient.open(srcFilePath, SftpClient.OpenMode.Read);
-            log.info("hadoop file = {}",destFileSystem.getConf());
-            Configuration c = destFileSystem.getConf();
-            log.info("fast.upload=" + c.get("fs.s3a.fast.upload"));
-            log.info("fast.upload.buffer=" + c.get("fs.s3a.fast.upload.buffer"));
-            log.info("active.blocks=" + c.get("fs.s3a.fast.upload.active.blocks"));
-            log.info("multipart.size=" + c.get("fs.s3a.multipart.size"));
-            log.info("conn.max=" + c.get("fs.s3a.connection.maximum"));
-            log.info("threads.max=" + c.get("fs.s3a.threads.max"));
-            log.info("current hadoop file = {}",this.destFileSystem.getConf());
-            Configuration cn = this.destFileSystem.getConf();
-            log.info("fast.upload=" + cn.get("fs.s3a.fast.upload"));
-            log.info("fast.upload.buffer=" + cn.get("fs.s3a.fast.upload.buffer"));
-            log.info("active.blocks=" + cn.get("fs.s3a.fast.upload.active.blocks"));
-            log.info("multipart.size=" + cn.get("fs.s3a.multipart.size"));
-            log.info("conn.max=" + cn.get("fs.s3a.connection.maximum"));
-            log.info("threads.max=" + cn.get("fs.s3a.threads.max"));
-            log.info("current hadoop file = {}",this.destFileSystem.getConf());
-            // Create output stream to Hadoop
-            hdfsOutputStream = this.destFileSystem.create(destPath, overwrite);
+            // Create a temporary file
+            tempFile = Files.createTempFile("sftp-", ".tmp");
+            String tempFilePath = tempFile.toString();
 
-            // Stream copy with buffer
-            byte[] buffer = new byte[256 * 1024]; // 256 KiB
-            int bytesRead;
-            long fileOffset = 0;
-            while ((bytesRead = sftpClient.read(handle, fileOffset, buffer, 0, buffer.length)) > 0) {
-                hdfsOutputStream.write(buffer, 0, bytesRead);
-                fileOffset += bytesRead;
-            }
+            // Download from SFTP to temporary file
+            copyWithBuffer(sftpClient, srcFilePath, tempFilePath);
 
-            // Flush and sync
-            hdfsOutputStream.close();
-
+            // Upload from temporary file to S3
+            destFileSystem.copyFromLocalFile(false, overwrite, new org.apache.hadoop.fs.Path(tempFilePath), destPath);
 
         } catch (Exception e) {
             throw new IOException("Error copying from SFTP to Hadoop", e);
         } finally {
-            // Close resources in reverse order
-            if (hdfsOutputStream != null) {
-                try { hdfsOutputStream.close(); } catch (IOException e) { /* ignore */ }
-            }
-            if (handle != null) {
-                try { handle.close(); } catch (IOException e) { /* ignore */ }
+            // Delete the temporary file
+            if (tempFile != null) {
+                try {
+                    Files.deleteIfExists(tempFile);
+                } catch (IOException e) {
+                    log.warn("Failed to delete temporary file: {}", tempFile, e);
+                }
             }
         }
     }
@@ -190,7 +164,7 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
         try (SftpClient.CloseableHandle handle = sftpClient.open(srcFilePath, SftpClient.OpenMode.Read);
              OutputStream outputStream = Files.newOutputStream(destPath)) {
 
-            byte[] buffer = new byte[32768]; // 32KB buffer
+            byte[] buffer = new byte[256 * 1024]; // 256KB buffer
             long offset = 0;
             int bytesRead;
 
