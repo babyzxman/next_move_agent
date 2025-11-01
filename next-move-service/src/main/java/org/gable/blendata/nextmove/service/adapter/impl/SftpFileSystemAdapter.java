@@ -94,7 +94,7 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
             copyWithBuffer(sftpClient, srcFilePath, tempFilePath);
 
             // Upload from temporary file to S3
-            destFileSystem.copyFromLocalFile(false, overwrite, new org.apache.hadoop.fs.Path(tempFilePath), destPath);
+            destFileSystem.copyFromLocalFile(false, overwrite, new org.apache.hadoop.fs.Path(tempFile.toUri()), destPath);
 
         } catch (Exception e) {
             throw new IOException("Error copying from SFTP to Hadoop", e);
@@ -161,15 +161,18 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
         Path destPath = Paths.get(destFilePath);
         Files.createDirectories(destPath.getParent());
 
+        // Use a BufferedOutputStream for efficient local writes
         try (SftpClient.CloseableHandle handle = sftpClient.open(srcFilePath, SftpClient.OpenMode.Read);
-             OutputStream outputStream = Files.newOutputStream(destPath)) {
+             OutputStream fileOutputStream = Files.newOutputStream(destPath);
+             BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fileOutputStream, 4 * 1024 * 1024)) { // 4MB write buffer
 
-            byte[] buffer = new byte[256 * 1024]; // 256KB buffer
+            // Use a large buffer for SFTP reads to minimize network round-trips
+            byte[] buffer = new byte[4 * 1024 * 1024]; // 4MB read buffer
             long offset = 0;
             int bytesRead;
 
             while ((bytesRead = sftpClient.read(handle, offset, buffer, 0, buffer.length)) > 0) {
-                outputStream.write(buffer, 0, bytesRead);
+                bufferedOutputStream.write(buffer, 0, bytesRead);
                 offset += bytesRead;
             }
         }
