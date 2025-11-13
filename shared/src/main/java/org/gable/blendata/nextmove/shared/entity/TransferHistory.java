@@ -10,6 +10,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -61,6 +62,7 @@ public class TransferHistory {
     @Column(updatable = false)
     private String createdBy;
     private String modifiedBy;
-
+    private Timestamp fileModifiedTime;
+    private Integer filePartitionDate;
 
 }

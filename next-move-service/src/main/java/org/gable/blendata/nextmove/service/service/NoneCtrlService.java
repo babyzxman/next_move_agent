@@ -35,6 +35,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -152,6 +153,7 @@ public class NoneCtrlService extends MoveService{
                         FileInfoDTO srcFile = adapter.getSourceFileInfo(transferHistory.getFilePath(), transferRequestWrapper.getSourceRootPathStr());
                         boolean isCompressFile = CompressFileUtil.isSupportedFormat(srcFile.getFileName());
                         transferHistory.setFileSize(srcFile.getSize());
+                        transferHistory.setFileModifiedTime(srcFile.getModifyTime());
 
                         //...Check connection is alive or not for SFTP source
                         adapter = connectionManager.ensureConnectionAlive(adapter, adapter.getSourceFileSystem(), taskKey);
@@ -314,9 +316,9 @@ public class NoneCtrlService extends MoveService{
                             + (isCreateTargetZipBaseDir? "/" + FilenameUtils.getBaseName(compressSrcFileName) : "")
                             + "/" + FilenameUtils.getName(file.getAbsolutePath()));
                     Path destFilePathProcessing = new Path(destFilePath.toString() + AppConst.PROCESSING_SUFFIX);
-                    if(!overwrite && adapter.exists(adapter.getDestFileSystem(), destFilePath.toString())){
-                        throw new DuplicateException(String.format("Target file %s already exists", destFilePath.toString()));
-                    }
+//                    if(!overwrite && adapter.exists(adapter.getDestFileSystem(), destFilePath.toString())){
+//                        throw new DuplicateException(String.format("Target file %s already exists", destFilePath.toString()));
+//                    }
                     adapter.copyFromLocalFile(false, overwrite, new Path("file://"+absoluteFilePath), destFilePathProcessing);
                     FileUtil.rename(adapter.getDestFileSystem()
                             , destFilePathProcessing
@@ -446,7 +448,7 @@ public class NoneCtrlService extends MoveService{
                 log.info("{} Task cancelled before copying regular file", AppConst.PREFIX_LOG);
                 throw new TaskCancelledException("Task was cancelled or interrupted before copying regular file");
             }
-            adapter.copy(adapter.getDestFileSystem(), srcFilePath, destinationFilePath, isDeleteSrc, overwrite);
+            adapter.copy(adapter.getDestFileSystem(), srcFilePath, destinationFilePath, isDeleteSrc, true);
             log.info("skip renamed file");
 //            long destinationFileSize = adapter.getDestFileSystem().getFileStatus(new Path(destinationFilePathProcessing)).getLen();
 //            if(srcFileSize != destinationFileSize){
@@ -502,6 +504,7 @@ public class NoneCtrlService extends MoveService{
         for (TransferHistory transferHistory : transferHistories) {
             transferHistory.setModifiedBy(appConfig.getAppId());
             transferHistory.setModifiedDate(DateUtil.getCurrentDateWithTime());
+            log.info("transfer history file modify time = {}",transferHistory.getFileModifiedTime());
             transferHistoryService.save(transferHistory);
         }
     }

@@ -28,15 +28,13 @@ public class TransferHistoryService {
         transferHistoryRepository.deleteByCreatedDateLessThan(beforeDate);
     }
 
-    public Set<String> getSuccessOrProcessingFiles(SourceType sourceType, String rootPath, String host){
+    public List<TransferHistoryView> getSuccessOrProcessingFiles(SourceType sourceType, String rootPath, String host){
         if(SourceType.HADOOP.equals(sourceType)){
-            Optional<Set<String>> hadoopFilePaths = transferHistoryRepository.findHadoopFilePathBySourceRootPathAndStatus(rootPath, Arrays.asList(FileStatus.SUCCESS.name(), FileStatus.PROCESSING.name()));
-            return hadoopFilePaths.orElseGet(HashSet::new);
+            return transferHistoryRepository.findHadoopFilePathBySourceRootPathAndStatus(rootPath, Arrays.asList(FileStatus.SUCCESS.name(), FileStatus.PROCESSING.name()));
         } else if(SourceType.SFTP.equals(sourceType)){
-            Optional<Set<String>> sftpFilePaths = transferHistoryRepository.findSftpFilePathBySourceRootPathAndStatus(rootPath, host, Arrays.asList(FileStatus.SUCCESS.name(), FileStatus.PROCESSING.name()));
-            return sftpFilePaths.orElseGet(HashSet::new);
+            return transferHistoryRepository.findSftpFilePathBySourceRootPathAndStatus(rootPath, host, Arrays.asList(FileStatus.SUCCESS.name(), FileStatus.PROCESSING.name()));
         }
-        return new HashSet<>();
+        return new ArrayList<>();
     }
 
 
@@ -44,15 +42,13 @@ public class TransferHistoryService {
         return transferHistoryRepository.findTransferHistoryViewByTaskId(taskId);
     }
 
-    public Set<String> getProcessingFiles(SourceType sourceType, String rootPath, String host){
+    public List<TransferHistoryView> getProcessingFiles(SourceType sourceType, String rootPath, String host){
         if(SourceType.HADOOP.equals(sourceType)){
-            Optional<Set<String>> hadoopFilePaths = transferHistoryRepository.findHadoopFilePathBySourceRootPathAndStatus(rootPath, Arrays.asList(FileStatus.PROCESSING.name()));
-            return hadoopFilePaths.orElseGet(HashSet::new);
+            return transferHistoryRepository.findHadoopFilePathBySourceRootPathAndStatus(rootPath, Arrays.asList(FileStatus.PROCESSING.name()));
         } else if(SourceType.SFTP.equals(sourceType)){
-            Optional<Set<String>> sftpFilePaths = transferHistoryRepository.findSftpFilePathBySourceRootPathAndStatus(rootPath, host, Arrays.asList(FileStatus.PROCESSING.name()));
-            return sftpFilePaths.orElseGet(HashSet::new);
+            return transferHistoryRepository.findSftpFilePathBySourceRootPathAndStatus(rootPath, host, Arrays.asList(FileStatus.PROCESSING.name()));
         }
-        return new HashSet<>();
+        return new ArrayList<>();
     }
 
     public TaskResponse getTaskInfoByTaskId(String taskId){

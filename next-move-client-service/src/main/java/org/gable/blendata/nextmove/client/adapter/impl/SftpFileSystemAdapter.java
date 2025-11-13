@@ -279,7 +279,10 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
             return true;
         }
         return patterns.stream()
-                .anyMatch(pattern -> FilenameUtils.wildcardMatch(file.getName(), pattern));
+                .anyMatch(pattern -> {
+                    Pattern changePattern = globToRegexPattern(pattern);
+                    return changePattern.matcher(file.getName()).matches();
+                });
     }
 
     private boolean matchesDateFilter(FileInfo file, LocalDateTime afterDate) {

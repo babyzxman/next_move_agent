@@ -1,5 +1,8 @@
 package org.gable.blendata.nextmove.client.dto;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 public interface TransferHistoryView {
 
     String getTaskId();
@@ -15,4 +18,6 @@ public interface TransferHistoryView {
     Long getFileSize();
 
     String getErrorNo();
+
+    Timestamp getFileModifiedTime();
 }

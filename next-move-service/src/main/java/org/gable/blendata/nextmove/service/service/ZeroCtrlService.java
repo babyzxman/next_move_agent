@@ -125,6 +125,7 @@ public class ZeroCtrlService extends MoveService{
                         FileInfoDTO srcFile = adapter.getSourceFileInfo(transferHistory.getFilePath(), transferRequestWrapper.getSourceRootPathStr());
                         boolean isCompressFile = CompressFileUtil.isSupportedFormat(srcFile.getFileName());
                         transferHistory.setFileSize(srcFile.getSize());
+                        transferHistory.setFileModifiedTime(srcFile.getModifyTime());
 
                         //...Check connection is alive or not for SFTP source
                         adapter = connectionManager.ensureConnectionAlive(adapter, adapter.getSourceFileSystem(), taskKey);
@@ -388,14 +389,14 @@ public class ZeroCtrlService extends MoveService{
 
 //            long srcFileSize = adapter.getFileSize(adapter.getSourceFileSystem(), srcFilePath);
             log.debug(">>> Exists {}: {}", destinationFilePath, adapter.exists(adapter.getDestFileSystem(), destinationFilePath));
-            if(!overwrite && adapter.exists(adapter.getDestFileSystem(), destinationFilePath)){
-                throw new DuplicateException(String.format("Target file %s already exists", destinationFilePath.toString()));
-            }
+//            if(adapter.exists(adapter.getDestFileSystem(), destinationFilePath)){
+//                throw new DuplicateException(String.format("Target file %s already exists", destinationFilePath.toString()));
+//            }
             if (cancellationFlag.get() || Thread.currentThread().isInterrupted()) {
                 log.info("{} Task cancelled before copying regular file", AppConst.PREFIX_LOG);
                 throw new TaskCancelledException("Task was cancelled or interrupted before copying regular file");
             }
-            adapter.copy(adapter.getDestFileSystem(), srcFilePath, destinationFilePath, isDeleteSrc, overwrite);
+            adapter.copy(adapter.getDestFileSystem(), srcFilePath, destinationFilePath, isDeleteSrc, true);
             log.info("skip renamed file");
 //            long destinationFileSize = adapter.getDestFileSystem().getFileStatus(new Path(destinationFilePathProcessing)).getLen();
 //            if(srcFileSize != destinationFileSize){

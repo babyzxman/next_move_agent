@@ -13,6 +13,9 @@ import org.gable.blendata.nextmove.shared.dto.FileInfoDTO;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.attribute.FileTime;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,6 +73,7 @@ public class FileInfoUtil {
                     .fileName(sourceFileName)
                     .extension(fileExtension)
                     .absoluteFilePath(fs.resolvePath(sourceFilePath).toString())
+                    .modifyTime(Timestamp.from(Instant.ofEpochMilli(getModifiedTime(fs,sourceFilePath))))
                     .build();
         }catch (Exception e){
             log.error("{} !!!Error get source file info {}", AppConst.PREFIX_LOG, filePathStr, e);
@@ -91,6 +95,7 @@ public class FileInfoUtil {
                     .fileName(sourceFileName)
                     .extension(fileExtension)
                     .absoluteFilePath(filePath)
+                    .modifyTime(Timestamp.from(stat.getModifyTime().toInstant()))
                     .build();
         }catch (Exception e){
             log.error("{} !!!Error get source file info {}", AppConst.PREFIX_LOG, filePath, e);

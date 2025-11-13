@@ -9,6 +9,8 @@ import org.gable.blendata.nextmove.client.service.TransferHistoryService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/api/external")
@@ -32,6 +34,70 @@ public class ExternalController {
     @GetMapping("/taskHistory/{taskId}")
     public List<TransferHistoryView> findTaskHistoryByTaskId(@PathVariable  String taskId) {
         return transferHistoryService.findTransferHistoryViewByTaskId(taskId);
+    }
+
+    @PostMapping("/test")
+    public Boolean test(@RequestBody Map<String,String> body) {
+        Pattern changePattern = globToRegexPattern(body.get("pattern"));
+        return changePattern.matcher(body.get("fileName")).matches();
+    }
+
+    private Pattern globToRegexPattern(String glob) {
+        StringBuilder regex = new StringBuilder();
+        for (int i = 0; i < glob.length(); i++) {
+            char c = glob.charAt(i);
+            switch (c) {
+                case '*':
+                    regex.append(".*");
+                    break;
+                case '?':
+                    regex.append(".");
+                    break;
+                case '[':
+                    regex.append("[");
+                    break;
+                case ']':
+                    regex.append("]");
+                    break;
+                case '{':
+                    regex.append("(");
+                    break;
+                case '}':
+                    regex.append(")");
+                    break;
+                case ',':
+                    if (isInsideBraces(glob, i)) {
+                        regex.append("|");
+                    } else {
+                        regex.append(",");
+                    }
+                    break;
+                default:
+                    if (isSpecialRegexChar(c)) {
+                        regex.append("\\").append(c);
+                    } else {
+                        regex.append(c);
+                    }
+                    break;
+            }
+        }
+        return Pattern.compile(regex.toString());
+    }
+
+    private boolean isInsideBraces(String glob, int index) {
+        int braceCount = 0;
+        for (int i = 0; i < index; i++) {
+            if (glob.charAt(i) == '{') {
+                braceCount++;
+            } else if (glob.charAt(i) == '}') {
+                braceCount--;
+            }
+        }
+        return braceCount > 0;
+    }
+
+    private boolean isSpecialRegexChar(char c) {
+        return "\\^$.|+()".indexOf(c) != -1;
     }
 
 }

@@ -7,6 +7,7 @@ import org.apache.hadoop.fs.*;
 import org.gable.blendata.nextmove.client.adapter.FileInfo;
 import org.gable.blendata.nextmove.client.adapter.FileListingCriteria;
 import org.gable.blendata.nextmove.client.adapter.FileSystemAdapter;
+import org.gable.blendata.nextmove.client.dto.TransferHistoryView;
 import org.gable.blendata.nextmove.shared.constant.AppConst;
 import org.gable.blendata.nextmove.shared.constant.TaskConst;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,11 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static org.gable.blendata.nextmove.shared.constant.FileStatus.PROCESSING;
 
 @Slf4j
 @Service
@@ -75,16 +79,43 @@ public class ListFileService {
             return new ArrayList<>();
         }
 
-        Set<String> excludeFiles = getExcludeFiles(sourceType, rootPath, moveType, host, isOverwrite);
+        List<TransferHistoryView> excludeFiles = getExcludeFiles(sourceType, rootPath, moveType, host, isOverwrite);
 
-        return files.stream()
-                .map(FileInfo::getPath)
-                .filter(path -> !excludeFiles.contains(path))
-                .limit(criteria.getMaxFiles() != null ? criteria.getMaxFiles() : Long.MAX_VALUE)
-                .collect(Collectors.toList());
+        Map<String,TransferHistoryView> transferHistoryViewMap = new HashMap<>();
+        for(TransferHistoryView transferHistoryView: excludeFiles) {
+            transferHistoryViewMap.put(transferHistoryView.getFilePath(),transferHistoryView);
+        }
+
+        long criteriaMaxFiles = criteria.getMaxFiles() != null ? criteria.getMaxFiles() : Long.MAX_VALUE;
+        int count = 0;
+        List<String> filePath = new ArrayList<>();
+        for(FileInfo file: files) {
+            if(count >= criteriaMaxFiles) {
+                break;
+            }
+            TransferHistoryView transferHistoryView = transferHistoryViewMap.get(file.getPath());
+            if(transferHistoryView != null) {
+                if (!transferHistoryView.getStatus().equals(PROCESSING.name())) {
+                    if(transferHistoryView.getFileModifiedTime() == null) {
+                        filePath.add(file.getPath());
+                        count++;
+                    }
+                    else if(file.getModificationTime().isAfter(
+                            transferHistoryView.getFileModifiedTime().toLocalDateTime())) {
+                        filePath.add(file.getPath());
+                        count++;
+                    }
+                }
+            }
+            else {
+                filePath.add(file.getPath());
+            }
+        }
+
+        return filePath;
     }
 
-    private Set<String> getExcludeFiles(TaskConst.SourceType sourceType, String rootPath, TaskConst.MoveType moveType, String host, boolean isOverwrite) {
+    private List<TransferHistoryView> getExcludeFiles(TaskConst.SourceType sourceType, String rootPath, TaskConst.MoveType moveType, String host, boolean isOverwrite) {
 //        if (moveType.equals(TaskConst.MoveType.MOVE) && isOverwrite) {
         if (isOverwrite) {
             return transferHistoryService.getProcessingFiles(sourceType, rootPath, host);
@@ -158,17 +189,26 @@ public class ListFileService {
             return new ArrayList<>();
         }
 
-        Set<String> excludeFiles = getExcludeFiles(sourceType, rootPath, moveType, host, isOverwrite);
+        List<TransferHistoryView> excludeFiles = getExcludeFiles(sourceType, rootPath, moveType, host, isOverwrite);
+        Map<String,TransferHistoryView> transferHistoryViewMap = new HashMap<>();
+        for(TransferHistoryView transferHistoryView: excludeFiles) {
+            transferHistoryViewMap.put(transferHistoryView.getFilePath(),transferHistoryView);
+        }
         List<String> result = new ArrayList<>();
 
         for (FileInfo file : files) {
+            TransferHistoryView transferHistoryView = transferHistoryViewMap.get(file.getPath());
             log.info("file name = {}",file.getName());
             if(result.size() >= (criteria.getMaxFiles() != null ? criteria.getMaxFiles() : Integer.MAX_VALUE)) {
                 break;
             }
-            if (excludeFiles.contains(file.getPath())) {
+            if (transferHistoryView != null && transferHistoryView.getFileModifiedTime() != null
+                && !file.getModificationTime().truncatedTo(ChronoUnit.SECONDS).
+                    isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.SECONDS))) {
+                log.info("check inside continue");
                 continue;
             }
+
 
             String extension = FilenameUtils.getExtension(file.getName());
             if(controlFileNamePattern != null) {

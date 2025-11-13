@@ -22,18 +22,42 @@ public interface TransferHistoryRepository extends JpaRepository<TransferHistory
     @Query("select th.filePath from TransferHistory th where (sourceRootPath = :SOURCE_ROOT_PATH or actualSourceRootPath = :SOURCE_ROOT_PATH) and status in :STATUS")
     public Optional<List<String>> findFilePathBySourceRootPathAndStatus(@Param("SOURCE_ROOT_PATH") String sourceRootPath, @Param("STATUS")List<String> status);
 
-    @Query("select th.filePath from TransferHistory th " +
-            "where sourceType = 'HADOOP' " +
-            "and (sourceRootPath = :SOURCE_ROOT_PATH or actualSourceRootPath = :SOURCE_ROOT_PATH) " +
-            "and status in :STATUS ")
-    public Optional<Set<String>> findHadoopFilePathBySourceRootPathAndStatus(@Param("SOURCE_ROOT_PATH") String sourceRootPath, @Param("STATUS")List<String> status);
+    @Query("select th.filePath as filePath, " +
+            "th.status as status, " +
+            "th.fileModifiedTime as fileModifiedTime " +
+            "from TransferHistory th " +
+            "where th.sourceType = 'HADOOP' " +
+            "and (th.sourceRootPath = :SOURCE_ROOT_PATH or th.actualSourceRootPath = :SOURCE_ROOT_PATH) " +
+            "and th.status in :STATUS " +
+            "and th.fileModifiedTime = (" +
+            "select max(th2.fileModifiedTime) " +
+            "from TransferHistory th2 " +
+            "where th2.filePath = th.filePath " +
+            "and th2.sourceType = th.sourceType " +
+            "and (th2.sourceRootPath = :SOURCE_ROOT_PATH or th2.actualSourceRootPath = :SOURCE_ROOT_PATH) " +
+            "and th2.status in :STATUS" +
+            ") " +
+            "order by th.fileModifiedTime desc")
+    public List<TransferHistoryView> findHadoopFilePathBySourceRootPathAndStatus(@Param("SOURCE_ROOT_PATH") String sourceRootPath, @Param("STATUS")List<String> status);
 
-    @Query("select th.filePath from TransferHistory th " +
-            "where sourceType = 'SFTP' " +
-            "and (sourceRootPath = :SOURCE_ROOT_PATH or actualSourceRootPath = :SOURCE_ROOT_PATH) " +
-            "and host = :HOST " +
-            "and status in :STATUS ")
-    public Optional<Set<String>> findSftpFilePathBySourceRootPathAndStatus(@Param("SOURCE_ROOT_PATH") String sourceRootPath, @Param("HOST") String host, @Param("STATUS")List<String> status);
+    @Query("select th.filePath as filePath, " +
+            "th.status as status, " +
+            "th.fileModifiedTime as fileModifiedTime " +
+            "from TransferHistory th " +
+            "where th.sourceType = 'SFTP' " +
+            "and (th.sourceRootPath = :SOURCE_ROOT_PATH or th.actualSourceRootPath = :SOURCE_ROOT_PATH) " +
+            "and th.status in :STATUS " +
+            "and th.host = :HOST " +
+            "and th.fileModifiedTime = (" +
+            "select max(th2.fileModifiedTime) " +
+            "from TransferHistory th2 " +
+            "where th2.filePath = th.filePath " +
+            "and th2.sourceType = th.sourceType " +
+            "and (th2.sourceRootPath = :SOURCE_ROOT_PATH or th2.actualSourceRootPath = :SOURCE_ROOT_PATH) " +
+            "and th2.status in :STATUS" +
+            ") " +
+            "order by th.fileModifiedTime desc")
+    public List<TransferHistoryView> findSftpFilePathBySourceRootPathAndStatus(@Param("SOURCE_ROOT_PATH") String sourceRootPath, @Param("HOST") String host, @Param("STATUS")List<String> status);
 
 
     @Modifying

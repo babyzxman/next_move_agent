@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -16,5 +18,6 @@ public class FileInfoDTO {
     private String fileName;
     private String extension;
     private Long size;
+    private Timestamp modifyTime;
 
 }
