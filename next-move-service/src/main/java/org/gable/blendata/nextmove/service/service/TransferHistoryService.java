@@ -2,9 +2,11 @@ package org.gable.blendata.nextmove.service.service;
 
 import lombok.RequiredArgsConstructor;
 import org.apache.hadoop.fs.Path;
+import org.gable.blendata.nextmove.service.adapter.FileSystemAdapter;
 import org.gable.blendata.nextmove.service.config.AppConfig;
 import org.gable.blendata.nextmove.service.repo.TransferHistoryRepository;
 import org.gable.blendata.nextmove.shared.constant.FileStatus;
+import org.gable.blendata.nextmove.shared.dto.FileInfoDTO;
 import org.gable.blendata.nextmove.shared.dto.TransferRequestWrapper;
 import org.gable.blendata.nextmove.shared.entity.TransferHistory;
 import org.gable.blendata.nextmove.shared.util.DateUtil;
@@ -37,12 +39,13 @@ public class TransferHistoryService extends GenericService<TransferHistory, Long
     }
 
     @Transactional
-    public List<TransferHistory> saveProcessing(TransferRequestWrapper transferRequestWrapper) {
+    public List<TransferHistory> saveProcessing(FileSystemAdapter adapter, TransferRequestWrapper transferRequestWrapper) {
         List<TransferHistory> transferHistories = new ArrayList<>();
         for (String filePathStr : transferRequestWrapper.getFilePathStrs()) {
             String actualSourceRootPath = transferRequestWrapper.getSourceRootPathStr().contains("*")?
                     FilePathUtil.extractMatchingPrefix(transferRequestWrapper.getSourceRootPathStr(), filePathStr)
                     : transferRequestWrapper.getSourceRootPathStr();
+            FileInfoDTO srcFile = adapter.getSourceFileInfo(filePathStr, transferRequestWrapper.getSourceRootPathStr());
             TransferHistory transferHistory = save(TransferHistory.builder()
                     .appId(appConfig.getAppId())
                     .taskId(transferRequestWrapper.getTaskId())
@@ -55,6 +58,7 @@ public class TransferHistoryService extends GenericService<TransferHistory, Long
                     .status(FileStatus.PROCESSING.name())
                     .createdDate(DateUtil.getCurrentDateWithTime())
                     .createdBy(appConfig.getAppId())
+                    .fileModifiedTime(srcFile.getModifyTime())
                     .build()
             );
             transferHistories.add(transferHistory);

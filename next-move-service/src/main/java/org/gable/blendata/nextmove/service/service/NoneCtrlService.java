@@ -75,17 +75,38 @@ public class NoneCtrlService extends MoveService{
         hadoopConfig.registerFileSystem(fileSystems, FileSystemUtil.getFileSystemKey(transferRequestWrapper.getDestinationRootPathStr()));
 
         //...Save into table and mark them to processing status
-        List<TransferHistory> transferHistories = transferHistoryService.saveProcessing(transferRequestWrapper);
-        final List<Long> transferHistoryIds = transferHistories.stream().map(TransferHistory::getId).collect(Collectors.toList());
+        FileSystemAdapter adapter = null;
+        ConnectionManager connectionManager = null;
+        try {
+            connectionManager = connectionManagerFactory.createConnectionManager(transferRequestWrapper.getSourceType()
+                    , transferRequestWrapper.getSourceRootPathStr()
+                    , transferRequestWrapper.getDestinationRootPathStr()
+                    , transferRequestWrapper.getSourceProperties());
+            adapter = connectionManager.createConnection();
 
-        AtomicBoolean cancellationFlag = new AtomicBoolean(false);
-        synchronized (runningTasks) {
-            cancellationFlags.put(taskKey, cancellationFlag);
+            List<TransferHistory> transferHistories = transferHistoryService.saveProcessing(adapter, transferRequestWrapper);
+            final List<Long> transferHistoryIds = transferHistories.stream().map(TransferHistory::getId).collect(Collectors.toList());
+
+            AtomicBoolean cancellationFlag = new AtomicBoolean(false);
+            synchronized (runningTasks) {
+                cancellationFlags.put(taskKey, cancellationFlag);
+            }
+
+            CompletableFuture<Void> future = CompletableFuture.supplyAsync(
+                    processFileTransfers(transferHistoryIds, transferRequestWrapper, cancellationFlag, taskKey));
+            runningTasks.put(taskKey, future);
+        }catch (IOException e) {
+            log.error("{} !!!Error cannot create connection to source or destination for task {}: {} ", AppConst.PREFIX_LOG, taskKey, e.getMessage(), e);
+            throw new RuntimeException("Cannot create connection to source or destination", e);
+        } finally {
+            if(connectionManager != null){
+                try {
+                    connectionManager.closeConnection(adapter);
+                } catch (IOException e) {
+                    log.error("{} !!!Error cannot close connection : {}", AppConst.PREFIX_LOG, e.getMessage(), e);
+                }
+            }
         }
-
-        CompletableFuture<Void> future = CompletableFuture.supplyAsync(
-                processFileTransfers(transferHistoryIds, transferRequestWrapper, cancellationFlag, taskKey));
-        runningTasks.put(taskKey, future);
     }
 
     private Supplier<Void> processFileTransfers(List<Long> transferHistoryIds, TransferRequestWrapper transferRequestWrapper, AtomicBoolean cancellationFlag, String taskKey) {
@@ -153,7 +174,7 @@ public class NoneCtrlService extends MoveService{
                         FileInfoDTO srcFile = adapter.getSourceFileInfo(transferHistory.getFilePath(), transferRequestWrapper.getSourceRootPathStr());
                         boolean isCompressFile = CompressFileUtil.isSupportedFormat(srcFile.getFileName());
                         transferHistory.setFileSize(srcFile.getSize());
-                        transferHistory.setFileModifiedTime(srcFile.getModifyTime());
+//                        transferHistory.setFileModifiedTime(srcFile.getModifyTime());
 
                         //...Check connection is alive or not for SFTP source
                         adapter = connectionManager.ensureConnectionAlive(adapter, adapter.getSourceFileSystem(), taskKey);
