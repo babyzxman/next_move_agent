@@ -11,6 +11,7 @@ import org.gable.blendata.nextmove.shared.util.DateUtil;
 import org.gable.blendata.nextmove.shared.util.FilePathUtil;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,7 @@ public class TransferHistoryService extends GenericService<TransferHistory, Long
         return transferHistoryRepository.findByIdIn(transferHistoryIds);
     }
 
+    @Transactional
     public List<TransferHistory> saveProcessing(TransferRequestWrapper transferRequestWrapper) {
         List<TransferHistory> transferHistories = new ArrayList<>();
         for (String filePathStr : transferRequestWrapper.getFilePathStrs()) {
