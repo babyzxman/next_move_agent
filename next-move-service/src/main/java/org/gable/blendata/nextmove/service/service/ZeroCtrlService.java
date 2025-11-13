@@ -186,7 +186,7 @@ public class ZeroCtrlService extends MoveService{
 
     private void addRemainingReconciledInfo(FileSystemAdapter adapter, List<TransferHistory> processingTransferHistories, List<ReconcileInfoDTO> reconcileInfos, String errorNo, String errorMsg, String sourceRootPath) {
         for(TransferHistory processingTransferHistory : processingTransferHistories){
-            FileInfoDTO srcFile = FileInfoUtil.getFileInfo(adapter.getSourceFileSystem(), processingTransferHistory.getFilePath(), sourceRootPath);
+            FileInfoDTO srcFile = adapter.getSourceFileInfo(processingTransferHistory.getFilePath(), sourceRootPath);
             reconcileInfos.add( ReconcileInfoDTO.builder()
                     .createDate(DateUtil.convertToString(LocalDateTime.now(), DateUtil.YYYYMMDDHHmmssSSS))
                     .fileSizeInBytes(srcFile.getSize())
