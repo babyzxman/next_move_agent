@@ -254,7 +254,8 @@ public class ListFileService {
                 return new ArrayList<>();
             }
             for(FileInfo fileInfo: controlFiles) {
-                if (excludeFiles.contains(fileInfo.getPath())) {
+                TransferHistoryView transferHistoryView = transferHistoryViewMap.get(fileInfo.getPath());
+                if (null != transferHistoryView) {
                     continue;
                 }
                 result.add(fileInfo.getPath());
