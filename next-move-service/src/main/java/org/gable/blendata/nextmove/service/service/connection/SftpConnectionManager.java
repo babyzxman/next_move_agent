@@ -18,10 +18,14 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.KeyPair;
 import java.time.Duration;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class SftpConnectionManager implements ConnectionManager {
+
+    private static final Map<String, FileSystemAdapter> connectionCache = new ConcurrentHashMap<>();
 
     private final SftpConnectionProperties properties;
     private final FileSystem destFileSystem;
@@ -53,6 +57,18 @@ public class SftpConnectionManager implements ConnectionManager {
 
     @Override
     public FileSystemAdapter createConnection() throws IOException {
+        String cacheKey = properties.getUsername() + "@" + properties.getHost() + ":" + properties.getPort();
+        synchronized (connectionCache) {
+            FileSystemAdapter adapter = connectionCache.get(cacheKey);
+            if (adapter == null || !isConnectionAlive(adapter, null)) {
+                adapter = doCreateConnection();
+                connectionCache.put(cacheKey, adapter);
+            }
+            return adapter;
+        }
+    }
+
+    private FileSystemAdapter doCreateConnection() throws IOException {
         CoreModuleProperties.HEARTBEAT_INTERVAL.set(client, Duration.ofSeconds(15));
         CoreModuleProperties.HEARTBEAT_NO_REPLY_MAX.set(client, 3);
         ClientSession session = client.connect(properties.getUsername(),
@@ -65,7 +81,9 @@ public class SftpConnectionManager implements ConnectionManager {
             FileKeyPairProvider provider = new FileKeyPairProvider(keyPath);
             Iterable<KeyPair> keys = provider.loadKeys(null);
 
-            session.addPublicKeyIdentity(keys.iterator().next());
+            for (KeyPair key : keys) {
+                session.addPublicKeyIdentity(key);
+            }
             session.auth().verify(10, TimeUnit.SECONDS);
         } else {
             session.addPasswordIdentity(properties.getPassword());
