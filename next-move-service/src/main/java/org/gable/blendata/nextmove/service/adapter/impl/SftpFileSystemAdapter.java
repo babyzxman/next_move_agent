@@ -144,7 +144,7 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
 
     @Override
     public Long getModifiedTime(FileSystem fs, String srcFilePath) throws IOException {
-        if(fs != null) {
+        if(fs == null) {
             return sftpClient.stat(srcFilePath).getModifyTime().toMillis();
         }else{
             return fs.getFileStatus(new org.apache.hadoop.fs.Path(srcFilePath)).getModificationTime();
