@@ -49,6 +49,7 @@ spring:
       ribbon:
         NFLoadBalancerRuleClassName: com.netflix.loadbalancer.BestAvailableRule
   quartz:
+    auto-startup: false
     job-store-type: jdbc
     jdbc:
       initialize-schema: always  #...never
