@@ -1,21 +1,24 @@
+nextmove:
+  sftp:
+    temp-dir: /tmp/nextmove/sftp
 server:
   port: 8081
   ssl:
-    key-store: /Users/a007626/IdeaProjects/beg-move-file-agent/shared/src/main/resources/eureka-client.p12
+    key-store: classpath:/eureka-client.p12
     key-store-password: 'l;ylfu=k;F]d1'
     key-store-type: PKCS12
     key-alias: client
-    trust-store: /Users/a007626/IdeaProjects/beg-move-file-agent/shared/src/main/resources/client-truststore.jks
+    trust-store: classpath:/client-truststore.jks
     trust-store-password: 'l;ylfu=k;F]d1'
 eureka:
   client:
     tls:
       enabled: true
-      key-store: file:/Users/a007626/IdeaProjects/beg-move-file-agent/shared/src/main/resources/eureka-client.p12
+      key-store: file:classpath:/eureka-client.p12
       key-store-type: PKCS12
       key-store-password: 'l;ylfu=k;F]d1'
       key-password: 'l;ylfu=k;F]d1'
-      trust-store: file:/Users/a007626/IdeaProjects/beg-move-file-agent/shared/src/main/resources/client-truststore.jks
+      trust-store: file:classpath:/client-truststore.jks
       trust-store-type: JKS
       trust-store-password: 'l;ylfu=k;F]d1'
     service-url:
@@ -50,37 +53,37 @@ spring:
 app:
   id: Z001
   temp-dir:
-    decompress: /Users/a007626/IdeaProjects/beg-move-file-agent/tmp/test-next-move-src-dest/extract
-    reconcile-log: /Users/a007626/IdeaProjects/beg-move-file-agent/tmp/test-next-move-src-dest/reconcile-log/zero-001
+    decompress: /tmp/nextmove/decompress
+    reconcile-log: /tmp/nextmove/reconcile-log
 const:
   path:
     config:
-      license: /Users/a007626/IdeaProjects/beg-move-file-agent/license/src/main/resources/license_off.lic
+      license: classpath:/license_off.lic
       hadoop-core-site: classpath:/core-site.xml
 logging:
-  config: /Users/a007626/IdeaProjects/beg-move-file-agent/next-move-service/src/main/resources/logback.xml
+  config: classpath:/logback.xml
 
 ---
 
 server:
   port: 8083
   ssl:
-    key-store: /Users/a007626/IdeaProjects/beg-move-file-agent/shared/src/main/resources/eureka-client.p12
+    key-store: classpath:/eureka-client.p12
     key-store-password: 'l;ylfu=k;F]d1'
     key-store-type: PKCS12
     key-alias: client
-    trust-store: /Users/a007626/IdeaProjects/beg-move-file-agent/shared/src/main/resources/client-truststore.jks
+    trust-store: classpath:/client-truststore.jks
     trust-store-password: 'l;ylfu=k;F]d1'
 
 eureka:
   client:
     tls:
       enabled: true
-      key-store: file:/Users/a007626/IdeaProjects/beg-move-file-agent/shared/src/main/resources/eureka-client.p12
+      key-store: file:classpath:/eureka-client.p12
       key-store-type: PKCS12
       key-store-password: 'l;ylfu=k;F]d1'
       key-password: 'l;ylfu=k;F]d1'
-      trust-store: file:/Users/a007626/IdeaProjects/beg-move-file-agent/shared/src/main/resources/client-truststore.jks
+      trust-store: file:classpath:/client-truststore.jks
       trust-store-type: JKS
       trust-store-password: 'l;ylfu=k;F]d1'
     service-url:
@@ -114,12 +117,12 @@ spring:
 app:
   id: N001
   temp-dir:
-    decompress: /Users/a007626/IdeaProjects/beg-move-file-agent/tmp/test-next-move-src-dest/extract
-    reconcile-log: /Users/a007626/IdeaProjects/beg-move-file-agent/tmp/test-next-move-src-dest/reconcile-log/zero-002
+    decompress: /tmp/nextmove/decompress
+    reconcile-log: /tmp/nextmove/reconcile-log
 const:
   path:
     config:
-      license: /Users/a007626/IdeaProjects/beg-move-file-agent/license/src/main/resources/license_off.lic
+      license: classpath:/license_off.lic
       hadoop-core-site: classpath:/core-site.xml
 logging:
-  config: /Users/a007626/IdeaProjects/beg-move-file-agent/src/main/resources/logback.xml
+  config: classpath:/logback.xml

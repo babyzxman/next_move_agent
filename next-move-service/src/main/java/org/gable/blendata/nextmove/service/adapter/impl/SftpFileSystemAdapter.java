@@ -26,10 +26,12 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
 
     private final SftpClient sftpClient;
     private final FileSystem destFileSystem;
+    private final String sftpTempDir;
 
-    public SftpFileSystemAdapter(SftpClient sftpClient, FileSystem destFileSystem) {
+    public SftpFileSystemAdapter(SftpClient sftpClient, FileSystem destFileSystem, String sftpTempDir) {
         this.sftpClient = sftpClient;
         this.destFileSystem = destFileSystem;
+        this.sftpTempDir = sftpTempDir;
     }
 
 
@@ -88,10 +90,21 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
     public void copy(FileSystem destFileSystem, String srcFilePath, String destFilePath, boolean isDeleteSrc, boolean overwrite) throws IOException {
         File tmp = null;
         try {
+            // check disk space before download
+            long fileSize = sftpClient.stat(srcFilePath).getSize();
+            File tempDir = new File(sftpTempDir);
+            long usableSpace = tempDir.getUsableSpace();
+            if (usableSpace < fileSize) {
+                throw new IOException("Not enough disk space to download the file. Required: " + fileSize + ", Available: " + usableSpace);
+            }
+
             // download from sftp to temp file
+            if (!tempDir.exists()) {
+                tempDir.mkdirs();
+            }
             Path srcPath = Paths.get(srcFilePath);
             String tmpFileName = "." + srcPath.getFileName().toString();
-            tmp = File.createTempFile(tmpFileName, "");
+            tmp = File.createTempFile(tmpFileName, "", tempDir);
             log.info("Start download from {} to {}", srcFilePath, tmp.getAbsolutePath());
             copyToLocal(srcFilePath, tmp.getAbsolutePath());
             log.info("Done download from {} to {}", srcFilePath, tmp.getAbsolutePath());
