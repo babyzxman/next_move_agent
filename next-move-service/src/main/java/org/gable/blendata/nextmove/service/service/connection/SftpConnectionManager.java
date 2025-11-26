@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.sshd.client.SshClient;
 import org.apache.sshd.client.session.ClientSession;
+import org.apache.sshd.common.SshException;
 import org.apache.sshd.common.keyprovider.FileKeyPairProvider;
 import org.apache.sshd.core.CoreModuleProperties;
 import org.apache.sshd.sftp.client.SftpClient;
@@ -18,6 +19,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.KeyPair;
 import java.time.Duration;
+import java.util.Collections;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -58,25 +62,74 @@ public class SftpConnectionManager implements ConnectionManager {
     public FileSystemAdapter createConnection() throws IOException {
         CoreModuleProperties.HEARTBEAT_INTERVAL.set(client, Duration.ofSeconds(15));
         CoreModuleProperties.HEARTBEAT_NO_REPLY_MAX.set(client, 3);
-        ClientSession session = client.connect(properties.getUsername(),
-                        properties.getHost(),
-                        properties.getPort())
-                .verify(properties.getConnectionTimeout())
-                .getSession();
         if (properties.getPrivateKeyPath() != null) {
-            Path keyPath = Paths.get(properties.getPrivateKeyPath());
-            FileKeyPairProvider provider = new FileKeyPairProvider(keyPath);
-            Iterable<KeyPair> keys = provider.loadKeys(null);
-
-            session.addPublicKeyIdentity(keys.iterator().next());
-            session.auth().verify(10, TimeUnit.SECONDS);
+            String key = ConnectionManagerUtil.getServerMapKey(properties.getHost(),properties.getPort());
+            Set<String> algroithmSet = ConnectionManagerUtil.getSftpAlgorithmMap(key);
+            Set<String> successKeySet = ConcurrentHashMap.newKeySet();
+            if(!algroithmSet.isEmpty()) {
+                int count = 0;
+                for (String algorithm : algroithmSet) {
+                    log.info("algorithm = {}",algorithm);
+                    count++;
+                    ClientSession session = client.connect(properties.getUsername(),
+                                    properties.getHost(),
+                                    properties.getPort())
+                            .verify(properties.getConnectionTimeout())
+                            .getSession();
+                    session.setSignatureFactoriesNameList(algorithm);
+                    Path keyPath = Paths.get(properties.getPrivateKeyPath());
+                    FileKeyPairProvider provider = new FileKeyPairProvider(keyPath);
+                    Iterable<KeyPair> keys = provider.loadKeys(null);
+                    session.addPublicKeyIdentity(keys.iterator().next());
+                    try {
+                        session.auth().verify(10, TimeUnit.SECONDS);
+                        SftpClient sftpClient = SftpClientFactory.instance().createSftpClient(session);
+                        if(algroithmSet.size() != 1) {
+                            successKeySet.add(algorithm);
+                            ConnectionManagerUtil.setSftpAlogirthmSet(successKeySet,key);
+                        }
+                        return adapterFactory.createSftpAdapter(sftpClient, destFileSystem);
+                    }
+                    catch (SshException ex) {
+                        if (ex.getCause() instanceof IllegalArgumentException) {
+                            if (count >= algroithmSet.size()) {
+                                ConnectionManagerUtil.setSftpAlogirthmSet(successKeySet, key);
+                                throw new IOException(ex);
+                            }
+                        }
+                        else {
+                            throw new IOException(ex);
+                        }
+                    }
+                }
+            }
+            else {
+                client.setSignatureFactories(ConnectionManagerUtil.getDEFAULT_SIGNATURE_FACTORIES());
+                ClientSession session = client.connect(properties.getUsername(),
+                                properties.getHost(),
+                                properties.getPort())
+                        .verify(properties.getConnectionTimeout())
+                        .getSession();
+                Path keyPath = Paths.get(properties.getPrivateKeyPath());
+                FileKeyPairProvider provider = new FileKeyPairProvider(keyPath);
+                Iterable<KeyPair> keys = provider.loadKeys(null);
+                session.addPublicKeyIdentity(keys.iterator().next());
+                session.auth().verify(10, TimeUnit.SECONDS);
+                SftpClient sftpClient = SftpClientFactory.instance().createSftpClient(session);
+                return adapterFactory.createSftpAdapter(sftpClient, destFileSystem);
+            }
         } else {
+            ClientSession session = client.connect(properties.getUsername(),
+                            properties.getHost(),
+                            properties.getPort())
+                    .verify(properties.getConnectionTimeout())
+                    .getSession();
             session.addPasswordIdentity(properties.getPassword());
             session.auth().verify(10, TimeUnit.SECONDS);
+            SftpClient sftpClient = SftpClientFactory.instance().createSftpClient(session);
+            return adapterFactory.createSftpAdapter(sftpClient, destFileSystem);
         }
-
-        SftpClient sftpClient = SftpClientFactory.instance().createSftpClient(session);
-        return adapterFactory.createSftpAdapter(sftpClient, destFileSystem);
+        return null;
     }
 
     public FileSystemAdapter ensureConnectionAlive(FileSystemAdapter currentAdapter, FileSystem fs, String taskKey) throws IOException {

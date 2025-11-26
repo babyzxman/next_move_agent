@@ -64,5 +64,6 @@ public class TransferHistory {
     private String modifiedBy;
     private Timestamp fileModifiedTime;
     private Integer filePartitionDate;
+    private String destinationRootPath;
 
 }

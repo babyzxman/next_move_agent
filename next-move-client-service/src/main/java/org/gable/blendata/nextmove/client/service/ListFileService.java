@@ -63,7 +63,7 @@ public class ListFileService {
                                          Integer filePerRound, LocalDateTime afterDate,
                                          List<String> srcExtensions, List<String> wildcardPatterns,
                                          boolean isOverwrite, TaskConst.MoveType moveType, String taskId,
-                                         TaskConst.SourceType sourceType, String host) throws IOException {
+                                         TaskConst.SourceType sourceType, String host,String destPath) throws IOException {
 
         FileListingCriteria criteria = FileListingCriteria.builder()
                 .maxFiles(filePerRound)
@@ -79,7 +79,9 @@ public class ListFileService {
             return new ArrayList<>();
         }
 
-        List<TransferHistoryView> excludeFiles = getExcludeFiles(sourceType, rootPath, moveType, host, isOverwrite);
+        List<TransferHistoryView> excludeFiles = getExcludeFiles(
+                sourceType, rootPath, moveType, host, isOverwrite,
+                destPath);
 
         Map<String,TransferHistoryView> transferHistoryViewMap = new HashMap<>();
         for(TransferHistoryView transferHistoryView: excludeFiles) {
@@ -115,12 +117,14 @@ public class ListFileService {
         return filePath;
     }
 
-    private List<TransferHistoryView> getExcludeFiles(TaskConst.SourceType sourceType, String rootPath, TaskConst.MoveType moveType, String host, boolean isOverwrite) {
+    private List<TransferHistoryView> getExcludeFiles(TaskConst.SourceType sourceType, String rootPath,
+                                                      TaskConst.MoveType moveType, String host, boolean isOverwrite,
+                                                      String destPath) {
 //        if (moveType.equals(TaskConst.MoveType.MOVE) && isOverwrite) {
         if (isOverwrite) {
-            return transferHistoryService.getProcessingFiles(sourceType, rootPath, host);
+            return transferHistoryService.getProcessingFiles(sourceType, rootPath, host,destPath);
         } else {
-            return transferHistoryService.getSuccessOrProcessingFiles(sourceType, rootPath, host);
+            return transferHistoryService.getSuccessOrProcessingFiles(sourceType, rootPath, host,destPath);
         }
     }
 
@@ -172,7 +176,8 @@ public class ListFileService {
                                              List<String> wildcardPatterns, boolean isOverwrite,
                                              TaskConst.MoveType moveType, String taskId,
                                              TaskConst.SourceType sourceType, String host,
-                                             String controlPath, List<String> controlFileNamePattern) throws IOException {
+                                             String controlPath, List<String> controlFileNamePattern,
+                                             String destPath) throws IOException {
 
         FileListingCriteria criteria =  FileListingCriteria.builder()
                 .maxFiles(filePerRound)
@@ -189,7 +194,8 @@ public class ListFileService {
             return new ArrayList<>();
         }
 
-        List<TransferHistoryView> excludeFiles = getExcludeFiles(sourceType, rootPath, moveType, host, isOverwrite);
+        List<TransferHistoryView> excludeFiles = getExcludeFiles(
+                sourceType, rootPath, moveType, host, isOverwrite,destPath);
         Map<String,TransferHistoryView> transferHistoryViewMap = new HashMap<>();
         for(TransferHistoryView transferHistoryView: excludeFiles) {
             transferHistoryViewMap.put(transferHistoryView.getFilePath(),transferHistoryView);

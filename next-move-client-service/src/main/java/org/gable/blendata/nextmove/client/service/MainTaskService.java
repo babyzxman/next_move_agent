@@ -161,6 +161,7 @@ public class MainTaskService {
         LocalDateTime executeTime = LocalDateTime.now();
         String sourcePathString = StringUtil.replaceVariableCurrentDate(LocalDateTime.now(), taskDTO.getRootPath().getSource()).toString();
         taskDTO.getRootPath().setSource(sourcePathString);
+        String destination = StringUtil.replaceVariableCurrentDate(LocalDateTime.now(), taskDTO.getRootPath().getDestination()).toString();
         Path sourcePath = new Path(sourcePathString);
         List<String> wildcardPatterns = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(taskDTO.getWildcardPatterns())) {
@@ -188,7 +189,8 @@ public class MainTaskService {
                             , taskDTO.getSourceType()
                             , taskDTO.getSourceProperties() == null ?
                                     null
-                                    : taskDTO.getSourceProperties().get(TaskConst.SourceProperties.HOST.getPropertyName()).toString()
+                                    : taskDTO.getSourceProperties().get(TaskConst.SourceProperties.HOST.getPropertyName()).toString(),
+                            destination
                     );
                     break;
                 case ZERO_SIZE_CONTROL:
@@ -206,7 +208,8 @@ public class MainTaskService {
                             , taskDTO.getSourceProperties() == null ?
                                     null
                                     : taskDTO.getSourceProperties().get(TaskConst.SourceProperties.HOST.getPropertyName()).toString(),
-                            taskDTO.getRootPath().getCtrlPath(),taskDTO.getCtrlFilePatterns()
+                            taskDTO.getRootPath().getCtrlPath(),taskDTO.getCtrlFilePatterns(),
+                            destination
                     );
             }
         } finally {

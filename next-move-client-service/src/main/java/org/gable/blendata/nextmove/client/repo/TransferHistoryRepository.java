@@ -28,7 +28,9 @@ public interface TransferHistoryRepository extends JpaRepository<TransferHistory
             "from TransferHistory th " +
             "where th.sourceType = 'HADOOP' " +
             "and (th.sourceRootPath = :SOURCE_ROOT_PATH or th.actualSourceRootPath = :SOURCE_ROOT_PATH) " +
+            "and th.filePartitionDate >= :filePartitionDate " +
             "and th.status in :STATUS " +
+            "and th.destinationRootPath = :destinationRootPath " +
             "and th.fileModifiedTime = (" +
             "select max(th2.fileModifiedTime) " +
             "from TransferHistory th2 " +
@@ -38,7 +40,11 @@ public interface TransferHistoryRepository extends JpaRepository<TransferHistory
             "and th2.status in :STATUS" +
             ") " +
             "order by th.fileModifiedTime desc")
-    public List<TransferHistoryView> findHadoopFilePathBySourceRootPathAndStatus(@Param("SOURCE_ROOT_PATH") String sourceRootPath, @Param("STATUS")List<String> status);
+    public List<TransferHistoryView> findHadoopFilePathBySourceRootPathAndStatus(
+            @Param("SOURCE_ROOT_PATH") String sourceRootPath,
+            @Param("STATUS")List<String> status,
+            @Param("filePartitionDate") Integer filePartitionDate,
+            @Param("destinationRootPath") String destinationRootPath);
 
     @Query("select th.filePath as filePath, " +
             "th.status as status, " +
@@ -47,7 +53,9 @@ public interface TransferHistoryRepository extends JpaRepository<TransferHistory
             "where th.sourceType = 'SFTP' " +
             "and (th.sourceRootPath = :SOURCE_ROOT_PATH or th.actualSourceRootPath = :SOURCE_ROOT_PATH) " +
             "and th.status in :STATUS " +
+            "and th.destinationRootPath = :destinationRootPath " +
             "and th.host = :HOST " +
+            "and th.filePartitionDate >= :filePartitionDate " +
             "and th.fileModifiedTime = (" +
             "select max(th2.fileModifiedTime) " +
             "from TransferHistory th2 " +
@@ -57,7 +65,12 @@ public interface TransferHistoryRepository extends JpaRepository<TransferHistory
             "and th2.status in :STATUS" +
             ") " +
             "order by th.fileModifiedTime desc")
-    public List<TransferHistoryView> findSftpFilePathBySourceRootPathAndStatus(@Param("SOURCE_ROOT_PATH") String sourceRootPath, @Param("HOST") String host, @Param("STATUS")List<String> status);
+    public List<TransferHistoryView> findSftpFilePathBySourceRootPathAndStatus(
+            @Param("SOURCE_ROOT_PATH") String sourceRootPath,
+            @Param("HOST") String host,
+            @Param("STATUS")List<String> status,
+            @Param("filePartitionDate") Integer filePartitionDate,
+            @Param("destinationRootPath") String destinationRootPath) ;
 
 
     @Modifying

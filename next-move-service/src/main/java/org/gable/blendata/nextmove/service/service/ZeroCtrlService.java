@@ -442,6 +442,7 @@ public class ZeroCtrlService extends MoveService{
             reconcileInfo.setErrMsg(e.getMessage() + "(" + ErrorUtil.getCauseClassInfo(e.getStackTrace()) + ")");
             throw e;
         }catch(Exception e){
+            log.error(e.getMessage(),e);
             handleFileSizeMisMatchException(adapter.getDestFileSystem(), e);
             String errorNo = ErrorUtil.generateErrorNo(appConfig.getAppId());
             log.error("{} !!!ErrorNo({}) : Cannot move/copy file '{}'", AppConst.PREFIX_LOG, errorNo, transferHistory.getFilePath(), e);

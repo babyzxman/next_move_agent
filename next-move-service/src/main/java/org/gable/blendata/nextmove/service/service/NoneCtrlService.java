@@ -462,9 +462,9 @@ public class NoneCtrlService extends MoveService{
 
 //            long srcFileSize = adapter.getFileSize(adapter.getSourceFileSystem(), srcFilePath);
             log.debug(">>> Exists {}: {}", destinationFilePath, adapter.exists(adapter.getDestFileSystem(), destinationFilePath));
-            if(!overwrite && adapter.exists(adapter.getDestFileSystem(), destinationFilePath)){
-                throw new DuplicateException(String.format("Target file %s already exists", destinationFilePath));
-            }
+//            if(!overwrite && adapter.exists(adapter.getDestFileSystem(), destinationFilePath)){
+//                throw new DuplicateException(String.format("Target file %s already exists", destinationFilePath));
+//            }
             if (cancellationFlag.get() || Thread.currentThread().isInterrupted()) {
                 log.info("{} Task cancelled before copying regular file", AppConst.PREFIX_LOG);
                 throw new TaskCancelledException("Task was cancelled or interrupted before copying regular file");
@@ -493,6 +493,7 @@ public class NoneCtrlService extends MoveService{
             reconcileInfo.setErrMsg(e.getMessage() + "(" + ErrorUtil.getCauseClassInfo(e.getStackTrace()) + ")");
             throw e;
         } catch(Exception e){
+            log.error(e.getMessage(),e);
             handleFileSizeMisMatchException(adapter.getDestFileSystem(), e);
             String errorNo = ErrorUtil.generateErrorNo(appConfig.getAppId());
             log.error("{} !!!ErrorNo({}) : Cannot move/copy file '{}'", AppConst.PREFIX_LOG, errorNo, transferHistory.getFilePath(), e);

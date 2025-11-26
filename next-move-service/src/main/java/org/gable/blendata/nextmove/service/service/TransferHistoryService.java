@@ -15,6 +15,9 @@ import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -54,11 +57,13 @@ public class TransferHistoryService extends GenericService<TransferHistory, Long
                     .host(transferRequestWrapper.getHost())
                     .sourceType(transferRequestWrapper.getSourceType().name())
                     .sourceRootPath(new Path(transferRequestWrapper.getSourceRootPathStr()).toString())
+                    .destinationRootPath(transferRequestWrapper.getDestinationRootPathStr())
                     .actualSourceRootPath(actualSourceRootPath)
                     .status(FileStatus.PROCESSING.name())
                     .createdDate(DateUtil.getCurrentDateWithTime())
                     .createdBy(appConfig.getAppId())
                     .fileModifiedTime(srcFile.getModifyTime())
+                    .filePartitionDate(Integer.valueOf(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))))
                     .build()
             );
             transferHistories.add(transferHistory);
