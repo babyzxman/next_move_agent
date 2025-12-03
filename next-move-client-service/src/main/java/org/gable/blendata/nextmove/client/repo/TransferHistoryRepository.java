@@ -79,7 +79,7 @@ public interface TransferHistoryRepository extends JpaRepository<TransferHistory
 
     @Query("select t.taskId as taskId,t.filePath as filePath,t.destination as destination, " +
             "t.status as status,t.processTime as processTime,t.fileSize as fileSize," +
-            "t.errorNo as errorNo from TransferHistory t where t.taskId = :taskId")
+            "t.errorNo as errorNo,t.errorMsg as errorMsg from TransferHistory t where t.taskId = :taskId")
     List<TransferHistoryView> findTransferHistoryViewByTaskId(@Param("taskId") String taskId);
 
 }

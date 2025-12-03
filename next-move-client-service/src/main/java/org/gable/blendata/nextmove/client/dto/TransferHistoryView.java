@@ -20,4 +20,6 @@ public interface TransferHistoryView {
     String getErrorNo();
 
     Timestamp getFileModifiedTime();
+
+    String getErrorMsg();
 }

@@ -119,14 +119,13 @@ public class NoneCtrlService extends MoveService{
 
                 String destRootPathStr = transferRequestWrapper.getDestinationRootPathStr();
                 boolean isDeleteSrc = TaskConst.MoveType.MOVE.name().equalsIgnoreCase(transferRequestWrapper.getMoveType());
-
+                transferHistories = transferHistoryService.findByIdIn(transferHistoryIds);
                 connectionManager = connectionManagerFactory.createConnectionManager(transferRequestWrapper.getSourceType()
                         , transferRequestWrapper.getSourceRootPathStr()
                         , transferRequestWrapper.getDestinationRootPathStr()
                         , transferRequestWrapper.getSourceProperties());
 
                 adapter = connectionManager.createConnection();
-                transferHistories = transferHistoryService.findByIdIn(transferHistoryIds);
                 Map<String, Long> modifiedCheckerMap = new HashMap<>();
                 if(transferRequestWrapper.isCheckFileSize()){
                     modifiedCheckerMap = keepFileSize(transferHistories, adapter);
@@ -489,6 +488,7 @@ public class NoneCtrlService extends MoveService{
             String errorNo = ErrorUtil.generateErrorNo(appConfig.getAppId());
             log.error("{} !!!ErrorNo({}) : Task cancelled '{}'", AppConst.PREFIX_LOG, errorNo, transferHistory.getFilePath(), e);
             transferHistory.setErrorNo(errorNo);
+            transferHistory.setErrorMsg(e.getMessage());
             reconcileInfo.setErrorNo(errorNo);
             reconcileInfo.setErrMsg(e.getMessage() + "(" + ErrorUtil.getCauseClassInfo(e.getStackTrace()) + ")");
             throw e;

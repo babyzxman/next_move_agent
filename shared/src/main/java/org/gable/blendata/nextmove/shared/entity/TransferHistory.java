@@ -65,5 +65,6 @@ public class TransferHistory {
     private Timestamp fileModifiedTime;
     private Integer filePartitionDate;
     private String destinationRootPath;
+    private String errorMsg;
 
 }

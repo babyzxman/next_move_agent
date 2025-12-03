@@ -117,13 +117,13 @@ public class ZeroCtrlService extends MoveService{
                 String destRootPathStr = transferRequestWrapper.getDestinationRootPathStr();
                 boolean isDeleteSrc = TaskConst.MoveType.MOVE.name().equalsIgnoreCase(transferRequestWrapper.getMoveType());
 
+                transferHistories = transferHistoryService.findByIdIn(transferHistoryIds);
                 connectionManager = connectionManagerFactory.createConnectionManager(transferRequestWrapper.getSourceType()
                         , transferRequestWrapper.getSourceRootPathStr()
                         , transferRequestWrapper.getDestinationRootPathStr()
                         , transferRequestWrapper.getSourceProperties());
                 adapter = connectionManager.createConnection();
 
-                transferHistories = transferHistoryService.findByIdIn(transferHistoryIds);
                 int maxRetry = Objects.isNull(transferRequestWrapper.getRetry())? 1 : transferRequestWrapper.getRetry() +1; //...normal + retry
                 int retry = 0;
                 boolean hasError = true;
@@ -447,6 +447,7 @@ public class ZeroCtrlService extends MoveService{
             String errorNo = ErrorUtil.generateErrorNo(appConfig.getAppId());
             log.error("{} !!!ErrorNo({}) : Cannot move/copy file '{}'", AppConst.PREFIX_LOG, errorNo, transferHistory.getFilePath(), e);
             transferHistory.setErrorNo(errorNo);
+            transferHistory.setErrorMsg(e.getMessage());
             reconcileInfo.setErrorNo(errorNo);
             reconcileInfo.setErrMsg(e.getMessage() + "(" + ErrorUtil.getCauseClassInfo(e.getStackTrace()) + ")");
         }finally {
