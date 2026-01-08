@@ -92,9 +92,9 @@ public class NextMoveClientApplication implements CommandLineRunner {
     @Bean(name = "taskExecutor")
     public Executor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(5);
-        executor.setMaxPoolSize(10);
-        executor.setQueueCapacity(25);
+        executor.setCorePoolSize(50);
+        executor.setMaxPoolSize(150);
+        executor.setQueueCapacity(2000);
         executor.setThreadNamePrefix("Async-");
         executor.initialize();
         return executor;

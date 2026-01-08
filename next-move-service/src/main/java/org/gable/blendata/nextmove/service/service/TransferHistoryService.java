@@ -42,13 +42,12 @@ public class TransferHistoryService extends GenericService<TransferHistory, Long
     }
 
     @Transactional
-    public List<TransferHistory> saveProcessing(FileSystemAdapter adapter, TransferRequestWrapper transferRequestWrapper) {
+    public List<TransferHistory> saveProcessing(TransferRequestWrapper transferRequestWrapper) {
         List<TransferHistory> transferHistories = new ArrayList<>();
         for (String filePathStr : transferRequestWrapper.getFilePathStrs()) {
             String actualSourceRootPath = transferRequestWrapper.getSourceRootPathStr().contains("*")?
                     FilePathUtil.extractMatchingPrefix(transferRequestWrapper.getSourceRootPathStr(), filePathStr)
                     : transferRequestWrapper.getSourceRootPathStr();
-            FileInfoDTO srcFile = adapter.getSourceFileInfo(filePathStr, transferRequestWrapper.getSourceRootPathStr());
             TransferHistory transferHistory = save(TransferHistory.builder()
                     .appId(appConfig.getAppId())
                     .taskId(transferRequestWrapper.getTaskId())
@@ -62,7 +61,6 @@ public class TransferHistoryService extends GenericService<TransferHistory, Long
                     .status(FileStatus.PROCESSING.name())
                     .createdDate(DateUtil.getCurrentDateWithTime())
                     .createdBy(appConfig.getAppId())
-                    .fileModifiedTime(srcFile.getModifyTime())
                     .filePartitionDate(Integer.valueOf(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))))
                     .build()
             );

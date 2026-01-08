@@ -209,7 +209,9 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
                 } else {
                     FileInfo fileInfo = createFileInfo(entryPath, entry);
                     if (matchesExtension(fileInfo, criteria.getExtensions()) &&
-                            matchesWildcardPattern(fileInfo, criteria.getWildcardPatterns()) &&
+                            matchesWildcardPattern(
+                                    fileInfo, criteria.getWildcardPatterns(),
+                                    criteria.getExtensions().get(0)) &&
                             matchesDateFilter(fileInfo, criteria.getAfterDate())) {
 
                         result.add(fileInfo);
@@ -274,12 +276,15 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
                 });
     }
 
-    private boolean matchesWildcardPattern(FileInfo file, List<String> patterns) {
+    private boolean matchesWildcardPattern(FileInfo file, List<String> patterns, String fileExtensions) {
         if (patterns == null || patterns.isEmpty()) {
             return true;
         }
         return patterns.stream()
                 .anyMatch(pattern -> {
+                    if(!pattern.endsWith("." + fileExtensions)) {
+                        pattern = pattern + "." + fileExtensions;
+                    }
                     Pattern changePattern = globToRegexPattern(pattern);
                     return changePattern.matcher(file.getName()).matches();
                 });

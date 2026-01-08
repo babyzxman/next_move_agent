@@ -28,7 +28,10 @@ import org.gable.blendata.nextmove.shared.exception.DuplicateException;
 import org.gable.blendata.nextmove.shared.exception.FileSizeMisMatchException;
 import org.gable.blendata.nextmove.shared.exception.TaskCancelledException;
 import org.gable.blendata.nextmove.shared.util.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -46,6 +49,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Slf4j
 public class NoneCtrlService extends MoveService{
+
+    @Autowired
+    private TaskExecutor taskExecutor;
+
+    private final int RETRY_COUNT = 5;
+    private final int WAIT_RETRY = 3000;
     private final AppConfig appConfig;
     private final TransferHistoryService transferHistoryService;
     private final ReconcileLogService reconcileLogService;
@@ -56,6 +65,42 @@ public class NoneCtrlService extends MoveService{
     private final HadoopConfig hadoopConfig;
     private final Map<String, FileSystem> fileSystems;
 
+
+
+    private void logExecutorStats(String taskKey) {
+        if (taskExecutor instanceof ThreadPoolTaskExecutor) {
+            ThreadPoolTaskExecutor tp = (ThreadPoolTaskExecutor) taskExecutor;
+            ThreadPoolExecutor ex = tp.getThreadPoolExecutor();
+
+            if (ex == null) {
+                log.warn("{} TaskKey({}) ThreadPoolExecutor not initialized yet",
+                        AppConst.PREFIX_LOG, taskKey);
+                return;
+            }
+
+            log.info("{} TaskKey({}) ExecutorStats: active={}, poolSize={}, core={}, max={}, " +
+                            "largest={}, completed={}, taskCount={}, queueSize={}, queueRemaining={}",
+                    AppConst.PREFIX_LOG,
+                    taskKey,
+                    ex.getActiveCount(),
+                    ex.getPoolSize(),
+                    ex.getCorePoolSize(),
+                    ex.getMaximumPoolSize(),
+                    ex.getLargestPoolSize(),
+                    ex.getCompletedTaskCount(),
+                    ex.getTaskCount(),
+                    ex.getQueue().size(),
+                    ex.getQueue().remainingCapacity()
+            );
+
+        } else {
+            log.warn("{} TaskKey({}) TaskExecutor is {} (no thread stats available)",
+                    AppConst.PREFIX_LOG,
+                    taskKey,
+                    taskExecutor.getClass().getName());
+        }
+    }
+
     public void moveFiles(TransferRequestWrapper transferRequestWrapper) {
         String srcRootPath = transferRequestWrapper.getSourceRootPathStr();
         String taskKey = transferRequestWrapper.getClientId() + "_" + transferRequestWrapper.getTaskId() + "_" + StringUtil.getRandomAlphanumericString(8);
@@ -63,7 +108,7 @@ public class NoneCtrlService extends MoveService{
 
         //...P'Ban Request
         if(CollectionUtils.isNotEmpty(transferRequestWrapper.getFilePathStrs())) {
-            transferRequestWrapper.getFilePathStrs().parallelStream().forEach(filePathStr -> {
+            transferRequestWrapper.getFilePathStrs().forEach(filePathStr -> {
                 log.info("{} Task ID({}) Request to move file {} to {}", AppConst.PREFIX_LOG
                         , transferRequestWrapper.getTaskId()
                         , filePathStr
@@ -75,48 +120,38 @@ public class NoneCtrlService extends MoveService{
         hadoopConfig.registerFileSystem(fileSystems, FileSystemUtil.getFileSystemKey(transferRequestWrapper.getDestinationRootPathStr()));
 
         //...Save into table and mark them to processing status
-        FileSystemAdapter adapter = null;
-        ConnectionManager connectionManager = null;
-        try {
-            connectionManager = connectionManagerFactory.createConnectionManager(transferRequestWrapper.getSourceType()
-                    , transferRequestWrapper.getSourceRootPathStr()
-                    , transferRequestWrapper.getDestinationRootPathStr()
-                    , transferRequestWrapper.getSourceProperties());
-            adapter = connectionManager.createConnection();
+//        FileSystemAdapter adapter = null;
+//        ConnectionManager connectionManager = null;
+//            connectionManager = connectionManagerFactory.createConnectionManager(transferRequestWrapper.getSourceType()
+//                    , transferRequestWrapper.getSourceRootPathStr()
+//                    , transferRequestWrapper.getDestinationRootPathStr()
+//                    , transferRequestWrapper.getSourceProperties());
+//            adapter = connectionManager.createConnection();
 
-            List<TransferHistory> transferHistories = transferHistoryService.saveProcessing(adapter, transferRequestWrapper);
-            final List<Long> transferHistoryIds = transferHistories.stream().map(TransferHistory::getId).collect(Collectors.toList());
+        List<TransferHistory> transferHistories = transferHistoryService.saveProcessing(transferRequestWrapper);
+        final List<Long> transferHistoryIds = transferHistories.stream().map(TransferHistory::getId).collect(Collectors.toList());
 
-            AtomicBoolean cancellationFlag = new AtomicBoolean(false);
-            synchronized (runningTasks) {
-                cancellationFlags.put(taskKey, cancellationFlag);
-            }
-
-            CompletableFuture<Void> future = CompletableFuture.supplyAsync(
-                    processFileTransfers(transferHistoryIds, transferRequestWrapper, cancellationFlag, taskKey));
-            runningTasks.put(taskKey, future);
-        }catch (IOException e) {
-            log.error("{} !!!Error cannot create connection to source or destination for task {}: {} ", AppConst.PREFIX_LOG, taskKey, e.getMessage(), e);
-            throw new RuntimeException("Cannot create connection to source or destination", e);
-        } finally {
-            if(connectionManager != null){
-                try {
-                    connectionManager.closeConnection(adapter);
-                } catch (IOException e) {
-                    log.error("{} !!!Error cannot close connection : {}", AppConst.PREFIX_LOG, e.getMessage(), e);
-                }
-            }
+        AtomicBoolean cancellationFlag = new AtomicBoolean(false);
+        synchronized (runningTasks) {
+            cancellationFlags.put(taskKey, cancellationFlag);
         }
+
+        logExecutorStats(taskKey);
+
+        CompletableFuture<Void> future = CompletableFuture.supplyAsync(
+                processFileTransfers(transferHistoryIds, transferRequestWrapper, cancellationFlag, taskKey),
+                taskExecutor);
+        runningTasks.put(taskKey, future);
     }
 
     private Supplier<Void> processFileTransfers(List<Long> transferHistoryIds, TransferRequestWrapper transferRequestWrapper, AtomicBoolean cancellationFlag, String taskKey) {
         return () -> {
+            log.info("{} Task {} running on thread {}", AppConst.PREFIX_LOG, taskKey, Thread.currentThread().getName());
             List<ReconcileInfoDTO> reconcileInfos = new ArrayList<>();
             List<TransferHistory> transferHistories = new ArrayList<>();
             ConnectionManager connectionManager = null;
             FileSystemAdapter adapter = null;
             try {
-
                 String destRootPathStr = transferRequestWrapper.getDestinationRootPathStr();
                 boolean isDeleteSrc = TaskConst.MoveType.MOVE.name().equalsIgnoreCase(transferRequestWrapper.getMoveType());
                 transferHistories = transferHistoryService.findByIdIn(transferHistoryIds);
@@ -124,8 +159,18 @@ public class NoneCtrlService extends MoveService{
                         , transferRequestWrapper.getSourceRootPathStr()
                         , transferRequestWrapper.getDestinationRootPathStr()
                         , transferRequestWrapper.getSourceProperties());
-
-                adapter = connectionManager.createConnection();
+                for(int i =0;i<RETRY_COUNT;i++) {
+                    try {
+                        adapter = connectionManager.createConnection();
+                        break;
+                    }
+                    catch (Exception ex) {
+                        Thread.sleep(WAIT_RETRY);
+                        if(i == RETRY_COUNT-1) {
+                            throw new Exception();
+                        }
+                    }
+                }
                 Map<String, Long> modifiedCheckerMap = new HashMap<>();
                 if(transferRequestWrapper.isCheckFileSize()){
                     modifiedCheckerMap = keepFileSize(transferHistories, adapter);
@@ -173,7 +218,7 @@ public class NoneCtrlService extends MoveService{
                         FileInfoDTO srcFile = adapter.getSourceFileInfo(transferHistory.getFilePath(), transferRequestWrapper.getSourceRootPathStr());
                         boolean isCompressFile = CompressFileUtil.isSupportedFormat(srcFile.getFileName());
                         transferHistory.setFileSize(srcFile.getSize());
-//                        transferHistory.setFileModifiedTime(srcFile.getModifyTime());
+                        transferHistory.setFileModifiedTime(srcFile.getModifyTime());
 
                         //...Check connection is alive or not for SFTP source
                         adapter = connectionManager.ensureConnectionAlive(adapter, adapter.getSourceFileSystem(), taskKey);
@@ -498,6 +543,7 @@ public class NoneCtrlService extends MoveService{
             String errorNo = ErrorUtil.generateErrorNo(appConfig.getAppId());
             log.error("{} !!!ErrorNo({}) : Cannot move/copy file '{}'", AppConst.PREFIX_LOG, errorNo, transferHistory.getFilePath(), e);
             transferHistory.setErrorNo(errorNo);
+            transferHistory.setErrorMsg(e.getMessage());
             reconcileInfo.setErrorNo(errorNo);
             reconcileInfo.setErrMsg(e.getMessage() + "(" + ErrorUtil.getCauseClassInfo(e.getStackTrace()) + ")");
         }finally {

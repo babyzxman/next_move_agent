@@ -170,6 +170,19 @@ public class ListFileService {
     }
 */
 
+    public String getControlFilePath(FileInfo file, String ctrlExtensions, String controlPath) {
+        if (controlPath != null) {
+            String controlAbsolutePath = controlPath.endsWith("/") ? controlPath + file.getName() :
+                    controlPath + File.separator + file.getName();
+            String basePath = FilenameUtils.removeExtension(controlAbsolutePath);
+            return basePath + "." + ctrlExtensions;
+        }
+        else {
+            String basePath = FilenameUtils.removeExtension(file.getPath());
+            return basePath + "." + ctrlExtensions;
+        }
+    }
+
     public List<String> listZeroSizeCtrlFile(FileSystemAdapter fileSystemAdapter, String rootPath,
                                              Integer filePerRound, LocalDateTime afterDate,
                                              List<String> ctrlExtensions, List<String> srcExtensions,
@@ -204,17 +217,26 @@ public class ListFileService {
 
         for (FileInfo file : files) {
             TransferHistoryView transferHistoryView = transferHistoryViewMap.get(file.getPath());
-            log.info("file name = {}",file.getName());
-            if(result.size() >= (criteria.getMaxFiles() != null ? criteria.getMaxFiles() : Integer.MAX_VALUE)) {
+            boolean isControlFileFailedToCopy = false;
+            if (result.size() >= (criteria.getMaxFiles() != null ? criteria.getMaxFiles() : Integer.MAX_VALUE)) {
                 break;
             }
             if (transferHistoryView != null && transferHistoryView.getFileModifiedTime() != null
                 && !file.getModificationTime().truncatedTo(ChronoUnit.SECONDS).
                     isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.SECONDS))) {
-                log.info("check inside continue");
-                continue;
+                if(controlFileNamePattern == null) {
+                    if(transferHistoryViewMap.get(getControlFilePath(file,ctrlExtensions.get(0),controlPath)) == null) {
+                        isControlFileFailedToCopy = true;
+                    }
+                    else {
+                        continue;
+                    }
+                }
+                else {
+                    log.info("check inside continue");
+                    continue;
+                }
             }
-
 
             String extension = FilenameUtils.getExtension(file.getName());
             if(controlFileNamePattern != null) {
@@ -226,13 +248,15 @@ public class ListFileService {
                         String controlAbsolutePath = controlPath.endsWith("/") ? controlPath + file.getName() :
                                 controlPath + File.separator + file.getName();
                         if (hasControlFile(fileSystemAdapter, controlAbsolutePath, ctrlExtensions)) {
-                            result.add(file.getPath());
+                            if(!isControlFileFailedToCopy)
+                                result.add(file.getPath());
                             result.add(FilenameUtils.removeExtension(
                                     controlAbsolutePath) + "." + ctrlExtensions.get(0));
                         }
                     } else {
                         if (hasControlFile(fileSystemAdapter, file.getPath(), ctrlExtensions)) {
-                            result.add(file.getPath());
+                            if(!isControlFileFailedToCopy)
+                                result.add(file.getPath());
                             result.add(FilenameUtils.removeExtension(
                                     file.getPath()) + "." + ctrlExtensions.get(0));
                         }
@@ -261,7 +285,9 @@ public class ListFileService {
             }
             for(FileInfo fileInfo: controlFiles) {
                 TransferHistoryView transferHistoryView = transferHistoryViewMap.get(fileInfo.getPath());
-                if (null != transferHistoryView) {
+                if (null != transferHistoryView && transferHistoryView.getFileModifiedTime() != null
+                        && !fileInfo.getModificationTime().truncatedTo(ChronoUnit.SECONDS).
+                        isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.SECONDS))) {
                     continue;
                 }
                 result.add(fileInfo.getPath());

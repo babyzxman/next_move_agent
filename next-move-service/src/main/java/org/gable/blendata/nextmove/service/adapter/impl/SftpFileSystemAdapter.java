@@ -111,7 +111,7 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
             hdfsOutputStream = this.destFileSystem.create(destPath, overwrite);
 
             // Stream copy with buffer
-            byte[] buffer = new byte[8 * 1024 * 1024]; // 256 KiB
+            byte[] buffer = new byte[16 * 1024 * 1024]; // 256 KiB
             int bytesRead;
             long fileOffset = 0;
             while ((bytesRead = sftpClient.read(handle, fileOffset, buffer, 0, buffer.length)) > 0) {

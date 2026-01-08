@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.net.SocketException;
@@ -54,11 +55,11 @@ public class NextMoveServiceApplication implements CommandLineRunner {
     }
 
     @Bean(name = "taskExecutor")
-    public Executor taskExecutor() {
+    public TaskExecutor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(5);
-        executor.setMaxPoolSize(10);
-        executor.setQueueCapacity(25);
+        executor.setCorePoolSize(50);
+        executor.setMaxPoolSize(150);
+        executor.setQueueCapacity(2000);
         executor.setThreadNamePrefix("Async-");
         executor.initialize();
         return executor;
