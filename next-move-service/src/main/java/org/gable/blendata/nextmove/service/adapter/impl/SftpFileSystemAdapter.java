@@ -73,16 +73,18 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
     }
 
     @Override
-    public void copy(FileSystem destFileSystem, String srcFilePath, String destFilePath, TransferRequestWrapper request) throws IOException {
+    public void copy(FileSystem destFileSystem, TransferRequestWrapper request) throws IOException {
         if (request.isUseTempFileDownload()) {
-            copyViaTempFile(destFileSystem, srcFilePath, destFilePath, request);
+            copyViaTempFile(destFileSystem, request);
         } else {
-            copyViaDirectStream(destFileSystem, srcFilePath, destFilePath, request);
+            copyViaDirectStream(destFileSystem, request);
         }
     }
 
-    private void copyViaTempFile(FileSystem destFileSystem, String srcFilePath, String destFilePath, TransferRequestWrapper request) throws IOException {
+    private void copyViaTempFile(FileSystem destFileSystem, TransferRequestWrapper request) throws IOException {
         Path tempFile = null;
+        String srcFilePath = request.getFilePathStrs().get(0);
+        String destFilePath = Paths.get(request.getDestinationRootPathStr(), new java.io.File(srcFilePath).getName()).toString();
         try {
             // 1. Create a temporary local file path
             String tempFileName = UUID.randomUUID().toString();
@@ -123,9 +125,11 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
         }
     }
 
-    private void copyViaDirectStream(FileSystem destFileSystem, String srcFilePath, String destFilePath, TransferRequestWrapper request) throws IOException {
+    private void copyViaDirectStream(FileSystem destFileSystem, TransferRequestWrapper request) throws IOException {
         FSDataOutputStream hdfsOutputStream = null;
         SftpClient.CloseableHandle handle = null;
+        String srcFilePath = request.getFilePathStrs().get(0);
+        String destFilePath = Paths.get(request.getDestinationRootPathStr(), new java.io.File(srcFilePath).getName()).toString();
         try {
 
             // Check if source file exists
@@ -227,7 +231,7 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
         try (InputStream sftpInputStream = sftpClient.read(srcFilePath);
              OutputStream localOutputStream = new BufferedOutputStream(Files.newOutputStream(destPath))) {
 
-            byte[] buffer = new byte[8 * 1024 * 1024]; // 8MB buffer for high performance
+            byte[] buffer = new byte[256 * 1024]; // 256KB buffer
             int bytesRead;
             while ((bytesRead = sftpInputStream.read(buffer)) != -1) {
                 localOutputStream.write(buffer, 0, bytesRead);

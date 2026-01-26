@@ -55,7 +55,9 @@ public class HadoopFileSystemAdapter implements FileSystemAdapter {
     }
 
     @Override
-    public void copy(FileSystem destFileSystem, String srcFilePath, String destFilePath, TransferRequestWrapper request) throws IOException {
+    public void copy(FileSystem destFileSystem, TransferRequestWrapper request) throws IOException {
+        String srcFilePath = request.getFilePathStrs().get(0);
+        String destFilePath = Paths.get(request.getDestinationRootPathStr(), new java.io.File(srcFilePath).getName()).toString();
         boolean isDeleteSrc = TaskConst.MoveType.MOVE.name().equalsIgnoreCase(request.getMoveType());
         FileUtil.copy(this.sourceFileSystem, new Path(srcFilePath), destFileSystem, new Path(destFilePath), isDeleteSrc, request.isOverwrite(), sourceFileSystem.getConf());
     }

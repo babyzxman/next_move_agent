@@ -18,7 +18,7 @@ public interface FileSystemAdapter {
 
     boolean exists(FileSystem fs, String filePath) throws IOException;
 
-    void copy(FileSystem destFileSystem, String srcFilePath, String destFilePath, TransferRequestWrapper request) throws IOException;
+    void copy(FileSystem destFileSystem, TransferRequestWrapper request) throws IOException;
 
     void delete(FileSystem fs, String relativeFilePath) throws IOException;
 
