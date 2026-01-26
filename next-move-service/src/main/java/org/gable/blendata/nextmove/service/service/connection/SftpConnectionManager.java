@@ -2,9 +2,14 @@ package org.gable.blendata.nextmove.service.service.connection;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.fs.FileSystem;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.sshd.client.SshClient;
 import org.apache.sshd.client.session.ClientSession;
+import org.apache.sshd.common.NamedFactory;
 import org.apache.sshd.common.SshException;
+import org.apache.sshd.common.cipher.BuiltinCiphers;
+import org.apache.sshd.common.cipher.Cipher;
 import org.apache.sshd.common.keyprovider.FileKeyPairProvider;
 import org.apache.sshd.core.CoreModuleProperties;
 import org.apache.sshd.sftp.client.SftpClient;
@@ -19,7 +24,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.KeyPair;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
@@ -39,6 +46,14 @@ public class SftpConnectionManager implements ConnectionManager {
         CoreModuleProperties.WINDOW_SIZE.set(client, (long) (16 * 1024 * 1024)); // 16 MB
         // Increase the packet size for data channels.
         CoreModuleProperties.MAX_PACKET_SIZE.set(client,(long)  (16 * 1024 * 1024)); // 16 MB
+
+        // Force high-performance ciphers
+        List<NamedFactory<Cipher>> cipherFactories = new ArrayList<>();
+        cipherFactories.add(BuiltinCiphers.aes128ctr);
+        cipherFactories.add(BuiltinCiphers.aes192ctr);
+        cipherFactories.add(BuiltinCiphers.aes256ctr);
+        client.setCipherFactories(cipherFactories);
+
         client.start();
         // Optional: Register a shutdown hook to stop the client when the JVM exits
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
