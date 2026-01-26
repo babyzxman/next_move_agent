@@ -47,6 +47,9 @@ public class SftpConnectionManager implements ConnectionManager {
         // Increase the packet size for data channels.
         CoreModuleProperties.MAX_PACKET_SIZE.set(client,(long)  (16 * 1024 * 1024)); // 16 MB
 
+        // Set a large I/O buffer size for the underlying session
+        CoreModuleProperties.IO_BUFFER_SIZE.set(client, (long) (8 * 1024 * 1024)); // 8 MB
+
         // Force high-performance ciphers
         List<NamedFactory<Cipher>> cipherFactories = new ArrayList<>();
         cipherFactories.add(BuiltinCiphers.aes128ctr);
