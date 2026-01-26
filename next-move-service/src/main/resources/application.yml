@@ -56,6 +56,10 @@ const:
 logging:
   config: /Users/a007626/IdeaProjects/beg-move-file-agent/next-move-service/src/main/resources/logback.xml
 
+nextmove:
+  sftp:
+    temp-dir: /tmp/nextmove-uploads
+
 ---
 
 server:

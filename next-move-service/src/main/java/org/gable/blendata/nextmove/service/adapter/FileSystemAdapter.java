@@ -4,6 +4,7 @@ package org.gable.blendata.nextmove.service.adapter;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.gable.blendata.nextmove.shared.dto.FileInfoDTO;
+import org.gable.blendata.nextmove.shared.dto.TransferRequestWrapper;
 
 import java.io.IOException;
 
@@ -17,7 +18,7 @@ public interface FileSystemAdapter {
 
     boolean exists(FileSystem fs, String filePath) throws IOException;
 
-    void copy(FileSystem destFileSystem, String srcFilePath, String destFilePath, boolean isDeleteSrc, boolean overwrite) throws IOException;
+    void copy(FileSystem destFileSystem, String srcFilePath, String destFilePath, TransferRequestWrapper request) throws IOException;
 
     void delete(FileSystem fs, String relativeFilePath) throws IOException;
 

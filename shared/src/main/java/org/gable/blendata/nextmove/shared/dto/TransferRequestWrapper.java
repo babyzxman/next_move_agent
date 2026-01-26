@@ -36,4 +36,5 @@ public class TransferRequestWrapper {
     private List<String> ctrlExtensions;
     private Integer filePartitionDate;
     private Boolean usedCheckpoint;
+    private boolean useTempFileDownload;
 }
