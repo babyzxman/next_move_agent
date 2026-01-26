@@ -31,7 +31,8 @@ public class FileInfoUtil {
                 URI uri = new URI(fullPath);
                 return uri.getPath();
             } catch (URISyntaxException e) {
-                log.error("{} !!!Error cannot extract relative source path , full path = {}", AppConst.PREFIX_LOG, fullPath);
+                log.error("{} !!!" +
+                        "Error cannot extract relative source path , full path = {}", AppConst.PREFIX_LOG, fullPath);
                 return null;
             }
         }

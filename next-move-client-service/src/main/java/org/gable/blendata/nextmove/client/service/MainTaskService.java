@@ -7,12 +7,20 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.gable.blendata.nextmove.client.adapter.FileSystemAdapter;
 import org.gable.blendata.nextmove.client.config.AppConfig;
+import org.gable.blendata.nextmove.client.config.SftpConnectionProperties;
 import org.gable.blendata.nextmove.client.dto.CreateTaskResponse;
 import org.gable.blendata.nextmove.client.dto.TaskDTO;
+import org.gable.blendata.nextmove.client.repo.CheckpointMasterRepository;
+import org.gable.blendata.nextmove.client.repo.CheckpointRepository;
+import org.gable.blendata.nextmove.client.repo.TransferHistoryRepository;
 import org.gable.blendata.nextmove.client.service.connection.TaskAwareFileSystemService;
 import org.gable.blendata.nextmove.shared.constant.AppConst;
+import org.gable.blendata.nextmove.shared.constant.FileStatus;
 import org.gable.blendata.nextmove.shared.constant.ServiceConst.ServiceId;
 import org.gable.blendata.nextmove.shared.constant.TaskConst;
+import org.gable.blendata.nextmove.shared.entity.CheckPointMasterFileList;
+import org.gable.blendata.nextmove.shared.entity.PathCheckpoint;
+import org.gable.blendata.nextmove.shared.entity.TransferHistory;
 import org.gable.blendata.nextmove.shared.exception.BusinessException;
 import org.gable.blendata.nextmove.shared.exception.GeneralException;
 import org.gable.blendata.nextmove.shared.exception.NotFoundException;
@@ -28,10 +36,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
@@ -52,6 +59,8 @@ public class MainTaskService {
     private final ScheduleJobService scheduleJobService;
     private final TransferService transferService;
     private final TaskAwareFileSystemService taskAwareFileSystemService;
+    private final CheckpointRepository checkpointRepository;
+    private final CheckpointMasterRepository checkpointMasterRepository;
 
     public void create(List<TaskDTO> taskDtos) {
         //...Create schedule job
@@ -81,6 +90,36 @@ public class MainTaskService {
 
             //...List files of tasks
             List<String> fileSourcePaths = listFile(taskDto);
+            SftpConnectionProperties sftpConnectionProperties =
+                    SftpConnectionProperties.fromMap(taskDto.getSourceProperties());
+            if(taskDto.getUsedCheckpoint()) {
+                List<CheckPointMasterFileList> checkPointMasterFileLists = new ArrayList<>();
+                int batchCount = 0;
+                Set<String> leftOverFileProcess = checkpointMasterRepository.getLeftOverFileProcess(
+                        taskDto.getRootPath().getSource(),sftpConnectionProperties.getHost(),
+                        sftpConnectionProperties.getPort(),taskDto.getFilePartitionDate());
+                for(String fileSourcePath: fileSourcePaths) {
+                    log.info("check test in file source path");
+                    leftOverFileProcess.remove(fileSourcePath);
+                    CheckPointMasterFileList checkPointMasterFileList = new CheckPointMasterFileList();
+                    checkPointMasterFileList.setFilePath(fileSourcePath);
+                    checkPointMasterFileList.setStatus(FileStatus.READY_TO_PROCESS.toString());
+                    checkPointMasterFileList.setFilePartitionDate(taskDto.getFilePartitionDate());
+                    checkPointMasterFileList.setHost(sftpConnectionProperties.getHost());
+                    checkPointMasterFileList.setPort(sftpConnectionProperties.getPort());
+                    checkPointMasterFileList.setSourceRootPath(taskDto.getRootPath().getSource());
+                    checkPointMasterFileLists.add(checkPointMasterFileList);
+                    batchCount++;
+                    if(batchCount > 5000) {
+                        checkPointMasterFileLists = new ArrayList<>();
+                        checkpointMasterRepository.saveAll(checkPointMasterFileLists);
+                    }
+                }
+                fileSourcePaths.addAll(leftOverFileProcess);
+                if(!checkPointMasterFileLists.isEmpty()) {
+                    checkpointMasterRepository.saveAll(checkPointMasterFileLists);
+                }
+            }
             //...P'Ban request to print all matching file paths
             log.info("{} task = {}, matching file source paths = {}"
                     , AppConst.PREFIX_LOG
@@ -174,10 +213,16 @@ public class MainTaskService {
                 : taskDTO.getBeforeCurrentDateInHours() != null ? DateUtil.calculateDateBySubtractingHours(taskDTO.getBeforeCurrentDateInHours())
                 : null;
         FileSystemAdapter fileSystemAdapter = taskAwareFileSystemService.getFileSystemAdapter(taskDTO.getId());
+        SftpConnectionProperties sftpProps = SftpConnectionProperties.fromMap(taskDTO.getSourceProperties());
+        Timestamp checkpoint = checkpointRepository.getCheckpointTimeByPath(
+                taskDTO.getRootPath().getSource(),sftpProps.getHost(),
+                sftpProps.getPort(),taskDTO.getFilePartitionDate());
+        log.info("check point time = {}",checkpoint);
+        ReturnListFile returnListFile = new ReturnListFile();
         try {
             switch (taskDTO.getType()) {
                 case NONE_CONTROL:
-                    filteredSourcePaths = listFileService.listNoneCtrlFile(fileSystemAdapter
+                    returnListFile = listFileService.listNoneCtrlFile(fileSystemAdapter
                             , sourcePath.toString()
                             , taskDTO.getFilesPerRound()
                             , afterDate
@@ -190,11 +235,15 @@ public class MainTaskService {
                             , taskDTO.getSourceProperties() == null ?
                                     null
                                     : taskDTO.getSourceProperties().get(TaskConst.SourceProperties.HOST.getPropertyName()).toString(),
-                            destination
+                            destination,
+                            taskDTO.getFilePartitionDate(),
+                            taskDTO.getUsedCheckpoint(),
+                            checkpoint
                     );
+                    filteredSourcePaths = returnListFile.getFileList();
                     break;
                 case ZERO_SIZE_CONTROL:
-                    filteredSourcePaths = listFileService.listZeroSizeCtrlFile(fileSystemAdapter
+                    returnListFile = listFileService.listZeroSizeCtrlFile(fileSystemAdapter
                             , sourcePath.toString()
                             , taskDTO.getFilesPerRound()
                             , afterDate
@@ -209,11 +258,31 @@ public class MainTaskService {
                                     null
                                     : taskDTO.getSourceProperties().get(TaskConst.SourceProperties.HOST.getPropertyName()).toString(),
                             taskDTO.getRootPath().getCtrlPath(),taskDTO.getCtrlFilePatterns(),
-                            destination
+                            destination, taskDTO.getFilePartitionDate(),
+                            taskDTO.getUsedCheckpoint(), checkpoint
                     );
+                    filteredSourcePaths = returnListFile.getFileList();
             }
         } finally {
             taskAwareFileSystemService.closeConnection(taskDTO.getId(), fileSystemAdapter);
+        }
+        if(taskDTO.getUsedCheckpoint()) {
+            SftpConnectionProperties sftpConnectionProperties = SftpConnectionProperties.fromMap(taskDTO.getSourceProperties());
+            if (returnListFile.getLatestModifiedTime() != null) {
+                PathCheckpoint pathCheckpoint = checkpointRepository.findByPathHostAndPort(
+                        taskDTO.getRootPath().getSource(),
+                        sftpConnectionProperties.getHost(),
+                        sftpConnectionProperties.getPort(), taskDTO.getFilePartitionDate());
+                if (pathCheckpoint == null) {
+                    pathCheckpoint = new PathCheckpoint();
+                }
+                pathCheckpoint.setPath(taskDTO.getRootPath().getSource());
+                pathCheckpoint.setLatestModifiedTime(returnListFile.getLatestModifiedTime());
+                pathCheckpoint.setPort(sftpConnectionProperties.getPort());
+                pathCheckpoint.setHost(sftpConnectionProperties.getHost());
+                pathCheckpoint.setFilePartitionDate(taskDTO.getFilePartitionDate());
+                checkpointRepository.save(pathCheckpoint);
+            }
         }
         return filteredSourcePaths;
     }

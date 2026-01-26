@@ -3,6 +3,8 @@ package org.gable.blendata.nextmove.client.adapter;
 import lombok.Builder;
 import lombok.Data;
 
+import java.nio.file.attribute.FileTime;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,5 +18,6 @@ public class FileListingCriteria {
     private final List<String> wildcardPatterns;
     private final List<String> ctrlExtensions;
     private final boolean recursive;
+    private FileTime checkpointTime;
 }
 

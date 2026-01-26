@@ -14,6 +14,9 @@ import org.gable.blendata.nextmove.shared.constant.TaskConst.SourceType;
 import org.gable.blendata.nextmove.shared.entity.TransferHistory;
 import org.gable.blendata.nextmove.shared.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -39,42 +42,47 @@ public class TransferHistoryService {
     }
 
     public List<TransferHistoryView> getSuccessOrProcessingFiles(SourceType sourceType, String rootPath, String host,
-                                                                 String destinationRootPath){
+                                                                 String destinationRootPath,Integer filePartitionDate){
         Long filePartitionCountDate = fileListConfig.getFileModifyTimePartition();
-        Integer dateFilterCheckModifyTime = Integer.valueOf(LocalDate.now().minusDays(filePartitionCountDate).format(localDateFormatter));
         if(SourceType.HADOOP.equals(sourceType)){
             return transferHistoryRepository.findHadoopFilePathBySourceRootPathAndStatus(
                     rootPath, Arrays.asList(FileStatus.SUCCESS.name(),
                             FileStatus.PROCESSING.name()),
-                    dateFilterCheckModifyTime, destinationRootPath);
+                    filePartitionDate);
         } else if(SourceType.SFTP.equals(sourceType)){
             return transferHistoryRepository.findSftpFilePathBySourceRootPathAndStatus(
                     rootPath, host, Arrays.asList(FileStatus.SUCCESS.name(),
-                            FileStatus.PROCESSING.name()),dateFilterCheckModifyTime,
-                    destinationRootPath);
+                            FileStatus.PROCESSING.name()),filePartitionDate);
         }
         return new ArrayList<>();
     }
 
 
-    public List<TransferHistoryView> findTransferHistoryViewByTaskId(String taskId) {
-        return transferHistoryRepository.findTransferHistoryViewByTaskId(taskId);
+    public List<TransferHistoryView> findTransferHistoryViewByTaskId(String taskId,Integer page, Integer pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.by(Sort.Direction.DESC, "id"));
+        return transferHistoryRepository.findTransferHistoryViewByTaskId(taskId,pageable).getContent();
+    }
+
+    public Integer findTransferHistoryViewPageSizeByTaskId(String taskId, Integer pageSize) {
+        Pageable pageable = PageRequest.of(0, pageSize, Sort.by(Sort.Direction.DESC, "id"));
+        return transferHistoryRepository.findTransferHistoryViewByTaskId(taskId,pageable).getTotalPages();
+    }
+
+    public Boolean findTransferHistoryStatus(String taskId) {
+        return transferHistoryRepository.existsProcessingByTaskId(taskId);
     }
 
     public List<TransferHistoryView> getProcessingFiles(SourceType sourceType,
-                                                        String rootPath, String host,String destPath){
-        Long filePartitionCountDate = fileListConfig.getFileModifyTimePartition();
-        Integer dateFilterCheckModifyTime = Integer.valueOf(LocalDate.now().minusDays(filePartitionCountDate).format(localDateFormatter));
+                                                        String rootPath,
+                                                        String host,String destPath,Integer filePartitionDate){
         if(SourceType.HADOOP.equals(sourceType)){
             return transferHistoryRepository.findHadoopFilePathBySourceRootPathAndStatus(
-                    rootPath, Collections.singletonList(FileStatus.PROCESSING.name()),dateFilterCheckModifyTime,
-                    destPath);
+                    rootPath, Collections.singletonList(FileStatus.PROCESSING.name()),filePartitionDate);
         } else if(SourceType.SFTP.equals(sourceType)){
             return transferHistoryRepository.
                     findSftpFilePathBySourceRootPathAndStatus(
                             rootPath, host, Collections.singletonList(
-                                    FileStatus.PROCESSING.name()),dateFilterCheckModifyTime,
-                            destPath);
+                                    FileStatus.PROCESSING.name()),filePartitionDate);
         }
         return new ArrayList<>();
     }

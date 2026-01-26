@@ -31,9 +31,20 @@ public class ExternalController {
         mainTaskService.removeTaskIdFromMap(taskId);
     }
 
-    @GetMapping("/taskHistory/{taskId}")
-    public List<TransferHistoryView> findTaskHistoryByTaskId(@PathVariable  String taskId) {
-        return transferHistoryService.findTransferHistoryViewByTaskId(taskId);
+    @GetMapping("/taskHistory/detail/{taskId}/{page}/{pageSize}")
+    public List<TransferHistoryView> findTaskHistoryByTaskId(
+            @PathVariable  String taskId, @PathVariable Integer page, @PathVariable Integer pageSize) {
+        return transferHistoryService.findTransferHistoryViewByTaskId(taskId,page,pageSize);
+    }
+
+    @GetMapping("/taskHistory/page/{taskId}/{pageSize}")
+    public Integer findTaskHistoryPageSize(@PathVariable String taskId, @PathVariable Integer pageSize) {
+        return transferHistoryService.findTransferHistoryViewPageSizeByTaskId(taskId,pageSize);
+    }
+
+    @GetMapping("/taskHistory/status/{taskId}")
+    public Boolean checkStatusOfTask(@PathVariable String taskId) {
+        return transferHistoryService.findTransferHistoryStatus(taskId);
     }
 
     @PostMapping("/test")

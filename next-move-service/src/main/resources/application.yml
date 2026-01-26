@@ -23,14 +23,13 @@ eureka:
 
 spring:
   application:
-    name: zero-size-control-service
+    name: none-control-service
   profiles:
     active: service-03
   datasource:
-    url: jdbc:mysql://localhost:3306/next_move
-    username: root
+    url: jdbc:postgresql://localhost:5432/next_move
+    username: a007626
     password:
-    driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       minimum-idle: 5  # Minimum number of idle connections that HikariCP tries to maintain in the pool. Default is 10.
       maximum-pool-size: 20  # Maximum number of connections that HikariCP will keep in the pool, including both idle and in-use connections. Default is 10.
@@ -44,9 +43,6 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL5Dialect
 app:
   id: Z001
   temp-dir:

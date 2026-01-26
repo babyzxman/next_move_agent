@@ -35,9 +35,9 @@ public class SftpConnectionManager implements ConnectionManager {
     // Static initializer to set up the SshClient once
     static {
         client = SshClient.setUpDefaultClient();
-        CoreModuleProperties.WINDOW_SIZE.set(client, (long) (16 * 1024 * 1024)); // 4 MB
+        CoreModuleProperties.WINDOW_SIZE.set(client, (long) (4 * 1024 * 1024)); // 4 MB
         // Increase the packet size for data channels.
-        CoreModuleProperties.MAX_PACKET_SIZE.set(client,(long)  (8 * 1024 * 1024)); // 256 KB
+        CoreModuleProperties.MAX_PACKET_SIZE.set(client,(long)  (2 * 1024 * 1024)); // 256 KB
         client.start();
         // Optional: Register a shutdown hook to stop the client when the JVM exits
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -60,8 +60,6 @@ public class SftpConnectionManager implements ConnectionManager {
 
     @Override
     public FileSystemAdapter createConnection() throws IOException {
-        CoreModuleProperties.HEARTBEAT_INTERVAL.set(client, Duration.ofSeconds(15));
-        CoreModuleProperties.HEARTBEAT_NO_REPLY_MAX.set(client, 3);
         if (properties.getPrivateKeyPath() != null) {
             String key = ConnectionManagerUtil.getServerMapKey(properties.getHost(),properties.getPort());
             Set<String> algroithmSet = ConnectionManagerUtil.getSftpAlgorithmMap(key);
@@ -82,7 +80,7 @@ public class SftpConnectionManager implements ConnectionManager {
                     Iterable<KeyPair> keys = provider.loadKeys(null);
                     session.addPublicKeyIdentity(keys.iterator().next());
                     try {
-                        session.auth().verify(10, TimeUnit.SECONDS);
+                        session.auth().verify(properties.getConnectionTimeout(), TimeUnit.MILLISECONDS);
                         SftpClient sftpClient = SftpClientFactory.instance().createSftpClient(session);
                         if(algroithmSet.size() != 1) {
                             successKeySet.add(algorithm);
@@ -91,6 +89,7 @@ public class SftpConnectionManager implements ConnectionManager {
                         return adapterFactory.createSftpAdapter(sftpClient, destFileSystem);
                     }
                     catch (SshException ex) {
+                        session.close();
                         if (ex.getCause() instanceof IllegalArgumentException) {
                             if (count >= algroithmSet.size()) {
                                 ConnectionManagerUtil.setSftpAlogirthmSet(successKeySet, key);
@@ -104,17 +103,18 @@ public class SftpConnectionManager implements ConnectionManager {
                 }
             }
             else {
-                client.setSignatureFactories(ConnectionManagerUtil.getDEFAULT_SIGNATURE_FACTORIES());
+//                client.setSignatureFactories(ConnectionManagerUtil.getDEFAULT_SIGNATURE_FACTORIES());
                 ClientSession session = client.connect(properties.getUsername(),
                                 properties.getHost(),
                                 properties.getPort())
                         .verify(properties.getConnectionTimeout())
                         .getSession();
+                session.setSignatureFactories(ConnectionManagerUtil.getDEFAULT_SIGNATURE_FACTORIES());
                 Path keyPath = Paths.get(properties.getPrivateKeyPath());
                 FileKeyPairProvider provider = new FileKeyPairProvider(keyPath);
                 Iterable<KeyPair> keys = provider.loadKeys(null);
                 session.addPublicKeyIdentity(keys.iterator().next());
-                session.auth().verify(10, TimeUnit.SECONDS);
+                session.auth().verify(properties.getConnectionTimeout(), TimeUnit.MILLISECONDS);
                 SftpClient sftpClient = SftpClientFactory.instance().createSftpClient(session);
                 return adapterFactory.createSftpAdapter(sftpClient, destFileSystem);
             }
@@ -125,7 +125,7 @@ public class SftpConnectionManager implements ConnectionManager {
                     .verify(properties.getConnectionTimeout())
                     .getSession();
             session.addPasswordIdentity(properties.getPassword());
-            session.auth().verify(10, TimeUnit.SECONDS);
+            session.auth().verify(properties.getConnectionTimeout(), TimeUnit.MILLISECONDS);
             SftpClient sftpClient = SftpClientFactory.instance().createSftpClient(session);
             return adapterFactory.createSftpAdapter(sftpClient, destFileSystem);
         }

@@ -16,4 +16,12 @@ public interface TransferHistoryRepository extends JpaRepository<TransferHistory
 
     @Query("select th from TransferHistory th where th.id in (:ID_LIST)")
     public List<TransferHistory> findByIdIn(@Param("ID_LIST") List<Long> ids);
+
+    @Query("select th from TransferHistory th where th.taskId = :taskId")
+    List<TransferHistory> findByTaskId(@Param("taskId") String taskId);
+
+    @Query(value =
+            "select * from transfer_history where id = any (cast(:ids as bigint[]))",
+            nativeQuery = true)
+    List<TransferHistory> findByIdAny(@Param("ids") Long[] ids);
 }

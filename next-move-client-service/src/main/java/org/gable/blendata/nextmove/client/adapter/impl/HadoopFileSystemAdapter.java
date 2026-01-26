@@ -11,6 +11,7 @@ import org.gable.blendata.nextmove.client.custom.pathfilter.OrPathFilter;
 import org.gable.blendata.nextmove.shared.util.DateUtil;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +27,9 @@ public class HadoopFileSystemAdapter implements FileSystemAdapter {
     }
 
     @Override
-    public List<FileInfo> listFiles(String rootPath, FileListingCriteria criteria) throws IOException {
+    public List<FileInfo> listFiles(String rootPath, FileListingCriteria criteria,
+                                    Boolean usedCheckpoint, Timestamp checkpointTime,
+                                    Integer filePartitionDate) throws IOException {
 
         PathFilter pathFilter = createPathFilter(criteria);
         FileStatus[] fileStatusList = fs.globStatus(new Path(rootPath + "/*.*"), pathFilter);

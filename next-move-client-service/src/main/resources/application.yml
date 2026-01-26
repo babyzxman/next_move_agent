@@ -24,10 +24,10 @@ spring:
   application:
     name: next-move-client-service
   datasource:
-    url: jdbc:mysql://localhost:3306/next_move
-    username: root
+    url: jdbc:postgresql://localhost:5432/next_move
+    username: a007626
     password:
-    driver-class-name: com.mysql.cj.jdbc.Driver
+
     hikari:
       minimum-idle: 5  # Minimum number of idle connections that HikariCP tries to maintain in the pool. Default is 10.
       maximum-pool-size: 20  # Maximum number of connections that HikariCP will keep in the pool, including both idle and in-use connections. Default is 10.
@@ -41,9 +41,6 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: false
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL5Dialect
   cloud:
     loadbalancer:
       ribbon:
@@ -73,6 +70,9 @@ app:
       enabled : false
       keep-days: 2
       cron: 0 0 0 ? * *      # Seconds | Minutes | Hours | Day of Month | Month | Day of Week
+file:
+  modifyTime:
+    partition: 7
 client:
   url-scheme: https
 const:

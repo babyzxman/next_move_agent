@@ -34,5 +34,6 @@ public class TransferRequestWrapper {
     private SourceType sourceType;
     private String host;    //...SFTP
     private List<String> ctrlExtensions;
-
+    private Integer filePartitionDate;
+    private Boolean usedCheckpoint;
 }

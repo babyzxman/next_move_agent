@@ -13,6 +13,10 @@ public class ErrorUtil {
         return e.getMessage() + "(" + getCauseClassInfo(e.getStackTrace()) + ")";
     }
 
+    public static String getErrorMessage(Throwable e){
+        return e.getMessage() + "(" + getCauseClassInfo(e.getStackTrace()) + ")";
+    }
+
     public static String getCauseClassInfo(StackTraceElement[] stes){
         for(StackTraceElement ste : stes){
             if(ste.getClassName().startsWith("org.gable.blendata.nextmove")){

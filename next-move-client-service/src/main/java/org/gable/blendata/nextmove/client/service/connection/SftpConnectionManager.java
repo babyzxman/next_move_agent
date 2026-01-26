@@ -42,7 +42,6 @@ public class SftpConnectionManager implements ConnectionManager {
 
     public SftpConnectionManager(SftpConnectionProperties properties) {
         this.properties = properties;
-
     }
 
     @Override
@@ -67,7 +66,7 @@ public class SftpConnectionManager implements ConnectionManager {
                     Iterable<KeyPair> keys = provider.loadKeys(null);
                     session.addPublicKeyIdentity(keys.iterator().next());
                     try {
-                        session.auth().verify(10, TimeUnit.SECONDS);
+                        session.auth().verify(properties.getConnectionTimeout(), TimeUnit.SECONDS);
                         SftpClient sftpClient = SftpClientFactory.instance().createSftpClient(session);
                         if(algroithmSet.size() != 1) {
                             successKeySet.add(algorithm);
@@ -76,6 +75,7 @@ public class SftpConnectionManager implements ConnectionManager {
                         return new SftpFileSystemAdapter(sftpClient);
                     }
                     catch (SshException ex) {
+                        session.close();
                         if (ex.getCause() instanceof IllegalArgumentException) {
                             if (count >= algroithmSet.size()) {
                                 ConnectionManagerUtil.setSftpAlogirthmSet(successKeySet, key);
@@ -89,17 +89,17 @@ public class SftpConnectionManager implements ConnectionManager {
                 }
             }
             else {
-                client.setSignatureFactories(ConnectionManagerUtil.getDEFAULT_SIGNATURE_FACTORIES());
                 ClientSession session = client.connect(properties.getUsername(),
                                 properties.getHost(),
                                 properties.getPort())
                         .verify(properties.getConnectionTimeout())
                         .getSession();
+                session.setSignatureFactories(ConnectionManagerUtil.getDEFAULT_SIGNATURE_FACTORIES());
                 Path keyPath = Paths.get(properties.getPrivateKeyPath());
                 FileKeyPairProvider provider = new FileKeyPairProvider(keyPath);
                 Iterable<KeyPair> keys = provider.loadKeys(null);
                 session.addPublicKeyIdentity(keys.iterator().next());
-                session.auth().verify(10, TimeUnit.SECONDS);
+                session.auth().verify(properties.getConnectionTimeout(), TimeUnit.MILLISECONDS);
                 SftpClient sftpClient = SftpClientFactory.instance().createSftpClient(session);
                 return new SftpFileSystemAdapter(sftpClient);
             }
@@ -110,7 +110,7 @@ public class SftpConnectionManager implements ConnectionManager {
                     .verify(properties.getConnectionTimeout())
                     .getSession();
             session.addPasswordIdentity(properties.getPassword());
-            session.auth().verify(10, TimeUnit.SECONDS);
+            session.auth().verify(properties.getConnectionTimeout(), TimeUnit.MILLISECONDS);
             SftpClient sftpClient = SftpClientFactory.instance().createSftpClient(session);
             return new SftpFileSystemAdapter(sftpClient);
         }

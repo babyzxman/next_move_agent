@@ -154,6 +154,8 @@ public class TransferService {
                 .destinationCtrlRootPathStr(taskDto.getRootPath().getCtrlDestPath())
                 .notExtract(Objects.isNull(taskDto.getCompression())? false : taskDto.getCompression().isNotExtract())
                 .createTargetZipBaseDir(Objects.isNull(taskDto.getCompression())? false : taskDto.getCompression().isCreateTargetDirectory())
+                .filePartitionDate(taskDto.getFilePartitionDate())
+                .usedCheckpoint(taskDto.getUsedCheckpoint())
                 .build();
         HttpEntity<TransferRequestWrapper> entity = new HttpEntity<>(body, headers);
 

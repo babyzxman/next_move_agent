@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 public interface TransferHistoryView {
 
+    String getId();
+
     String getTaskId();
 
     String getFilePath();

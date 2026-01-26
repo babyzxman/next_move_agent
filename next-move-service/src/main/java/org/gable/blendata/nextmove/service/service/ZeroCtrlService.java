@@ -14,7 +14,9 @@ import org.apache.hadoop.fs.Path;
 import org.gable.blendata.nextmove.service.adapter.FileSystemAdapter;
 import org.gable.blendata.nextmove.service.config.AppConfig;
 import org.gable.blendata.nextmove.service.config.HadoopConfig;
+import org.gable.blendata.nextmove.service.config.SftpConnectionProperties;
 import org.gable.blendata.nextmove.service.dto.ReconcileInfoDTO;
+import org.gable.blendata.nextmove.service.repo.CheckpointMasterRepository;
 import org.gable.blendata.nextmove.service.service.connection.ConnectionManager;
 import org.gable.blendata.nextmove.service.service.connection.ConnectionManagerFactory;
 import org.gable.blendata.nextmove.shared.constant.AppConst;
@@ -59,6 +61,7 @@ public class ZeroCtrlService extends MoveService{
     private final TransferHistoryService transferHistoryService;
     private final ReconcileLogService reconcileLogService;
     private final ConnectionManagerFactory connectionManagerFactory;
+    private final CheckpointMasterRepository checkpointMasterRepository;
 
     private final Map<String, CompletableFuture<Void>> runningTasks = new ConcurrentHashMap<>();
     private final Map<String, AtomicBoolean> cancellationFlags = new ConcurrentHashMap<>();
@@ -140,12 +143,15 @@ public class ZeroCtrlService extends MoveService{
             List<ReconcileInfoDTO> reconcileInfos = new ArrayList<>();
             List<TransferHistory> transferHistories = new ArrayList<>();
             ConnectionManager connectionManager = null;
+            Set<Long> transferHistoryIdSet = new HashSet<>(transferHistoryIds);
             FileSystemAdapter adapter = null;
             try {
                 String destRootPathStr = transferRequestWrapper.getDestinationRootPathStr();
                 boolean isDeleteSrc = TaskConst.MoveType.MOVE.name().equalsIgnoreCase(transferRequestWrapper.getMoveType());
-
-                transferHistories = transferHistoryService.findByIdIn(transferHistoryIds);
+                transferHistories = transferHistoryService.findByTaskId(transferRequestWrapper.getTaskId());
+                transferHistories = transferHistories.stream().filter(f -> {
+                    return transferHistoryIdSet.contains(f.getId());
+                }).collect(Collectors.toList());
                 connectionManager = connectionManagerFactory.createConnectionManager(transferRequestWrapper.getSourceType()
                         , transferRequestWrapper.getSourceRootPathStr()
                         , transferRequestWrapper.getDestinationRootPathStr()
@@ -213,7 +219,7 @@ public class ZeroCtrlService extends MoveService{
 
                 }while(retry < maxRetry && hasError && !cancellationFlag.get() && !Thread.currentThread().isInterrupted());
 
-            }catch (Exception e) {
+            } catch (Throwable e){
                 String errorNo = ErrorUtil.generateErrorNo(appConfig.getAppId());
                 if(e instanceof TaskCancelledException){
                     log.error("{} !!!ErrorNo({}) : Task {} was cancelled: {}, interrupt status: {}", AppConst.PREFIX_LOG, errorNo, taskKey, e.getMessage(), Thread.currentThread().isInterrupted());
@@ -226,7 +232,7 @@ public class ZeroCtrlService extends MoveService{
                 markTransferHistoriesAsFailed(processingTransferHistories, errorNo);
                 addRemainingReconciledInfo(adapter, processingTransferHistories, reconcileInfos
                         , errorNo, ErrorUtil.getErrorMessage(e), transferRequestWrapper.getSourceRootPathStr());
-            } finally {
+            } finally{
                 if(connectionManager != null){
                     try {
                         connectionManager.closeConnection(adapter);
@@ -234,7 +240,10 @@ public class ZeroCtrlService extends MoveService{
                         log.error("{} !!!Error cannot close connection : {}", AppConst.PREFIX_LOG, e.getMessage(), e);
                     }
                 }
-                saveFinish(transferHistories);
+                SftpConnectionProperties sftpConnectionProperties = SftpConnectionProperties.fromMap(
+                        transferRequestWrapper.getSourceProperties());
+                saveFinish(transferHistories, sftpConnectionProperties.getHost(),
+                        sftpConnectionProperties.getPort(),transferRequestWrapper.getUsedCheckpoint());
                 //...Write log file
                 if (!reconcileInfos.isEmpty()) {
                     reconcileLogService.writeLogFile(reconcileInfos, transferRequestWrapper.getSourceRootPathStr(), transferRequestWrapper.getTaskId());
@@ -481,16 +490,17 @@ public class ZeroCtrlService extends MoveService{
             reconcileInfo.setErrorNo(errorNo);
             reconcileInfo.setErrMsg(e.getMessage() + "(" + ErrorUtil.getCauseClassInfo(e.getStackTrace()) + ")");
             throw e;
-        }catch(Exception e){
-            log.error(e.getMessage(),e);
-            handleFileSizeMisMatchException(adapter.getDestFileSystem(), e);
+        } catch (Throwable t) {
+            // this is the missing branch that explains FAILED without errorNo
             String errorNo = ErrorUtil.generateErrorNo(appConfig.getAppId());
-            log.error("{} !!!ErrorNo({}) : Cannot move/copy file '{}'", AppConst.PREFIX_LOG, errorNo, transferHistory.getFilePath(), e);
+            log.error("{} !!!ErrorNo({}) : FATAL throwable while processing '{}', type={}",
+                    AppConst.PREFIX_LOG, errorNo, transferHistory.getFilePath(), t.getClass().getName(), t);
+
             transferHistory.setErrorNo(errorNo);
-            transferHistory.setErrorMsg(e.getMessage());
+            transferHistory.setErrorMsg(t.getMessage());
             reconcileInfo.setErrorNo(errorNo);
-            reconcileInfo.setErrMsg(e.getMessage() + "(" + ErrorUtil.getCauseClassInfo(e.getStackTrace()) + ")");
-        }finally {
+            reconcileInfo.setErrMsg(t.getMessage());
+        } finally {
             transferHistory.setProcessTime(Duration.between(startTime, LocalDateTime.now()).toMillis());
             transferHistory.setStatus(isSuccess ? FileStatus.SUCCESS.name() :FileStatus.FAILED.name());
             reconcileInfo.setStatus(isSuccess ? FileStatus.SUCCESS.name() :FileStatus.FAILED.name());
@@ -512,11 +522,36 @@ public class ZeroCtrlService extends MoveService{
         }
     }
 
-    private void saveFinish(List<TransferHistory> transferHistories) {
+    private void saveFinish(List<TransferHistory> transferHistories,
+                            String host,Integer port,Boolean isUsedCheckpoint) {
+        int batchCount = 0;
+        String sourceRootPath = null;
+        List<String> updatePath = new ArrayList<>();
+        Integer filePartitionDate = null;
         for (TransferHistory transferHistory : transferHistories) {
+            sourceRootPath = transferHistory.getSourceRootPath();
             transferHistory.setModifiedBy(appConfig.getAppId());
             transferHistory.setModifiedDate(DateUtil.getCurrentDateWithTime());
+            log.info("transfer history file modify time = {}",transferHistory.getFileModifiedTime());
             transferHistoryService.save(transferHistory);
+            filePartitionDate = transferHistory.getFilePartitionDate();
+            if(isUsedCheckpoint) {
+                if (transferHistory.getStatus().equals(FileStatus.SUCCESS.toString())) {
+                    updatePath.add(transferHistory.getFilePath());
+                    batchCount++;
+                }
+                if (batchCount > 5000) {
+                    batchCount = 0;
+                    checkpointMasterRepository.updateCheckpointMasterFileListFinished(
+                            sourceRootPath, updatePath, host, port, transferHistory.getFilePartitionDate());
+                    updatePath = new ArrayList<>();
+                }
+            }
+        }
+        if(isUsedCheckpoint) {
+            if (!updatePath.isEmpty())
+                checkpointMasterRepository.updateCheckpointMasterFileListFinished(
+                        sourceRootPath, updatePath, host, port, filePartitionDate);
         }
     }
 

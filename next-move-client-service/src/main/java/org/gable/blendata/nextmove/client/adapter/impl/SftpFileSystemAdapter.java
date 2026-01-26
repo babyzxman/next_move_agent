@@ -10,9 +10,21 @@ import org.gable.blendata.nextmove.client.adapter.FileSystemAdapter;
 import org.gable.blendata.nextmove.shared.util.DateUtil;
 
 import java.io.IOException;
+import java.nio.file.attribute.FileTime;
+import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalField;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Pattern;
 
 @Slf4j
@@ -25,9 +37,9 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
     }
 
     @Override
-    public List<FileInfo> listFiles(String rootPath, FileListingCriteria criteria) throws IOException {
+    public List<FileInfo> listFiles(String rootPath, FileListingCriteria criteria,Boolean usedCheckpoint,
+                                    Timestamp checkpointTime,Integer filePartitionDate) throws IOException {
         List<FileInfo> allFiles = new ArrayList<>();
-
         // Check if rootPath contains glob patterns
         if (containsGlobPattern(rootPath)) {
             List<String> matchedPaths = resolveGlobPattern(rootPath);
@@ -37,10 +49,12 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
                 if (criteria.getMaxFetchFiles() != null && allFiles.size() >= criteria.getMaxFetchFiles()) {
                     break;
                 }
-                collectFiles(path, criteria, allFiles, 0);
+                collectFiles(path, criteria, allFiles, 0,
+                        usedCheckpoint,checkpointTime,filePartitionDate);
             }
         } else {
-            collectFiles(rootPath, criteria, allFiles, 0);
+            collectFiles(rootPath, criteria, allFiles, 0,
+                    usedCheckpoint,checkpointTime,filePartitionDate);
         }
 
         return allFiles;
@@ -187,39 +201,105 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
         return "\\^$.|+()".indexOf(c) != -1;
     }
 
-    private void collectFiles(String path, FileListingCriteria criteria, List<FileInfo> result, int currentCount) throws IOException {
+    private void collectFiles(String path, FileListingCriteria criteria, List<FileInfo> result,
+                              int currentCount, Boolean isCheckpointUsed, Timestamp checkpointTime,
+                              Integer filePartitionDate) throws IOException {
         if (criteria.getMaxFetchFiles() != null && result.size() >= criteria.getMaxFetchFiles()) {
             return;
         }
-
-        try {
+        if(isCheckpointUsed) {
             Iterable<DirEntry> entries = sftpClient.readDir(path);
-
-            for (DirEntry entry : entries) {
+            for (SftpClient.DirEntry entry : entries) {
+                String entryPath = path.endsWith("/") ? path + entry.getFilename() : path + "/" + entry.getFilename();
                 if (criteria.getMaxFetchFiles() != null && result.size() >= criteria.getMaxFetchFiles()) {
                     break;
                 }
-
-                String entryPath = path.endsWith("/") ? path + entry.getFilename() : path + "/" + entry.getFilename();
-
                 if (entry.getAttributes().isDirectory()) {
                     if (criteria.isRecursive() && !".".equals(entry.getFilename()) && !"..".equals(entry.getFilename())) {
-                        collectFiles(entryPath, criteria, result, currentCount);
+                        collectFiles(entryPath, criteria, result, currentCount, isCheckpointUsed, checkpointTime,filePartitionDate);
                     }
                 } else {
-                    FileInfo fileInfo = createFileInfo(entryPath, entry);
-                    if (matchesExtension(fileInfo, criteria.getExtensions()) &&
-                            matchesWildcardPattern(
-                                    fileInfo, criteria.getWildcardPatterns(),
-                                    criteria.getExtensions().get(0)) &&
-                            matchesDateFilter(fileInfo, criteria.getAfterDate())) {
-
-                        result.add(fileInfo);
+                    if (checkpointTime != null) {
+                        if (checkpointTime.toInstant().toEpochMilli() <
+                                entry.getAttributes().getModifyTime().to(TimeUnit.MILLISECONDS)) {
+                            Instant instant = Instant.ofEpochMilli(entry.getAttributes().getCreateTime() != null
+                                    ? entry.getAttributes().getCreateTime().toMillis()
+                                    : entry.getAttributes().getModifyTime().toMillis());
+                            LocalDate date = instant.atZone(ZoneId.systemDefault()).toLocalDate();
+                            String yyyyMMdd = date.format(DateTimeFormatter.BASIC_ISO_DATE);
+                            if(yyyyMMdd.equals(filePartitionDate.toString())) {
+                                if (criteria.getCheckpointTime() != null) {
+                                    if (criteria.getCheckpointTime().toMillis() < entry.getAttributes().getModifyTime().toMillis()) {
+                                        criteria.setCheckpointTime(entry.getAttributes().getModifyTime());
+                                    }
+                                } else {
+                                    criteria.setCheckpointTime(entry.getAttributes().getModifyTime());
+                                }
+                                FileInfo fileInfo = createFileInfo(entryPath, entry);
+                                if (matchesExtension(fileInfo, criteria.getExtensions()) &&
+                                        matchesWildcardPattern(
+                                                fileInfo, criteria.getWildcardPatterns(),
+                                                criteria.getExtensions().get(0)) &&
+                                        matchesDateFilter(fileInfo, criteria.getAfterDate())) {
+                                    result.add(fileInfo);
+                                }
+                            }
+                        }
+                    } else {
+                        Instant instant = Instant.ofEpochMilli(entry.getAttributes().getCreateTime() != null
+                                ? entry.getAttributes().getCreateTime().toMillis()
+                                : entry.getAttributes().getModifyTime().toMillis());
+                        LocalDate date = instant.atZone(ZoneId.systemDefault()).toLocalDate();
+                        String yyyyMMdd = date.format(DateTimeFormatter.BASIC_ISO_DATE);
+                        if(yyyyMMdd.equals(filePartitionDate.toString())) {
+                            if (criteria.getCheckpointTime() != null) {
+                                if (criteria.getCheckpointTime().toMillis() > entry.getAttributes().getModifyTime().toMillis()) {
+                                    criteria.setCheckpointTime(entry.getAttributes().getModifyTime());
+                                }
+                            } else {
+                                criteria.setCheckpointTime(entry.getAttributes().getModifyTime());
+                            }
+                            FileInfo fileInfo = createFileInfo(entryPath, entry);
+                            if (matchesExtension(fileInfo, criteria.getExtensions()) &&
+                                    matchesWildcardPattern(
+                                            fileInfo, criteria.getWildcardPatterns(),
+                                            criteria.getExtensions().get(0)) &&
+                                    matchesDateFilter(fileInfo, criteria.getAfterDate())) {
+                                result.add(fileInfo);
+                            }
+                        }
                     }
                 }
             }
-        } catch (IOException e) {
-            log.warn("Cannot read directory '{}': {}", path, e.getMessage());
+        }
+        else {
+            try {
+                Iterable<DirEntry> entries = sftpClient.readDir(path);
+                for (DirEntry entry : entries) {
+                    if (criteria.getMaxFetchFiles() != null && result.size() >= criteria.getMaxFetchFiles()) {
+                        break;
+                    }
+
+                    String entryPath = path.endsWith("/") ? path + entry.getFilename() : path + "/" + entry.getFilename();
+
+                    if (entry.getAttributes().isDirectory()) {
+                        if (criteria.isRecursive() && !".".equals(entry.getFilename()) && !"..".equals(entry.getFilename())) {
+                            collectFiles(entryPath, criteria, result, currentCount,isCheckpointUsed,checkpointTime,filePartitionDate);
+                        }
+                    } else {
+                        FileInfo fileInfo = createFileInfo(entryPath, entry);
+                        if (matchesExtension(fileInfo, criteria.getExtensions()) &&
+                                matchesWildcardPattern(
+                                        fileInfo, criteria.getWildcardPatterns(),
+                                        criteria.getExtensions().get(0)) &&
+                                matchesDateFilter(fileInfo, criteria.getAfterDate())) {
+                            result.add(fileInfo);
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                log.warn("Cannot read directory '{}': {}", path, e.getMessage());
+            }
         }
     }
 

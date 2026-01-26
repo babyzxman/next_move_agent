@@ -6,6 +6,7 @@ import org.gable.blendata.nextmove.shared.constant.TaskConst.MoveType;
 import org.gable.blendata.nextmove.shared.constant.TaskConst.TaskType;
 import org.gable.blendata.nextmove.shared.constant.TaskConst.SourceType;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +38,9 @@ public class TaskDTO implements Serializable {
     private String sourceFile;
     private Map<String, Object> sourceProperties;
     private List<String> ctrlFilePatterns;
+    private Integer filePartitionDate;
+    private Boolean usedCheckpoint = false;
+    private Timestamp modifiedTime;
 
     @AllArgsConstructor
     @NoArgsConstructor

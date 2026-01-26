@@ -10,10 +10,12 @@ import org.gable.blendata.nextmove.client.adapter.FileSystemAdapter;
 import org.gable.blendata.nextmove.client.dto.TransferHistoryView;
 import org.gable.blendata.nextmove.shared.constant.AppConst;
 import org.gable.blendata.nextmove.shared.constant.TaskConst;
+import org.gable.blendata.nextmove.shared.entity.PathCheckpoint;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -59,12 +61,14 @@ public class ListFileService {
 */
 
 
-    public List<String> listNoneCtrlFile(FileSystemAdapter fileSystemAdapter, String rootPath,
+    public ReturnListFile listNoneCtrlFile(FileSystemAdapter fileSystemAdapter, String rootPath,
                                          Integer filePerRound, LocalDateTime afterDate,
                                          List<String> srcExtensions, List<String> wildcardPatterns,
                                          boolean isOverwrite, TaskConst.MoveType moveType, String taskId,
-                                         TaskConst.SourceType sourceType, String host,String destPath) throws IOException {
-
+                                         TaskConst.SourceType sourceType, String host, String destPath,
+                                         Integer filePartitionDate, Boolean usedCheckpoint,
+                                         Timestamp checkpointTime) throws IOException {
+        ReturnListFile returnListFile = new ReturnListFile();
         FileListingCriteria criteria = FileListingCriteria.builder()
                 .maxFiles(filePerRound)
                 .afterDate(afterDate)
@@ -72,16 +76,19 @@ public class ListFileService {
                 .wildcardPatterns(wildcardPatterns)
                 .build();
 
-        List<FileInfo> files = fileSystemAdapter.listFiles(rootPath, criteria);
+        List<FileInfo> files = fileSystemAdapter.listFiles(
+                rootPath, criteria,usedCheckpoint,checkpointTime,filePartitionDate);
 
         if (files.isEmpty()) {
             log.warn("[Blendata] !!! Not found match files on path {} of task id {}", rootPath, taskId);
-            return new ArrayList<>();
+            return returnListFile;
         }
-
-        List<TransferHistoryView> excludeFiles = getExcludeFiles(
-                sourceType, rootPath, moveType, host, isOverwrite,
-                destPath);
+        List<TransferHistoryView> excludeFiles = new ArrayList<>();
+        if(!usedCheckpoint) {
+            excludeFiles = getExcludeFiles(
+                    sourceType, rootPath, moveType, host, isOverwrite,
+                    destPath, filePartitionDate);
+        }
 
         Map<String,TransferHistoryView> transferHistoryViewMap = new HashMap<>();
         for(TransferHistoryView transferHistoryView: excludeFiles) {
@@ -113,18 +120,20 @@ public class ListFileService {
                 filePath.add(file.getPath());
             }
         }
-
-        return filePath;
+        returnListFile.setFileList(filePath);
+        if(criteria.getCheckpointTime() != null)
+            returnListFile.setLatestModifiedTime(Timestamp.from(criteria.getCheckpointTime().toInstant()));
+        return returnListFile;
     }
 
     private List<TransferHistoryView> getExcludeFiles(TaskConst.SourceType sourceType, String rootPath,
                                                       TaskConst.MoveType moveType, String host, boolean isOverwrite,
-                                                      String destPath) {
+                                                      String destPath,Integer filePartitionDate) {
 //        if (moveType.equals(TaskConst.MoveType.MOVE) && isOverwrite) {
         if (isOverwrite) {
-            return transferHistoryService.getProcessingFiles(sourceType, rootPath, host,destPath);
+            return transferHistoryService.getProcessingFiles(sourceType, rootPath, host,destPath,filePartitionDate);
         } else {
-            return transferHistoryService.getSuccessOrProcessingFiles(sourceType, rootPath, host,destPath);
+            return transferHistoryService.getSuccessOrProcessingFiles(sourceType, rootPath, host,destPath,filePartitionDate);
         }
     }
 
@@ -170,28 +179,28 @@ public class ListFileService {
     }
 */
 
-    public String getControlFilePath(FileInfo file, String ctrlExtensions, String controlPath) {
+    public String getControlFilePath(FileInfo file, List<String> ctrlExtensions, String controlPath,FileSystemAdapter adapter) throws IOException {
         if (controlPath != null) {
             String controlAbsolutePath = controlPath.endsWith("/") ? controlPath + file.getName() :
                     controlPath + File.separator + file.getName();
-            String basePath = FilenameUtils.removeExtension(controlAbsolutePath);
-            return basePath + "." + ctrlExtensions;
+            return hasControlFile(adapter,controlAbsolutePath,ctrlExtensions);
         }
         else {
-            String basePath = FilenameUtils.removeExtension(file.getPath());
-            return basePath + "." + ctrlExtensions;
+            return hasControlFile(adapter,file.getPath(),ctrlExtensions);
         }
     }
 
-    public List<String> listZeroSizeCtrlFile(FileSystemAdapter fileSystemAdapter, String rootPath,
+    public ReturnListFile listZeroSizeCtrlFile(FileSystemAdapter fileSystemAdapter, String rootPath,
                                              Integer filePerRound, LocalDateTime afterDate,
                                              List<String> ctrlExtensions, List<String> srcExtensions,
                                              List<String> wildcardPatterns, boolean isOverwrite,
                                              TaskConst.MoveType moveType, String taskId,
                                              TaskConst.SourceType sourceType, String host,
                                              String controlPath, List<String> controlFileNamePattern,
-                                             String destPath) throws IOException {
-
+                                             String destPath, Integer filePartitionDate,Boolean usedCheckpoint,
+                                             Timestamp checkpointTime) throws IOException {
+        ReturnListFile returnListFile = new ReturnListFile();
+        long t0 = System.currentTimeMillis();
         FileListingCriteria criteria =  FileListingCriteria.builder()
                 .maxFiles(filePerRound)
                 .afterDate(afterDate)
@@ -200,15 +209,18 @@ public class ListFileService {
                 .ctrlExtensions(ctrlExtensions)
                 .build();
 
-        List<FileInfo> files = fileSystemAdapter.listFiles(rootPath, criteria);
-
+        List<FileInfo> files = fileSystemAdapter.listFiles(
+                rootPath, criteria,usedCheckpoint,checkpointTime,filePartitionDate);
+        log.info("list file took {} ms", System.currentTimeMillis()-t0);
         if (files.isEmpty()) {
             log.warn("[Blendata] !!! Not found match files on path {} of task id {}", rootPath, taskId);
-            return new ArrayList<>();
+            return returnListFile;
         }
-
+        t0 = System.currentTimeMillis();
         List<TransferHistoryView> excludeFiles = getExcludeFiles(
-                sourceType, rootPath, moveType, host, isOverwrite,destPath);
+                sourceType, rootPath, moveType, host, isOverwrite,destPath,
+                filePartitionDate);
+        log.info("get exclude files take {} ms", System.currentTimeMillis()-t0);
         Map<String,TransferHistoryView> transferHistoryViewMap = new HashMap<>();
         for(TransferHistoryView transferHistoryView: excludeFiles) {
             transferHistoryViewMap.put(transferHistoryView.getFilePath(),transferHistoryView);
@@ -216,6 +228,7 @@ public class ListFileService {
         List<String> result = new ArrayList<>();
 
         for (FileInfo file : files) {
+            log.debug("list file name = {}",file.getName());
             TransferHistoryView transferHistoryView = transferHistoryViewMap.get(file.getPath());
             boolean isControlFileFailedToCopy = false;
             if (result.size() >= (criteria.getMaxFiles() != null ? criteria.getMaxFiles() : Integer.MAX_VALUE)) {
@@ -225,7 +238,8 @@ public class ListFileService {
                 && !file.getModificationTime().truncatedTo(ChronoUnit.SECONDS).
                     isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.SECONDS))) {
                 if(controlFileNamePattern == null) {
-                    if(transferHistoryViewMap.get(getControlFilePath(file,ctrlExtensions.get(0),controlPath)) == null) {
+                    if(transferHistoryViewMap.get(getControlFilePath(file,ctrlExtensions,
+                            controlPath,fileSystemAdapter)) == null) {
                         isControlFileFailedToCopy = true;
                     }
                     else {
@@ -247,18 +261,18 @@ public class ListFileService {
                     if (controlPath != null) {
                         String controlAbsolutePath = controlPath.endsWith("/") ? controlPath + file.getName() :
                                 controlPath + File.separator + file.getName();
-                        if (hasControlFile(fileSystemAdapter, controlAbsolutePath, ctrlExtensions)) {
+                        String controlFileName = hasControlFile(fileSystemAdapter, controlAbsolutePath, ctrlExtensions);
+                        if (controlFileName != null) {
                             if(!isControlFileFailedToCopy)
                                 result.add(file.getPath());
-                            result.add(FilenameUtils.removeExtension(
-                                    controlAbsolutePath) + "." + ctrlExtensions.get(0));
+                            result.add(controlFileName);
                         }
                     } else {
-                        if (hasControlFile(fileSystemAdapter, file.getPath(), ctrlExtensions)) {
+                        String controlFileName = hasControlFile(fileSystemAdapter, file.getPath(), ctrlExtensions);
+                        if (controlFileName != null) {
                             if(!isControlFileFailedToCopy)
                                 result.add(file.getPath());
-                            result.add(FilenameUtils.removeExtension(
-                                    file.getPath()) + "." + ctrlExtensions.get(0));
+                            result.add(controlFileName);
                         }
                     }
                 }
@@ -275,13 +289,13 @@ public class ListFileService {
                     .build();
             List<FileInfo> controlFiles;
             if(controlPath != null) {
-                controlFiles = fileSystemAdapter.listFiles(controlPath, controlCriteria);
+                controlFiles = fileSystemAdapter.listFiles(controlPath, controlCriteria,usedCheckpoint,checkpointTime,filePartitionDate);
             }
             else {
-                controlFiles = fileSystemAdapter.listFiles(rootPath, controlCriteria);
+                controlFiles = fileSystemAdapter.listFiles(rootPath, controlCriteria,usedCheckpoint,checkpointTime,filePartitionDate);
             }
             if(controlFiles.isEmpty()) {
-                return new ArrayList<>();
+                return returnListFile;
             }
             for(FileInfo fileInfo: controlFiles) {
                 TransferHistoryView transferHistoryView = transferHistoryViewMap.get(fileInfo.getPath());
@@ -293,22 +307,35 @@ public class ListFileService {
                 result.add(fileInfo.getPath());
             }
         }
-
-        return result;
+        returnListFile.setFileList(result);
+        if(criteria.getCheckpointTime() != null)
+            returnListFile.setLatestModifiedTime(Timestamp.from(criteria.getCheckpointTime().toInstant()));
+        return returnListFile;
     }
 
-    private boolean hasControlFile(FileSystemAdapter adapter, String filePath, List<String> ctrlExtensions) throws IOException {
+    private String hasControlFile(FileSystemAdapter adapter, String filePath, List<String> ctrlExtensions) throws IOException {
         String basePath = FilenameUtils.removeExtension(filePath);
-
-        return ctrlExtensions.stream()
-                .anyMatch(ctrlExt -> {
-                    try {
-                        return adapter.exists(basePath + "." + ctrlExt);
-                    } catch (IOException e) {
-                        log.error("{} !!!Error checking control file existence", AppConst.PREFIX_LOG, e);
-                        return false;
+        for(String ctrlExt: ctrlExtensions) {
+            try {
+                if(!adapter.exists(basePath + "." + ctrlExt)) {
+                    int firstDot = basePath.indexOf('.');
+                    String baseName = (firstDot == -1)
+                            ? basePath
+                            : basePath.substring(0, firstDot);
+                    if(adapter.exists(baseName + "." + ctrlExt)){
+                        return baseName + "." + ctrlExt;
                     }
-                });
+                    return null;
+                }
+                else {
+                    return basePath + "." + ctrlExt;
+                }
+            } catch (IOException e) {
+                log.error("{} !!!Error checking control file existence", AppConst.PREFIX_LOG, e);
+                return null;
+            }
+        }
+        return null;
     }
 /*
 

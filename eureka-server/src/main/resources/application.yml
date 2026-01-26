@@ -37,9 +37,8 @@ eureka:
 #      trust-store-password: 'l;ylfu=k;F]d1'
     register-with-eureka: false
     fetch-registry: false
-
 #    service-url:
-#      defaultZone: https://localhost:8761/eureka/
+#      defaultZone: https://127.0.0.1:8761/eureka/
 
 spring:
   mvc:

@@ -31,6 +31,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TransferHistory {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
