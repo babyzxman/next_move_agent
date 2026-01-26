@@ -10,7 +10,9 @@ import org.gable.blendata.nextmove.shared.dto.FileInfoDTO;
 import org.gable.blendata.nextmove.shared.dto.TransferRequestWrapper;
 import org.gable.blendata.nextmove.shared.util.FileInfoUtil;
 
+import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -222,18 +224,14 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
         Path destPath = Paths.get(destFilePath);
         Files.createDirectories(destPath.getParent());
 
-        try (SftpClient.CloseableHandle handle = sftpClient.open(srcFilePath, SftpClient.OpenMode.Read);
-             OutputStream outputStream = Files.newOutputStream(destPath)) {
+        try (InputStream sftpInputStream = sftpClient.read(srcFilePath);
+             OutputStream localOutputStream = new BufferedOutputStream(Files.newOutputStream(destPath))) {
 
-            byte[] buffer = new byte[1024 * 1024]; // 1MB buffer for faster download
-            long offset = 0;
+            byte[] buffer = new byte[8 * 1024 * 1024]; // 8MB buffer for high performance
             int bytesRead;
-
-            while ((bytesRead = sftpClient.read(handle, offset, buffer, 0, buffer.length)) > 0) {
-                outputStream.write(buffer, 0, bytesRead);
-                offset += bytesRead;
+            while ((bytesRead = sftpInputStream.read(buffer)) != -1) {
+                localOutputStream.write(buffer, 0, bytesRead);
             }
         }
     }
-
 }
