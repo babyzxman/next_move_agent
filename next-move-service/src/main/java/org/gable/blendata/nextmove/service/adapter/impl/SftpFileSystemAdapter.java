@@ -14,6 +14,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 /**
  * Adapter for SFTP file system operations.
@@ -134,6 +135,33 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
             if (handle != null) {
                 try { handle.close(); } catch (IOException e) { /* ignore */ }
             }
+        }
+    }
+
+    public void copyWithTempDownload(String srcFilePath, String destFilePath, boolean overwrite, String tempDir) throws IOException {
+        Objects.requireNonNull(tempDir, "Temp directory must be configured for SFTP copy.");
+        Path tempDirPath = Paths.get(tempDir);
+        Files.createDirectories(tempDirPath);
+
+        SftpClient.Attributes srcAttrs = sftpClient.stat(srcFilePath);
+        if (srcAttrs == null) {
+            throw new IOException("Source file not found: " + srcFilePath);
+        }
+
+        org.apache.hadoop.fs.Path destPath = new org.apache.hadoop.fs.Path(destFilePath);
+        if (destFileSystem.exists(destPath)) {
+            if (!overwrite) {
+                throw new IOException("Destination file already exists: " + destFilePath);
+            }
+            destFileSystem.delete(destPath, false);
+        }
+
+        Path tempFilePath = Files.createTempFile(tempDirPath, "sftp-copy-", "-" + destPath.getName());
+        try {
+            copyWithBuffer(sftpClient, srcFilePath, tempFilePath.toString());
+            destFileSystem.copyFromLocalFile(false, overwrite, new org.apache.hadoop.fs.Path(tempFilePath.toUri()), destPath);
+        } finally {
+            Files.deleteIfExists(tempFilePath);
         }
     }
 

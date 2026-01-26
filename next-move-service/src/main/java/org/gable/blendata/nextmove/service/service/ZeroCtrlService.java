@@ -12,6 +12,7 @@ import org.apache.hadoop.fs.FileUtil;
 import org.apache.hadoop.fs.Options;
 import org.apache.hadoop.fs.Path;
 import org.gable.blendata.nextmove.service.adapter.FileSystemAdapter;
+import org.gable.blendata.nextmove.service.adapter.impl.SftpFileSystemAdapter;
 import org.gable.blendata.nextmove.service.config.AppConfig;
 import org.gable.blendata.nextmove.service.config.HadoopConfig;
 import org.gable.blendata.nextmove.service.config.SftpConnectionProperties;
@@ -209,6 +210,8 @@ public class ZeroCtrlService extends MoveService{
                             processRegularFile(reconcileInfos, transferHistory, destRootPathStr, isDeleteSrc
                                     , srcFile, retry==0? null : retry
                                     , transferRequestWrapper.isOverwrite()
+                                    , transferRequestWrapper.isDownloadToTmpBeforeUpload()
+                                    , appConfig.getSftpCopyDir()
                                     , cancellationFlag
                                     , adapter, transferRequestWrapper.getCtrlExtensions()
                                     , transferRequestWrapper.getDestinationCtrlRootPathStr());
@@ -424,7 +427,8 @@ public class ZeroCtrlService extends MoveService{
 
     private void processRegularFile(List<ReconcileInfoDTO> reconcileInfos, TransferHistory transferHistory, String destRootPathStr
             , boolean isDeleteSrc, FileInfoDTO srcFile, Integer retry
-            , boolean overwrite, AtomicBoolean cancellationFlag, FileSystemAdapter adapter
+            , boolean overwrite, boolean downloadToTmpBeforeUpload, String sftpCopyDir
+            , AtomicBoolean cancellationFlag, FileSystemAdapter adapter
             , List<String> ctrlExtensions, String destCtrlPath) throws IOException {
         boolean isSuccess = false;
         LocalDateTime startTime = LocalDateTime.now();
@@ -465,7 +469,11 @@ public class ZeroCtrlService extends MoveService{
                 log.info("{} Task cancelled before copying regular file", AppConst.PREFIX_LOG);
                 throw new TaskCancelledException("Task was cancelled or interrupted before copying regular file");
             }
-            adapter.copy(adapter.getDestFileSystem(), srcFilePath, destinationFilePath, isDeleteSrc, true);
+            if (downloadToTmpBeforeUpload && adapter instanceof SftpFileSystemAdapter) {
+                ((SftpFileSystemAdapter) adapter).copyWithTempDownload(srcFilePath, destinationFilePath, true, sftpCopyDir);
+            } else {
+                adapter.copy(adapter.getDestFileSystem(), srcFilePath, destinationFilePath, isDeleteSrc, true);
+            }
             log.info("skip renamed file");
 //            long destinationFileSize = adapter.getDestFileSystem().getFileStatus(new Path(destinationFilePathProcessing)).getLen();
 //            if(srcFileSize != destinationFileSize){

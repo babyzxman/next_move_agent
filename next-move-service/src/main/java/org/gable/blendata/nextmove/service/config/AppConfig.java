@@ -20,4 +20,6 @@ public class AppConfig {
     private String decompressDir;
     @Value("${app.temp-dir.reconcile-log}")
     private String reconcileLogDir;
+    @Value("${app.temp-dir.sftp-copy}")
+    private String sftpCopyDir;
 }

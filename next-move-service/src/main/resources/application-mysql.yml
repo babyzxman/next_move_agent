@@ -51,6 +51,7 @@ app:
   temp-dir:
     decompress: /Users/anucha.r/MyWork/tmp/test-next-move-src-dest/extract
     reconcile-log: /Users/anucha.r/MyWork/tmp/test-next-move-src-dest/reconcile-log/zero-001
+    sftp-copy: /Users/anucha.r/MyWork/tmp/test-next-move-src-dest/sftp-copy
 const:
   path:
     config:
@@ -112,6 +113,7 @@ app:
   temp-dir:
     decompress: /Users/anucha.r/MyWork/tmp/test-next-move-src-dest/extract
     reconcile-log: /Users/anucha.r/MyWork/tmp/test-next-move-src-dest/reconcile-log/zero-002
+    sftp-copy: /Users/anucha.r/MyWork/tmp/test-next-move-src-dest/sftp-copy
 const:
   path:
     config:
