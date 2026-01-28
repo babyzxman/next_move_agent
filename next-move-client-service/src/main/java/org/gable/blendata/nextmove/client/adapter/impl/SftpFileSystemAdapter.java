@@ -2,6 +2,7 @@ package org.gable.blendata.nextmove.client.adapter.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.sshd.client.session.ClientSession;
 import org.apache.sshd.sftp.client.SftpClient;
 import org.apache.sshd.sftp.client.SftpClient.DirEntry;
 import org.gable.blendata.nextmove.client.adapter.FileInfo;
@@ -31,9 +32,11 @@ import java.util.regex.Pattern;
 public class SftpFileSystemAdapter implements FileSystemAdapter {
 
     private final SftpClient sftpClient;
+    private final ClientSession session;
 
-    public SftpFileSystemAdapter(SftpClient sftpClient) {
+    public SftpFileSystemAdapter(SftpClient sftpClient, ClientSession session) {
         this.sftpClient = sftpClient;
+        this.session = session;
     }
 
     @Override
@@ -337,6 +340,9 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
     public void close() throws IOException {
         if (sftpClient != null) {
             sftpClient.close();
+        }
+        if (session != null) {
+            session.close();
         }
     }
 
