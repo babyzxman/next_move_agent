@@ -35,9 +35,6 @@ public class SftpConnectionManager implements ConnectionManager {
     // Static initializer to set up the SshClient once
     static {
         client = SshClient.setUpDefaultClient();
-        CoreModuleProperties.WINDOW_SIZE.set(client, (long) (4 * 1024 * 1024)); // 4 MB
-        // Increase the packet size for data channels.
-        CoreModuleProperties.MAX_PACKET_SIZE.set(client,(long)  (2 * 1024 * 1024)); // 256 KB
         client.start();
         // Optional: Register a shutdown hook to stop the client when the JVM exits
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -132,14 +129,14 @@ public class SftpConnectionManager implements ConnectionManager {
         return null;
     }
 
-    public FileSystemAdapter ensureConnectionAlive(FileSystemAdapter currentAdapter, FileSystem fs, String taskKey) throws IOException {
+    public FileSystemAdapter ensureConnectionAlive(FileSystemAdapter currentAdapter, FileSystem fs, String taskKey, String sourceRootPath) throws IOException {
         if (currentAdapter == null) {
             log.warn("{} Connection is null, creating new connection for task {}", AppConst.PREFIX_LOG, taskKey);
             return createConnection();
         }
 
         try {
-            if (!isConnectionAlive(currentAdapter, fs)) {
+            if (!isConnectionAlive(currentAdapter, fs,sourceRootPath)) {
                 log.warn("{} Connection appears to be dead, recreating for task {}", AppConst.PREFIX_LOG, taskKey);
                 closeConnectionSafely(currentAdapter, taskKey);
                 return createConnection();
@@ -164,9 +161,9 @@ public class SftpConnectionManager implements ConnectionManager {
         }
     }
 
-    private boolean isConnectionAlive(FileSystemAdapter adapter, FileSystem fs) {
+    private boolean isConnectionAlive(FileSystemAdapter adapter, FileSystem fs, String path) {
         try {
-            adapter.exists(fs, "/"); // หรือ path ที่เหมาะสม
+            adapter.exists(fs, path); // หรือ path ที่เหมาะสม
             return true;
         } catch (Exception e) {
             log.debug("{} Connection test failed: {}", AppConst.PREFIX_LOG, e.getMessage());

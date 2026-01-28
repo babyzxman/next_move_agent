@@ -33,7 +33,8 @@ public class HadoopConnectionManager implements ConnectionManager {
 
 
     @Override
-    public FileSystemAdapter ensureConnectionAlive(FileSystemAdapter fileSystemAdapter, FileSystem fs, String taskKey) {
+    public FileSystemAdapter ensureConnectionAlive(
+            FileSystemAdapter fileSystemAdapter, FileSystem fs, String taskKey, String sourceRootPath) {
         log.debug("Hadoop adapter connection is always alive");
         return fileSystemAdapter;
     }

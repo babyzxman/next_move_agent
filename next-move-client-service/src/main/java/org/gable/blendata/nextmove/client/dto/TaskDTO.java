@@ -40,6 +40,7 @@ public class TaskDTO implements Serializable {
     private List<String> ctrlFilePatterns;
     private Integer filePartitionDate;
     private Boolean usedCheckpoint = false;
+    private boolean downloadToTmpBeforeUpload;
     private Timestamp modifiedTime;
 
     @AllArgsConstructor

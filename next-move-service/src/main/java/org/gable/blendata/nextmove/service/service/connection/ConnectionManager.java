@@ -11,5 +11,6 @@ public interface ConnectionManager {
 
     void closeConnection(FileSystemAdapter adapter) throws IOException;
 
-    FileSystemAdapter ensureConnectionAlive(FileSystemAdapter fileSystemAdapter, FileSystem fs, String taskKey) throws IOException;
+    FileSystemAdapter ensureConnectionAlive(FileSystemAdapter fileSystemAdapter,
+                                            FileSystem fs, String taskKey, String sourceRootPath) throws IOException;
 }

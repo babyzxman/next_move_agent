@@ -24,6 +24,7 @@ taskConfig:
       moveType: COPY                         # MOVE | COPY
       overwrite: false                       # true | false
       retry: 1                               # Retry attempts
+      downloadToTmpBeforeUpload: false       # SFTP only: download to temp dir before upload
 
       # File Verification (NONE_CONTROL only - Choose ONE method)
       checkFileSize: true                    # Method 1: Verify file by checking size stability
