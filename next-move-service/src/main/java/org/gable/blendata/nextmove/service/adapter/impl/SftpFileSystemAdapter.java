@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
+import org.apache.sshd.client.session.ClientSession;
 import org.apache.sshd.sftp.client.SftpClient;
 import org.gable.blendata.nextmove.service.adapter.FileSystemAdapter;
 import org.gable.blendata.nextmove.shared.dto.FileInfoDTO;
@@ -25,10 +26,12 @@ import java.util.Objects;
 public class SftpFileSystemAdapter implements FileSystemAdapter {
 
     private final SftpClient sftpClient;
+    private final ClientSession session;
     private final FileSystem destFileSystem;
 
-    public SftpFileSystemAdapter(SftpClient sftpClient, FileSystem destFileSystem) {
+    public SftpFileSystemAdapter(SftpClient sftpClient, ClientSession session, FileSystem destFileSystem) {
         this.sftpClient = sftpClient;
+        this.session = session;
         this.destFileSystem = destFileSystem;
     }
 
@@ -42,6 +45,9 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
     public void close() throws IOException {
         if (sftpClient != null) {
             sftpClient.close();
+        }
+        if (session != null) {
+            session.close();
         }
     }
 

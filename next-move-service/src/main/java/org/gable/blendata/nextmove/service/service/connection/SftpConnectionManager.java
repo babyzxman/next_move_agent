@@ -83,7 +83,7 @@ public class SftpConnectionManager implements ConnectionManager {
                             successKeySet.add(algorithm);
                             ConnectionManagerUtil.setSftpAlogirthmSet(successKeySet,key);
                         }
-                        return adapterFactory.createSftpAdapter(sftpClient, destFileSystem);
+                        return adapterFactory.createSftpAdapter(sftpClient, session, destFileSystem);
                     }
                     catch (SshException ex) {
                         session.close();
@@ -113,7 +113,7 @@ public class SftpConnectionManager implements ConnectionManager {
                 session.addPublicKeyIdentity(keys.iterator().next());
                 session.auth().verify(properties.getConnectionTimeout(), TimeUnit.MILLISECONDS);
                 SftpClient sftpClient = SftpClientFactory.instance().createSftpClient(session);
-                return adapterFactory.createSftpAdapter(sftpClient, destFileSystem);
+                return adapterFactory.createSftpAdapter(sftpClient, session, destFileSystem);
             }
         } else {
             ClientSession session = client.connect(properties.getUsername(),
@@ -124,7 +124,7 @@ public class SftpConnectionManager implements ConnectionManager {
             session.addPasswordIdentity(properties.getPassword());
             session.auth().verify(properties.getConnectionTimeout(), TimeUnit.MILLISECONDS);
             SftpClient sftpClient = SftpClientFactory.instance().createSftpClient(session);
-            return adapterFactory.createSftpAdapter(sftpClient, destFileSystem);
+            return adapterFactory.createSftpAdapter(sftpClient, session, destFileSystem);
         }
         return null;
     }
