@@ -338,11 +338,11 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
 
     @Override
     public void close() throws IOException {
-        if (sftpClient != null) {
-            sftpClient.close();
-        }
         if (session != null) {
             session.close();
+        }
+        if (sftpClient != null) {
+            sftpClient.close();
         }
     }
 

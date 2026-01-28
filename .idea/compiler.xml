@@ -25,6 +25,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="beg-move-file-agent" target="1.8" />
+      <module name="next-move-agent" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

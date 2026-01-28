@@ -1,197 +1,440 @@
-2026-01-28 00:15:53 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=17m48s474ms).
-2026-01-28 00:20:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 00:25:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 00:30:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 00:35:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 00:40:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 00:45:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 00:50:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 00:55:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 01:00:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 01:05:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 01:10:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 01:15:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 01:20:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 01:25:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 01:30:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 01:35:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 01:40:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 01:45:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 01:50:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 01:55:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 02:00:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 02:05:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 02:10:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 02:15:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 02:20:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 02:25:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 02:30:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 02:35:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 02:40:19 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 02:58:19 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=15m52s937ms).
-2026-01-28 03:15:38 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=16m18s702ms).
-2026-01-28 03:32:54 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=17m16s349ms).
-2026-01-28 03:33:17 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 03:49:38 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=16m14s118ms).
-2026-01-28 04:06:18 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=16m9s437ms).
-2026-01-28 04:23:09 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=16m21s589ms).
-2026-01-28 04:25:33 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 04:43:48 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=15m39s14ms).
-2026-01-28 05:01:36 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=17m17s700ms).
-2026-01-28 05:19:57 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 05:20:04 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=17m58s126ms).
-2026-01-28 05:36:04 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=15m59s591ms).
-2026-01-28 05:44:54 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=8m20s412ms).
-2026-01-28 05:48:17 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 06:06:28 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=15m33s229ms).
-2026-01-28 06:23:17 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=16m49s104ms).
-2026-01-28 06:39:50 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=16m3s570ms).
-2026-01-28 06:40:13 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 06:45:46 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=5m25s894ms).
-2026-01-28 07:01:46 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=15m29s592ms).
-2026-01-28 07:19:48 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=15m32s131ms).
-2026-01-28 07:35:34 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 07:35:41 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=15m53s462ms).
-2026-01-28 07:46:53 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=10m41s127ms).
-2026-01-28 08:03:17 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=15m54s95ms).
-2026-01-28 08:19:28 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=16m11s527ms).
-2026-01-28 08:21:51 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 08:39:14 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=17m16s61ms).
-2026-01-28 08:47:43 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=7m58s546ms).
-2026-01-28 09:05:18 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=17m5s99ms).
-2026-01-28 09:10:28 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=4m40s381ms).
-2026-01-28 09:11:51 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 09:21:59 WARN  [ : ] c.z.h.p.HikariPool.run -  HikariCP - Thread starvation or clock leap detected (housekeeper delta=9m1s51ms).
-2026-01-28 09:25:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 09:30:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 09:35:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 09:40:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 09:45:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 09:50:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 09:55:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 10:00:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 10:05:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 10:10:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 10:15:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 10:20:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 10:25:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 10:30:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 10:35:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 10:40:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 10:45:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 10:50:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 10:55:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 11:00:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 11:05:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 11:10:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 11:15:22 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 11:20:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 11:25:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 11:30:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 11:35:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 11:40:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 11:45:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 11:50:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 11:55:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 12:00:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 12:05:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 12:10:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 12:15:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 12:20:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 12:25:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 12:30:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 12:35:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 12:40:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 12:45:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 12:50:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 12:55:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 13:00:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 13:05:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 13:10:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 13:15:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 13:20:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 13:25:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 13:30:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 13:35:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 13:40:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 13:45:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 13:50:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 13:55:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 14:00:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 14:05:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 14:10:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 14:15:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 14:20:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 14:25:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 14:30:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 14:35:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 14:40:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 14:45:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 14:50:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 14:55:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 15:00:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 15:05:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 15:10:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 15:15:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 15:20:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 15:25:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 15:30:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 15:35:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 15:40:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 15:45:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 15:50:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 15:55:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 16:00:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 16:05:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 16:10:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 16:15:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 16:20:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 16:25:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 16:30:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 16:35:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 16:40:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 16:45:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 16:50:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 16:55:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 17:00:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 17:05:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 17:10:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 17:15:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 17:20:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 17:25:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 17:30:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 17:35:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 17:40:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 17:45:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 17:50:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 17:55:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 18:00:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 18:05:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 18:10:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 18:15:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 18:20:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 18:25:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 18:30:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 18:35:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 18:40:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 18:45:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 18:50:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 18:55:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 19:00:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 19:05:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 19:10:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 19:15:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 19:20:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 19:25:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 19:30:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 19:35:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 19:40:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 19:45:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 19:50:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 19:55:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 20:00:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 20:05:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 20:10:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 20:15:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 20:20:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
-2026-01-28 20:25:24 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2026-01-29 00:02:37 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2026-01-29 00:04:31 INFO  [ : ] o.s.c.n.e.s.EurekaServiceRegistry.deregister -  Unregistering application NONE-CONTROL-SERVICE with eureka with status DOWN
+2026-01-29 00:04:31 INFO  [ : ] c.n.d.DiscoveryClient.notify -  Saw local status change event StatusChangeEvent [timestamp=1769619871098, current=DOWN, previous=UP]
+2026-01-29 00:04:31 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_NONE-CONTROL-SERVICE/192.168.1.165:none-control-service:8081: registering service...
+2026-01-29 00:04:31 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_NONE-CONTROL-SERVICE/192.168.1.165:none-control-service:8081 - registration status: 204
+2026-01-29 00:04:31 INFO  [ : ] o.s.s.c.ThreadPoolTaskExecutor.shutdown -  Shutting down ExecutorService 'taskExecutor'
+2026-01-29 00:04:31 INFO  [ : ] o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy -  Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-01-29 00:04:31 INFO  [ : ] c.z.h.HikariDataSource.close -  HikariCP - Shutdown initiated...
+2026-01-29 00:04:31 INFO  [ : ] c.z.h.HikariDataSource.close -  HikariCP - Shutdown completed.
+2026-01-29 00:04:31 INFO  [ : ] c.n.d.DiscoveryClient.shutdown -  Shutting down DiscoveryClient ...
+2026-01-29 00:04:34 INFO  [ : ] c.n.d.DiscoveryClient.unregister -  Unregistering ...
+2026-01-29 00:04:34 INFO  [ : ] c.n.d.DiscoveryClient.unregister -  DiscoveryClient_NONE-CONTROL-SERVICE/192.168.1.165:none-control-service:8081 - deregister  status: 200
+2026-01-29 00:04:34 INFO  [ : ] c.n.d.DiscoveryClient.shutdown -  Completed shut down of DiscoveryClient
+2026-01-29 00:04:56 INFO  [ : ] o.g.b.n.s.NextMoveServiceApplication.logStartupProfileInfo -  The following profiles are active: service-03
+2026-01-29 00:04:56 INFO  [ : ] o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn -  Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-29 00:04:56 INFO  [ : ] o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn -  Finished Spring Data repository scanning in 98ms. Found 2 JPA repository interfaces.
+2026-01-29 00:04:56 WARN  [ : ] o.s.b.a.e.EndpointId.logWarning -  Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2026-01-29 00:04:56 INFO  [ : ] o.s.c.c.s.GenericScope.setSerializationId -  BeanFactory id=61e727ce-8e3e-3268-bf40-8f2d1166f464
+2026-01-29 00:04:56 INFO  [ : ] c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor.postProcessBeanFactory -  Post-processing PropertySource instances
+2026-01-29 00:04:56 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2026-01-29 00:04:56 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2026-01-29 00:04:56 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource servletContextInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2026-01-29 00:04:56 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2026-01-29 00:04:56 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+2026-01-29 00:04:56 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2026-01-29 00:04:56 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource springCloudClientHostInfo [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2026-01-29 00:04:56 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource applicationConfig: [classpath:/application.yml] (document #0) [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2026-01-29 00:04:56 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource springCloudDefaultProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2026-01-29 00:04:56 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource cachedrandom [org.springframework.cloud.util.random.CachedRandomPropertySource] to EncryptablePropertySourceWrapper
+2026-01-29 00:04:56 INFO  [ : ] c.u.j.f.DefaultLazyPropertyFilter.lambda$null$2 -  Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2026-01-29 00:04:57 INFO  [ : ] c.u.j.r.DefaultLazyPropertyResolver.lambda$null$2 -  Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2026-01-29 00:04:57 INFO  [ : ] c.u.j.d.DefaultLazyPropertyDetector.lambda$null$2 -  Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2026-01-29 00:04:57 INFO  [ : ] o.s.b.w.e.t.TomcatWebServer.initialize -  Tomcat initialized with port(s): 8081 (https)
+2026-01-29 00:04:57 INFO  [ : ] o.a.c.h.Http11NioProtocol.log -  Initializing ProtocolHandler ["https-jsse-nio-8081"]
+2026-01-29 00:04:57 INFO  [ : ] o.a.c.c.StandardService.log -  Starting service [Tomcat]
+2026-01-29 00:04:57 INFO  [ : ] o.a.c.c.StandardEngine.log -  Starting Servlet engine: [Apache Tomcat/9.0.46]
+2026-01-29 00:04:57 INFO  [ : ] o.a.c.c.C.[.[.[/].log -  Initializing Spring embedded WebApplicationContext
+2026-01-29 00:04:57 INFO  [ : ] o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext -  Root WebApplicationContext: initialization completed in 1088 ms
+2026-01-29 00:04:57 WARN  [ : ] c.n.c.s.URLConfigurationSource.<init> -  No URLs will be polled as dynamic configuration sources.
+2026-01-29 00:04:57 INFO  [ : ] c.n.c.s.URLConfigurationSource.<init> -  To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2026-01-29 00:04:57 INFO  [ : ] c.n.c.DynamicPropertyFactory.getInstance -  DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@1eb9a3ef
+2026-01-29 00:04:57 INFO  [ : ] o.h.j.i.u.LogHelper.logPersistenceUnitInformation -  HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-29 00:04:57 INFO  [ : ] o.h.Version.logVersion -  HHH000412: Hibernate ORM core version 5.4.32.Final
+2026-01-29 00:04:57 INFO  [ : ] o.h.a.c.Version.<clinit> -  HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-01-29 00:04:57 INFO  [ : ] c.z.h.HikariDataSource.getConnection -  HikariCP - Starting...
+2026-01-29 00:04:57 INFO  [ : ] c.z.h.HikariDataSource.getConnection -  HikariCP - Start completed.
+2026-01-29 00:04:57 INFO  [ : ] o.h.d.Dialect.<init> -  HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2026-01-29 00:04:58 INFO  [ : ] o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService -  HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-01-29 00:04:58 INFO  [ : ] o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory -  Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-29 00:04:58 WARN  [ : ] o.a.h.u.NativeCodeLoader.<clinit> -  Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2026-01-29 00:04:58 INFO  [ : ] o.s.s.c.ThreadPoolTaskExecutor.initialize -  Initializing ExecutorService
+2026-01-29 00:04:58 INFO  [ : ] o.s.s.c.ThreadPoolTaskExecutor.initialize -  Initializing ExecutorService 'taskExecutor'
+2026-01-29 00:04:58 WARN  [ : ] c.n.c.s.URLConfigurationSource.<init> -  No URLs will be polled as dynamic configuration sources.
+2026-01-29 00:04:58 INFO  [ : ] c.n.c.s.URLConfigurationSource.<init> -  To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2026-01-29 00:04:58 WARN  [ : ] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor -  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-29 00:04:59 INFO  [ : ] o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration.discoveryClientOptionalArgs -  Eureka HTTP Client uses Jersey
+2026-01-29 00:04:59 WARN  [ : ] o.s.c.l.c.BlockingLoadBalancerClientAutoConfiguration$BlockingLoadBalancerClientRibbonWarnLogger.logWarning -  You already have RibbonLoadBalancerClient on your classpath. It will be used by default. As Spring Cloud Ribbon is in maintenance mode. We recommend switching to BlockingLoadBalancerClient instead. In order to use it, set the value of `spring.cloud.loadbalancer.ribbon.enabled` to `false` or remove spring-cloud-starter-netflix-ribbon from your project.
+2026-01-29 00:04:59 INFO  [ : ] o.s.b.a.e.w.EndpointLinksResolver.<init> -  Exposing 2 endpoint(s) beneath base path '/actuator'
+2026-01-29 00:04:59 INFO  [ : ] o.s.c.n.e.InstanceInfoFactory.create -  Setting initial instance status as: STARTING
+2026-01-29 00:04:59 INFO  [ : ] c.n.d.DiscoveryClient.<init> -  Initializing Eureka in region us-east-1
+2026-01-29 00:04:59 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using JSON encoding codec LegacyJacksonJson
+2026-01-29 00:04:59 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using JSON decoding codec LegacyJacksonJson
+2026-01-29 00:04:59 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using XML encoding codec XStreamXml
+2026-01-29 00:04:59 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using XML decoding codec XStreamXml
+2026-01-29 00:05:00 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2026-01-29 00:05:00 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Disable delta property : false
+2026-01-29 00:05:00 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Single vip registry refresh property : null
+2026-01-29 00:05:00 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Force full registry fetch : false
+2026-01-29 00:05:00 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Application is null : false
+2026-01-29 00:05:00 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Registered Applications size is zero : true
+2026-01-29 00:05:00 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Application version is -1: true
+2026-01-29 00:05:00 INFO  [ : ] c.n.d.DiscoveryClient.getAndStoreFullRegistry -  Getting all instance registry info from the eureka server
+2026-01-29 00:05:00 INFO  [ : ] c.n.d.DiscoveryClient.getAndStoreFullRegistry -  The response status is 200
+2026-01-29 00:05:00 INFO  [ : ] c.n.d.DiscoveryClient.initScheduledTasks -  Starting heartbeat executor: renew interval is: 30
+2026-01-29 00:05:00 INFO  [ : ] c.n.d.InstanceInfoReplicator.<init> -  InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-01-29 00:05:00 INFO  [ : ] c.n.d.DiscoveryClient.<init> -  Discovery Client initialized at timestamp 1769619900353 with initial instances count: 1
+2026-01-29 00:05:00 INFO  [ : ] o.s.c.n.e.s.EurekaServiceRegistry.register -  Registering application NONE-CONTROL-SERVICE with eureka with status UP
+2026-01-29 00:05:00 INFO  [ : ] c.n.d.DiscoveryClient.notify -  Saw local status change event StatusChangeEvent [timestamp=1769619900356, current=UP, previous=STARTING]
+2026-01-29 00:05:00 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_NONE-CONTROL-SERVICE/192.168.1.165:none-control-service:8081: registering service...
+2026-01-29 00:05:00 INFO  [ : ] o.a.c.h.Http11NioProtocol.log -  Starting ProtocolHandler ["https-jsse-nio-8081"]
+2026-01-29 00:05:00 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_NONE-CONTROL-SERVICE/192.168.1.165:none-control-service:8081 - registration status: 204
+2026-01-29 00:05:00 INFO  [ : ] o.s.b.w.e.t.TomcatWebServer.start -  Tomcat started on port(s): 8081 (https) with context path ''
+2026-01-29 00:05:00 INFO  [ : ] o.s.c.n.e.s.EurekaAutoServiceRegistration.onApplicationEvent -  Updating port to 8081
+2026-01-29 00:05:00 INFO  [ : ] o.g.b.n.s.NextMoveServiceApplication.logStarted -  Started NextMoveServiceApplication in 5.357 seconds (JVM running for 5.859)
+2026-01-29 00:05:00 INFO  [ : ] o.g.b.n.s.NextMoveServiceApplication.run -  ...License validation successful
+2026-01-29 00:06:30 INFO  [ : ] o.s.c.n.e.s.EurekaServiceRegistry.deregister -  Unregistering application NONE-CONTROL-SERVICE with eureka with status DOWN
+2026-01-29 00:06:30 INFO  [ : ] c.n.d.DiscoveryClient.notify -  Saw local status change event StatusChangeEvent [timestamp=1769619990720, current=DOWN, previous=UP]
+2026-01-29 00:06:30 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_NONE-CONTROL-SERVICE/192.168.1.165:none-control-service:8081: registering service...
+2026-01-29 00:06:30 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_NONE-CONTROL-SERVICE/192.168.1.165:none-control-service:8081 - registration status: 204
+2026-01-29 00:06:30 INFO  [ : ] o.s.s.c.ThreadPoolTaskExecutor.shutdown -  Shutting down ExecutorService 'taskExecutor'
+2026-01-29 00:06:30 INFO  [ : ] o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy -  Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-01-29 00:06:30 INFO  [ : ] c.z.h.HikariDataSource.close -  HikariCP - Shutdown initiated...
+2026-01-29 00:06:30 INFO  [ : ] c.z.h.HikariDataSource.close -  HikariCP - Shutdown completed.
+2026-01-29 00:06:30 INFO  [ : ] c.n.d.DiscoveryClient.shutdown -  Shutting down DiscoveryClient ...
+2026-01-29 00:06:33 INFO  [ : ] c.n.d.DiscoveryClient.unregister -  Unregistering ...
+2026-01-29 00:06:33 INFO  [ : ] c.n.d.DiscoveryClient.unregister -  DiscoveryClient_NONE-CONTROL-SERVICE/192.168.1.165:none-control-service:8081 - deregister  status: 200
+2026-01-29 00:06:33 INFO  [ : ] c.n.d.DiscoveryClient.shutdown -  Completed shut down of DiscoveryClient
+2026-01-29 00:06:53 INFO  [ : ] o.g.b.n.s.NextMoveServiceApplication.logStartupProfileInfo -  The following profiles are active: service-03
+2026-01-29 00:06:54 INFO  [ : ] o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn -  Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-29 00:06:54 INFO  [ : ] o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn -  Finished Spring Data repository scanning in 110ms. Found 2 JPA repository interfaces.
+2026-01-29 00:06:54 WARN  [ : ] o.s.b.a.e.EndpointId.logWarning -  Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2026-01-29 00:06:54 INFO  [ : ] o.s.c.c.s.GenericScope.setSerializationId -  BeanFactory id=61e727ce-8e3e-3268-bf40-8f2d1166f464
+2026-01-29 00:06:54 INFO  [ : ] c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor.postProcessBeanFactory -  Post-processing PropertySource instances
+2026-01-29 00:06:54 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2026-01-29 00:06:54 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2026-01-29 00:06:54 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource servletContextInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2026-01-29 00:06:54 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2026-01-29 00:06:54 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+2026-01-29 00:06:54 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2026-01-29 00:06:54 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource springCloudClientHostInfo [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2026-01-29 00:06:54 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource applicationConfig: [classpath:/application.yml] (document #0) [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2026-01-29 00:06:54 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource springCloudDefaultProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2026-01-29 00:06:54 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource cachedrandom [org.springframework.cloud.util.random.CachedRandomPropertySource] to EncryptablePropertySourceWrapper
+2026-01-29 00:06:54 INFO  [ : ] c.u.j.f.DefaultLazyPropertyFilter.lambda$null$2 -  Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2026-01-29 00:06:54 INFO  [ : ] c.u.j.r.DefaultLazyPropertyResolver.lambda$null$2 -  Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2026-01-29 00:06:54 INFO  [ : ] c.u.j.d.DefaultLazyPropertyDetector.lambda$null$2 -  Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2026-01-29 00:06:55 INFO  [ : ] o.s.b.w.e.t.TomcatWebServer.initialize -  Tomcat initialized with port(s): 8081 (https)
+2026-01-29 00:06:55 INFO  [ : ] o.a.c.h.Http11NioProtocol.log -  Initializing ProtocolHandler ["https-jsse-nio-8081"]
+2026-01-29 00:06:55 INFO  [ : ] o.a.c.c.StandardService.log -  Starting service [Tomcat]
+2026-01-29 00:06:55 INFO  [ : ] o.a.c.c.StandardEngine.log -  Starting Servlet engine: [Apache Tomcat/9.0.46]
+2026-01-29 00:06:55 INFO  [ : ] o.a.c.c.C.[.[.[/].log -  Initializing Spring embedded WebApplicationContext
+2026-01-29 00:06:55 INFO  [ : ] o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext -  Root WebApplicationContext: initialization completed in 1207 ms
+2026-01-29 00:06:55 WARN  [ : ] c.n.c.s.URLConfigurationSource.<init> -  No URLs will be polled as dynamic configuration sources.
+2026-01-29 00:06:55 INFO  [ : ] c.n.c.s.URLConfigurationSource.<init> -  To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2026-01-29 00:06:55 INFO  [ : ] c.n.c.DynamicPropertyFactory.getInstance -  DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@5d318e91
+2026-01-29 00:06:55 INFO  [ : ] o.h.j.i.u.LogHelper.logPersistenceUnitInformation -  HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-29 00:06:55 INFO  [ : ] o.h.Version.logVersion -  HHH000412: Hibernate ORM core version 5.4.32.Final
+2026-01-29 00:06:55 INFO  [ : ] o.h.a.c.Version.<clinit> -  HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-01-29 00:06:55 INFO  [ : ] c.z.h.HikariDataSource.getConnection -  HikariCP - Starting...
+2026-01-29 00:06:55 INFO  [ : ] c.z.h.HikariDataSource.getConnection -  HikariCP - Start completed.
+2026-01-29 00:06:55 INFO  [ : ] o.h.d.Dialect.<init> -  HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2026-01-29 00:06:56 INFO  [ : ] o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService -  HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-01-29 00:06:56 INFO  [ : ] o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory -  Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-29 00:06:56 WARN  [ : ] o.a.h.u.NativeCodeLoader.<clinit> -  Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2026-01-29 00:06:57 INFO  [ : ] o.s.s.c.ThreadPoolTaskExecutor.initialize -  Initializing ExecutorService
+2026-01-29 00:06:57 INFO  [ : ] o.s.s.c.ThreadPoolTaskExecutor.initialize -  Initializing ExecutorService 'taskExecutor'
+2026-01-29 00:06:57 WARN  [ : ] c.n.c.s.URLConfigurationSource.<init> -  No URLs will be polled as dynamic configuration sources.
+2026-01-29 00:06:57 INFO  [ : ] c.n.c.s.URLConfigurationSource.<init> -  To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2026-01-29 00:06:57 WARN  [ : ] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor -  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-29 00:06:57 INFO  [ : ] o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration.discoveryClientOptionalArgs -  Eureka HTTP Client uses Jersey
+2026-01-29 00:06:57 WARN  [ : ] o.s.c.l.c.BlockingLoadBalancerClientAutoConfiguration$BlockingLoadBalancerClientRibbonWarnLogger.logWarning -  You already have RibbonLoadBalancerClient on your classpath. It will be used by default. As Spring Cloud Ribbon is in maintenance mode. We recommend switching to BlockingLoadBalancerClient instead. In order to use it, set the value of `spring.cloud.loadbalancer.ribbon.enabled` to `false` or remove spring-cloud-starter-netflix-ribbon from your project.
+2026-01-29 00:06:57 INFO  [ : ] o.s.b.a.e.w.EndpointLinksResolver.<init> -  Exposing 2 endpoint(s) beneath base path '/actuator'
+2026-01-29 00:06:57 INFO  [ : ] o.s.c.n.e.InstanceInfoFactory.create -  Setting initial instance status as: STARTING
+2026-01-29 00:06:57 INFO  [ : ] c.n.d.DiscoveryClient.<init> -  Initializing Eureka in region us-east-1
+2026-01-29 00:06:58 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using JSON encoding codec LegacyJacksonJson
+2026-01-29 00:06:58 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using JSON decoding codec LegacyJacksonJson
+2026-01-29 00:06:58 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using XML encoding codec XStreamXml
+2026-01-29 00:06:58 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using XML decoding codec XStreamXml
+2026-01-29 00:06:58 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2026-01-29 00:06:58 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Disable delta property : false
+2026-01-29 00:06:58 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Single vip registry refresh property : null
+2026-01-29 00:06:58 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Force full registry fetch : false
+2026-01-29 00:06:58 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Application is null : false
+2026-01-29 00:06:58 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Registered Applications size is zero : true
+2026-01-29 00:06:58 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Application version is -1: true
+2026-01-29 00:06:58 INFO  [ : ] c.n.d.DiscoveryClient.getAndStoreFullRegistry -  Getting all instance registry info from the eureka server
+2026-01-29 00:06:58 INFO  [ : ] c.n.d.DiscoveryClient.getAndStoreFullRegistry -  The response status is 200
+2026-01-29 00:06:58 INFO  [ : ] c.n.d.DiscoveryClient.initScheduledTasks -  Starting heartbeat executor: renew interval is: 30
+2026-01-29 00:06:58 INFO  [ : ] c.n.d.InstanceInfoReplicator.<init> -  InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-01-29 00:06:58 INFO  [ : ] c.n.d.DiscoveryClient.<init> -  Discovery Client initialized at timestamp 1769620018546 with initial instances count: 1
+2026-01-29 00:06:58 INFO  [ : ] o.s.c.n.e.s.EurekaServiceRegistry.register -  Registering application NONE-CONTROL-SERVICE with eureka with status UP
+2026-01-29 00:06:58 INFO  [ : ] c.n.d.DiscoveryClient.notify -  Saw local status change event StatusChangeEvent [timestamp=1769620018549, current=UP, previous=STARTING]
+2026-01-29 00:06:58 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_NONE-CONTROL-SERVICE/192.168.1.165:none-control-service:8081: registering service...
+2026-01-29 00:06:58 INFO  [ : ] o.a.c.h.Http11NioProtocol.log -  Starting ProtocolHandler ["https-jsse-nio-8081"]
+2026-01-29 00:06:58 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_NONE-CONTROL-SERVICE/192.168.1.165:none-control-service:8081 - registration status: 204
+2026-01-29 00:06:58 INFO  [ : ] o.s.b.w.e.t.TomcatWebServer.start -  Tomcat started on port(s): 8081 (https) with context path ''
+2026-01-29 00:06:58 INFO  [ : ] o.s.c.n.e.s.EurekaAutoServiceRegistration.onApplicationEvent -  Updating port to 8081
+2026-01-29 00:06:58 INFO  [ : ] o.g.b.n.s.NextMoveServiceApplication.logStarted -  Started NextMoveServiceApplication in 5.736 seconds (JVM running for 6.209)
+2026-01-29 00:06:58 INFO  [ : ] o.g.b.n.s.NextMoveServiceApplication.run -  ...License validation successful
+2026-01-29 00:11:58 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2026-01-29 00:12:43 INFO  [ : ] o.s.c.n.e.s.EurekaServiceRegistry.deregister -  Unregistering application NONE-CONTROL-SERVICE with eureka with status DOWN
+2026-01-29 00:12:43 INFO  [ : ] c.n.d.DiscoveryClient.notify -  Saw local status change event StatusChangeEvent [timestamp=1769620363463, current=DOWN, previous=UP]
+2026-01-29 00:12:43 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_NONE-CONTROL-SERVICE/192.168.1.165:none-control-service:8081: registering service...
+2026-01-29 00:12:43 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_NONE-CONTROL-SERVICE/192.168.1.165:none-control-service:8081 - registration status: 204
+2026-01-29 00:12:43 INFO  [ : ] o.s.s.c.ThreadPoolTaskExecutor.shutdown -  Shutting down ExecutorService 'taskExecutor'
+2026-01-29 00:12:43 INFO  [ : ] o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy -  Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-01-29 00:12:43 INFO  [ : ] c.z.h.HikariDataSource.close -  HikariCP - Shutdown initiated...
+2026-01-29 00:12:43 INFO  [ : ] c.z.h.HikariDataSource.close -  HikariCP - Shutdown completed.
+2026-01-29 00:12:43 INFO  [ : ] c.n.d.DiscoveryClient.shutdown -  Shutting down DiscoveryClient ...
+2026-01-29 00:12:46 INFO  [ : ] c.n.d.DiscoveryClient.unregister -  Unregistering ...
+2026-01-29 00:12:46 INFO  [ : ] c.n.d.DiscoveryClient.unregister -  DiscoveryClient_NONE-CONTROL-SERVICE/192.168.1.165:none-control-service:8081 - deregister  status: 200
+2026-01-29 00:12:46 INFO  [ : ] c.n.d.DiscoveryClient.shutdown -  Completed shut down of DiscoveryClient
+2026-01-29 00:13:05 INFO  [ : ] o.g.b.n.s.NextMoveServiceApplication.logStartupProfileInfo -  The following profiles are active: service-03
+2026-01-29 00:13:05 INFO  [ : ] o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn -  Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-29 00:13:05 INFO  [ : ] o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn -  Finished Spring Data repository scanning in 119ms. Found 2 JPA repository interfaces.
+2026-01-29 00:13:05 WARN  [ : ] o.s.b.a.e.EndpointId.logWarning -  Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2026-01-29 00:13:05 INFO  [ : ] o.s.c.c.s.GenericScope.setSerializationId -  BeanFactory id=61e727ce-8e3e-3268-bf40-8f2d1166f464
+2026-01-29 00:13:05 INFO  [ : ] c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor.postProcessBeanFactory -  Post-processing PropertySource instances
+2026-01-29 00:13:05 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2026-01-29 00:13:05 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2026-01-29 00:13:05 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource servletContextInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2026-01-29 00:13:05 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2026-01-29 00:13:05 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+2026-01-29 00:13:05 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2026-01-29 00:13:05 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource springCloudClientHostInfo [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2026-01-29 00:13:05 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource applicationConfig: [classpath:/application.yml] (document #0) [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2026-01-29 00:13:05 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource springCloudDefaultProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2026-01-29 00:13:05 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource cachedrandom [org.springframework.cloud.util.random.CachedRandomPropertySource] to EncryptablePropertySourceWrapper
+2026-01-29 00:13:05 INFO  [ : ] c.u.j.f.DefaultLazyPropertyFilter.lambda$null$2 -  Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2026-01-29 00:13:06 INFO  [ : ] c.u.j.r.DefaultLazyPropertyResolver.lambda$null$2 -  Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2026-01-29 00:13:06 INFO  [ : ] c.u.j.d.DefaultLazyPropertyDetector.lambda$null$2 -  Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2026-01-29 00:13:06 INFO  [ : ] o.s.b.w.e.t.TomcatWebServer.initialize -  Tomcat initialized with port(s): 8081 (https)
+2026-01-29 00:13:06 INFO  [ : ] o.a.c.h.Http11NioProtocol.log -  Initializing ProtocolHandler ["https-jsse-nio-8081"]
+2026-01-29 00:13:06 INFO  [ : ] o.a.c.c.StandardService.log -  Starting service [Tomcat]
+2026-01-29 00:13:06 INFO  [ : ] o.a.c.c.StandardEngine.log -  Starting Servlet engine: [Apache Tomcat/9.0.46]
+2026-01-29 00:13:06 INFO  [ : ] o.a.c.c.C.[.[.[/].log -  Initializing Spring embedded WebApplicationContext
+2026-01-29 00:13:06 INFO  [ : ] o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext -  Root WebApplicationContext: initialization completed in 1306 ms
+2026-01-29 00:13:06 WARN  [ : ] c.n.c.s.URLConfigurationSource.<init> -  No URLs will be polled as dynamic configuration sources.
+2026-01-29 00:13:06 INFO  [ : ] c.n.c.s.URLConfigurationSource.<init> -  To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2026-01-29 00:13:06 INFO  [ : ] c.n.c.DynamicPropertyFactory.getInstance -  DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@3a8cea24
+2026-01-29 00:13:06 INFO  [ : ] o.h.j.i.u.LogHelper.logPersistenceUnitInformation -  HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-29 00:13:06 INFO  [ : ] o.h.Version.logVersion -  HHH000412: Hibernate ORM core version 5.4.32.Final
+2026-01-29 00:13:06 INFO  [ : ] o.h.a.c.Version.<clinit> -  HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-01-29 00:13:06 INFO  [ : ] c.z.h.HikariDataSource.getConnection -  HikariCP - Starting...
+2026-01-29 00:13:07 INFO  [ : ] c.z.h.HikariDataSource.getConnection -  HikariCP - Start completed.
+2026-01-29 00:13:07 INFO  [ : ] o.h.d.Dialect.<init> -  HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2026-01-29 00:13:07 INFO  [ : ] o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService -  HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-01-29 00:13:07 INFO  [ : ] o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory -  Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-29 00:13:08 WARN  [ : ] o.a.h.u.NativeCodeLoader.<clinit> -  Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2026-01-29 00:13:08 INFO  [ : ] o.s.s.c.ThreadPoolTaskExecutor.initialize -  Initializing ExecutorService
+2026-01-29 00:13:08 INFO  [ : ] o.s.s.c.ThreadPoolTaskExecutor.initialize -  Initializing ExecutorService 'taskExecutor'
+2026-01-29 00:13:08 WARN  [ : ] c.n.c.s.URLConfigurationSource.<init> -  No URLs will be polled as dynamic configuration sources.
+2026-01-29 00:13:08 INFO  [ : ] c.n.c.s.URLConfigurationSource.<init> -  To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2026-01-29 00:13:08 WARN  [ : ] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor -  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-29 00:13:08 INFO  [ : ] o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration.discoveryClientOptionalArgs -  Eureka HTTP Client uses Jersey
+2026-01-29 00:13:08 WARN  [ : ] o.s.c.l.c.BlockingLoadBalancerClientAutoConfiguration$BlockingLoadBalancerClientRibbonWarnLogger.logWarning -  You already have RibbonLoadBalancerClient on your classpath. It will be used by default. As Spring Cloud Ribbon is in maintenance mode. We recommend switching to BlockingLoadBalancerClient instead. In order to use it, set the value of `spring.cloud.loadbalancer.ribbon.enabled` to `false` or remove spring-cloud-starter-netflix-ribbon from your project.
+2026-01-29 00:13:08 INFO  [ : ] o.s.b.a.e.w.EndpointLinksResolver.<init> -  Exposing 2 endpoint(s) beneath base path '/actuator'
+2026-01-29 00:13:08 INFO  [ : ] o.s.c.n.e.InstanceInfoFactory.create -  Setting initial instance status as: STARTING
+2026-01-29 00:13:08 INFO  [ : ] c.n.d.DiscoveryClient.<init> -  Initializing Eureka in region us-east-1
+2026-01-29 00:13:08 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using JSON encoding codec LegacyJacksonJson
+2026-01-29 00:13:08 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using JSON decoding codec LegacyJacksonJson
+2026-01-29 00:13:08 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using XML encoding codec XStreamXml
+2026-01-29 00:13:08 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using XML decoding codec XStreamXml
+2026-01-29 00:13:09 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2026-01-29 00:13:09 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Disable delta property : false
+2026-01-29 00:13:09 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Single vip registry refresh property : null
+2026-01-29 00:13:09 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Force full registry fetch : false
+2026-01-29 00:13:09 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Application is null : false
+2026-01-29 00:13:09 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Registered Applications size is zero : true
+2026-01-29 00:13:09 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Application version is -1: true
+2026-01-29 00:13:09 INFO  [ : ] c.n.d.DiscoveryClient.getAndStoreFullRegistry -  Getting all instance registry info from the eureka server
+2026-01-29 00:13:09 INFO  [ : ] c.n.d.DiscoveryClient.getAndStoreFullRegistry -  The response status is 200
+2026-01-29 00:13:09 INFO  [ : ] c.n.d.DiscoveryClient.initScheduledTasks -  Starting heartbeat executor: renew interval is: 30
+2026-01-29 00:13:09 INFO  [ : ] c.n.d.InstanceInfoReplicator.<init> -  InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-01-29 00:13:09 INFO  [ : ] c.n.d.DiscoveryClient.<init> -  Discovery Client initialized at timestamp 1769620389396 with initial instances count: 0
+2026-01-29 00:13:09 INFO  [ : ] o.s.c.n.e.s.EurekaServiceRegistry.register -  Registering application NONE-CONTROL-SERVICE with eureka with status UP
+2026-01-29 00:13:09 INFO  [ : ] c.n.d.DiscoveryClient.notify -  Saw local status change event StatusChangeEvent [timestamp=1769620389402, current=UP, previous=STARTING]
+2026-01-29 00:13:09 INFO  [ : ] o.a.c.h.Http11NioProtocol.log -  Starting ProtocolHandler ["https-jsse-nio-8081"]
+2026-01-29 00:13:09 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_NONE-CONTROL-SERVICE/192.168.1.165:none-control-service:8081: registering service...
+2026-01-29 00:13:09 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_NONE-CONTROL-SERVICE/192.168.1.165:none-control-service:8081 - registration status: 204
+2026-01-29 00:13:09 INFO  [ : ] o.s.b.w.e.t.TomcatWebServer.start -  Tomcat started on port(s): 8081 (https) with context path ''
+2026-01-29 00:13:09 INFO  [ : ] o.s.c.n.e.s.EurekaAutoServiceRegistration.onApplicationEvent -  Updating port to 8081
+2026-01-29 00:13:09 INFO  [ : ] o.g.b.n.s.NextMoveServiceApplication.logStarted -  Started NextMoveServiceApplication in 5.504 seconds (JVM running for 6.039)
+2026-01-29 00:13:09 INFO  [ : ] o.g.b.n.s.NextMoveServiceApplication.run -  ...License validation successful
+2026-01-29 00:13:39 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Disable delta property : false
+2026-01-29 00:13:39 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Single vip registry refresh property : null
+2026-01-29 00:13:39 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Force full registry fetch : false
+2026-01-29 00:13:39 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Application is null : false
+2026-01-29 00:13:39 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Registered Applications size is zero : true
+2026-01-29 00:13:39 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Application version is -1: false
+2026-01-29 00:13:39 INFO  [ : ] c.n.d.DiscoveryClient.getAndStoreFullRegistry -  Getting all instance registry info from the eureka server
+2026-01-29 00:13:39 INFO  [ : ] c.n.d.DiscoveryClient.getAndStoreFullRegistry -  The response status is 200
+2026-01-29 00:18:09 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2026-01-29 00:21:04 INFO  [ : ] o.s.c.n.e.s.EurekaServiceRegistry.deregister -  Unregistering application NONE-CONTROL-SERVICE with eureka with status DOWN
+2026-01-29 00:21:04 INFO  [ : ] c.n.d.DiscoveryClient.notify -  Saw local status change event StatusChangeEvent [timestamp=1769620864115, current=DOWN, previous=UP]
+2026-01-29 00:21:04 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_NONE-CONTROL-SERVICE/192.168.1.165:none-control-service:8081: registering service...
+2026-01-29 00:21:04 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_NONE-CONTROL-SERVICE/192.168.1.165:none-control-service:8081 - registration status: 204
+2026-01-29 00:21:04 INFO  [ : ] o.s.s.c.ThreadPoolTaskExecutor.shutdown -  Shutting down ExecutorService 'taskExecutor'
+2026-01-29 00:21:04 INFO  [ : ] o.s.o.j.LocalContainerEntityManagerFactoryBean.destroy -  Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-01-29 00:21:04 INFO  [ : ] c.z.h.HikariDataSource.close -  HikariCP - Shutdown initiated...
+2026-01-29 00:21:04 INFO  [ : ] c.z.h.HikariDataSource.close -  HikariCP - Shutdown completed.
+2026-01-29 00:21:04 INFO  [ : ] c.n.d.DiscoveryClient.shutdown -  Shutting down DiscoveryClient ...
+2026-01-29 00:21:07 INFO  [ : ] c.n.d.DiscoveryClient.unregister -  Unregistering ...
+2026-01-29 00:21:07 INFO  [ : ] c.n.d.DiscoveryClient.unregister -  DiscoveryClient_NONE-CONTROL-SERVICE/192.168.1.165:none-control-service:8081 - deregister  status: 200
+2026-01-29 00:21:07 INFO  [ : ] c.n.d.DiscoveryClient.shutdown -  Completed shut down of DiscoveryClient
+2026-01-29 00:21:19 INFO  [ : ] o.g.b.n.s.NextMoveServiceApplication.logStartupProfileInfo -  The following profiles are active: service-03
+2026-01-29 00:21:19 INFO  [ : ] o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn -  Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-29 00:21:19 INFO  [ : ] o.s.d.r.c.RepositoryConfigurationDelegate.registerRepositoriesIn -  Finished Spring Data repository scanning in 157ms. Found 2 JPA repository interfaces.
+2026-01-29 00:21:20 WARN  [ : ] o.s.b.a.e.EndpointId.logWarning -  Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2026-01-29 00:21:20 INFO  [ : ] o.s.c.c.s.GenericScope.setSerializationId -  BeanFactory id=61e727ce-8e3e-3268-bf40-8f2d1166f464
+2026-01-29 00:21:20 INFO  [ : ] c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor.postProcessBeanFactory -  Post-processing PropertySource instances
+2026-01-29 00:21:20 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource configurationProperties [org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource] to AOP Proxy
+2026-01-29 00:21:20 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource servletConfigInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2026-01-29 00:21:20 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource servletContextInitParams [org.springframework.core.env.PropertySource$StubPropertySource] to EncryptablePropertySourceWrapper
+2026-01-29 00:21:20 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+2026-01-29 00:21:20 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+2026-01-29 00:21:20 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+2026-01-29 00:21:20 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource springCloudClientHostInfo [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2026-01-29 00:21:20 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource applicationConfig: [classpath:/application.yml] (document #0) [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+2026-01-29 00:21:20 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource springCloudDefaultProperties [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+2026-01-29 00:21:20 INFO  [ : ] c.u.j.EncryptablePropertySourceConverter.makeEncryptable -  Converting PropertySource cachedrandom [org.springframework.cloud.util.random.CachedRandomPropertySource] to EncryptablePropertySourceWrapper
+2026-01-29 00:21:20 INFO  [ : ] c.u.j.f.DefaultLazyPropertyFilter.lambda$null$2 -  Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+2026-01-29 00:21:20 INFO  [ : ] c.u.j.r.DefaultLazyPropertyResolver.lambda$null$2 -  Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+2026-01-29 00:21:20 INFO  [ : ] c.u.j.d.DefaultLazyPropertyDetector.lambda$null$2 -  Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+2026-01-29 00:21:20 INFO  [ : ] o.s.b.w.e.t.TomcatWebServer.initialize -  Tomcat initialized with port(s): 8081 (https)
+2026-01-29 00:21:20 INFO  [ : ] o.a.c.h.Http11NioProtocol.log -  Initializing ProtocolHandler ["https-jsse-nio-8081"]
+2026-01-29 00:21:20 INFO  [ : ] o.a.c.c.StandardService.log -  Starting service [Tomcat]
+2026-01-29 00:21:20 INFO  [ : ] o.a.c.c.StandardEngine.log -  Starting Servlet engine: [Apache Tomcat/9.0.46]
+2026-01-29 00:21:20 INFO  [ : ] o.a.c.c.C.[.[.[/].log -  Initializing Spring embedded WebApplicationContext
+2026-01-29 00:21:20 INFO  [ : ] o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext -  Root WebApplicationContext: initialization completed in 1597 ms
+2026-01-29 00:21:20 WARN  [ : ] c.n.c.s.URLConfigurationSource.<init> -  No URLs will be polled as dynamic configuration sources.
+2026-01-29 00:21:20 INFO  [ : ] c.n.c.s.URLConfigurationSource.<init> -  To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2026-01-29 00:21:20 INFO  [ : ] c.n.c.DynamicPropertyFactory.getInstance -  DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@58fd1214
+2026-01-29 00:21:20 INFO  [ : ] o.h.j.i.u.LogHelper.logPersistenceUnitInformation -  HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-01-29 00:21:21 INFO  [ : ] o.h.Version.logVersion -  HHH000412: Hibernate ORM core version 5.4.32.Final
+2026-01-29 00:21:21 INFO  [ : ] o.h.a.c.Version.<clinit> -  HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2026-01-29 00:21:21 INFO  [ : ] c.z.h.HikariDataSource.getConnection -  HikariCP - Starting...
+2026-01-29 00:21:21 INFO  [ : ] c.z.h.HikariDataSource.getConnection -  HikariCP - Start completed.
+2026-01-29 00:21:21 INFO  [ : ] o.h.d.Dialect.<init> -  HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2026-01-29 00:21:21 INFO  [ : ] o.h.e.t.j.p.i.JtaPlatformInitiator.initiateService -  HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2026-01-29 00:21:21 INFO  [ : ] o.s.o.j.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory -  Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-29 00:21:22 WARN  [ : ] o.a.h.u.NativeCodeLoader.<clinit> -  Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+2026-01-29 00:21:22 INFO  [ : ] o.s.s.c.ThreadPoolTaskExecutor.initialize -  Initializing ExecutorService
+2026-01-29 00:21:22 INFO  [ : ] o.s.s.c.ThreadPoolTaskExecutor.initialize -  Initializing ExecutorService 'taskExecutor'
+2026-01-29 00:21:22 WARN  [ : ] c.n.c.s.URLConfigurationSource.<init> -  No URLs will be polled as dynamic configuration sources.
+2026-01-29 00:21:22 INFO  [ : ] c.n.c.s.URLConfigurationSource.<init> -  To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2026-01-29 00:21:22 WARN  [ : ] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor -  spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-01-29 00:21:23 INFO  [ : ] o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration.discoveryClientOptionalArgs -  Eureka HTTP Client uses Jersey
+2026-01-29 00:21:23 WARN  [ : ] o.s.c.l.c.BlockingLoadBalancerClientAutoConfiguration$BlockingLoadBalancerClientRibbonWarnLogger.logWarning -  You already have RibbonLoadBalancerClient on your classpath. It will be used by default. As Spring Cloud Ribbon is in maintenance mode. We recommend switching to BlockingLoadBalancerClient instead. In order to use it, set the value of `spring.cloud.loadbalancer.ribbon.enabled` to `false` or remove spring-cloud-starter-netflix-ribbon from your project.
+2026-01-29 00:21:23 INFO  [ : ] o.s.b.a.e.w.EndpointLinksResolver.<init> -  Exposing 2 endpoint(s) beneath base path '/actuator'
+2026-01-29 00:21:23 INFO  [ : ] o.s.c.n.e.InstanceInfoFactory.create -  Setting initial instance status as: STARTING
+2026-01-29 00:21:23 INFO  [ : ] c.n.d.DiscoveryClient.<init> -  Initializing Eureka in region us-east-1
+2026-01-29 00:21:23 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using JSON encoding codec LegacyJacksonJson
+2026-01-29 00:21:23 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using JSON decoding codec LegacyJacksonJson
+2026-01-29 00:21:23 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using XML encoding codec XStreamXml
+2026-01-29 00:21:23 INFO  [ : ] c.n.d.p.DiscoveryJerseyProvider.<init> -  Using XML decoding codec XStreamXml
+2026-01-29 00:21:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2026-01-29 00:21:23 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Disable delta property : false
+2026-01-29 00:21:23 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Single vip registry refresh property : null
+2026-01-29 00:21:23 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Force full registry fetch : false
+2026-01-29 00:21:23 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Application is null : false
+2026-01-29 00:21:23 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Registered Applications size is zero : true
+2026-01-29 00:21:23 INFO  [ : ] c.n.d.DiscoveryClient.fetchRegistry -  Application version is -1: true
+2026-01-29 00:21:23 INFO  [ : ] c.n.d.DiscoveryClient.getAndStoreFullRegistry -  Getting all instance registry info from the eureka server
+2026-01-29 00:21:24 INFO  [ : ] c.n.d.DiscoveryClient.getAndStoreFullRegistry -  The response status is 200
+2026-01-29 00:21:24 INFO  [ : ] c.n.d.DiscoveryClient.initScheduledTasks -  Starting heartbeat executor: renew interval is: 30
+2026-01-29 00:21:24 INFO  [ : ] c.n.d.InstanceInfoReplicator.<init> -  InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-01-29 00:21:24 INFO  [ : ] c.n.d.DiscoveryClient.<init> -  Discovery Client initialized at timestamp 1769620884098 with initial instances count: 2
+2026-01-29 00:21:24 INFO  [ : ] o.s.c.n.e.s.EurekaServiceRegistry.register -  Registering application NONE-CONTROL-SERVICE with eureka with status UP
+2026-01-29 00:21:24 INFO  [ : ] c.n.d.DiscoveryClient.notify -  Saw local status change event StatusChangeEvent [timestamp=1769620884100, current=UP, previous=STARTING]
+2026-01-29 00:21:24 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_NONE-CONTROL-SERVICE/192.168.1.165:none-control-service:8081: registering service...
+2026-01-29 00:21:24 INFO  [ : ] o.a.c.h.Http11NioProtocol.log -  Starting ProtocolHandler ["https-jsse-nio-8081"]
+2026-01-29 00:21:24 INFO  [ : ] c.n.d.DiscoveryClient.register -  DiscoveryClient_NONE-CONTROL-SERVICE/192.168.1.165:none-control-service:8081 - registration status: 204
+2026-01-29 00:21:24 INFO  [ : ] o.s.b.w.e.t.TomcatWebServer.start -  Tomcat started on port(s): 8081 (https) with context path ''
+2026-01-29 00:21:24 INFO  [ : ] o.s.c.n.e.s.EurekaAutoServiceRegistration.onApplicationEvent -  Updating port to 8081
+2026-01-29 00:21:24 INFO  [ : ] o.g.b.n.s.NextMoveServiceApplication.logStarted -  Started NextMoveServiceApplication in 6.209 seconds (JVM running for 6.62)
+2026-01-29 00:21:24 INFO  [ : ] o.g.b.n.s.NextMoveServiceApplication.run -  ...License validation successful
+2026-01-29 00:21:34 INFO  [ : ] o.a.c.c.C.[.[.[/].log -  Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-29 00:21:34 INFO  [ : ] o.s.w.s.DispatcherServlet.initServletBean -  Initializing Servlet 'dispatcherServlet'
+2026-01-29 00:21:34 INFO  [ : ] o.s.w.s.DispatcherServlet.initServletBean -  Completed initialization in 14 ms
+2026-01-29 00:21:34 DEBUG [ : ] o.g.b.n.s.c.ManageFileController.transferFile -  [Blendata][Transfer] file /upload/test_dir/3dicons-png-dynamic-1.0.0.zip
+2026-01-29 00:21:34 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.moveFiles -  [Blendata] Starting task C001_task_external_112334411_qzXeSZVC with source path /upload/test_dir
+2026-01-29 00:21:34 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.lambda$moveFiles$0 -  [Blendata] Task ID(task_external_112334411) Request to move file /upload/test_dir/3dicons-png-dynamic-1.0.0.zip to file:///Users/a007626/next_move_test/dest
+2026-01-29 00:21:34 ERROR [ : ] o.g.b.n.s.u.FileSystemUtil.getFileSystemKey -  [Blendata] !!!Error getting file system key for path: /upload/test_dir
+2026-01-29 00:21:35 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.logExecutorStats -  [Blendata] TaskKey(C001_task_external_112334411_qzXeSZVC) ExecutorStats: active=0, poolSize=0, core=50, max=150, largest=0, completed=0, taskCount=0, queueSize=0, queueRemaining=2000
+2026-01-29 00:21:35 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.lambda$processFileTransfers$3 -  [Blendata] Task C001_task_external_112334411_qzXeSZVC running on thread Async-1
+2026-01-29 00:21:35 INFO  [ : ] o.a.s.c.u.s.b.BouncyCastleSecurityProviderRegistrar.getOrCreateProvider -  getOrCreateProvider(BC) created instance of org.bouncycastle.jce.provider.BouncyCastleProvider
+2026-01-29 00:21:35 INFO  [ : ] o.a.s.c.i.DefaultIoServiceFactoryFactory.getIoServiceProvider -  No detected/configured IoServiceFactoryFactory; using Nio2ServiceFactoryFactory
+2026-01-29 00:21:35 INFO  [ : ] o.a.s.c.c.h.DefaultConfigFileHostEntryResolver.reloadHostConfigEntries -  resolveEffectiveResolver(testuser@localhost:2222) loaded 3 entries from /Users/a007626/.ssh/config
+2026-01-29 00:21:35 WARN  [ : ] o.a.s.c.s.ClientSessionImpl.warn -  exceptionCaught(ClientSessionImpl[testuser@localhost/127.0.0.1:2222])[state=Opened] SshException: Unable to negotiate key exchange for kex algorithms (client: curve25519-sha256,curve25519-sha256@libssh.org,curve448-sha512,ecdh-sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group-exchange-sha256,diffie-hellman-group18-sha512,diffie-hellman-group17-sha512,diffie-hellman-group16-sha512,diffie-hellman-group15-sha512,diffie-hellman-group14-sha256,ext-info-c / server: diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1)
+2026-01-29 00:21:35 INFO  [ : ] o.a.s.c.s.ClientSessionImpl.disconnect -  Disconnecting(ClientSessionImpl[testuser@localhost/127.0.0.1:2222]): SSH2_DISCONNECT_KEY_EXCHANGE_FAILED - Unable to negotiate key exchange for kex algorithms (client: curve25519-sha256,curve25519-sha256@libssh.org,curve448-sha512,ecdh-sha2-nistp521,ecdh-sha2-nistp384,ecdh-sha2-nistp256,diffie-hellman-group-exchange-sha256,diffie-hellman-group18-sha512,diffie-hellman-group17-sha512,diffie-hellman-group16-sha512,diffie-hellman-group15-sha512,diffie-hellman-group14-sha256,ext-info-c / server: diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1)
+2026-01-29 00:21:35 WARN  [ : ] o.a.s.c.k.AcceptAllServerKeyVerifier.handleAcceptance -  Server at localhost/127.0.0.1:2222 presented unverified Ed25519 key: SHA256:1LhiKYR3krE1YsUFT766qi8SXik+u/kJVcLrBcLuLUQ
+2026-01-29 00:21:36 INFO  [ : ] o.g.b.n.s.s.c.SftpConnectionManager.connectAndAuthSmart -  Host localhost2222 classified as LEGACY after retry
+2026-01-29 00:22:07 ERROR [ : ] o.g.b.n.s.u.FileSystemUtil.getSchemeAndAuthority -  [Blendata] !!!Error get scheme and authority for path: /upload/test_dir
+java.lang.NullPointerException: null
+	at org.gable.blendata.nextmove.shared.util.FileSystemUtil.getSchemeAndAuthority(FileSystemUtil.java:35)
+	at org.gable.blendata.nextmove.service.service.NoneCtrlService.processRegularFile(NoneCtrlService.java:510)
+	at org.gable.blendata.nextmove.service.service.NoneCtrlService.lambda$processFileTransfers$3(NoneCtrlService.java:241)
+	at java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1604)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+2026-01-29 00:22:56 WARN  [ : ] o.a.s.c.k.AcceptAllServerKeyVerifier.handleAcceptance -  Server at localhost/127.0.0.1:2222 presented unverified Ed25519 key: SHA256:1LhiKYR3krE1YsUFT766qi8SXik+u/kJVcLrBcLuLUQ
+2026-01-29 00:23:18 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.processRegularFile -  skip renamed file
+2026-01-29 00:23:18 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.saveFinish -  transfer history file modify time = 2026-01-26 23:20:41.0
+2026-01-29 00:26:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2026-01-29 00:27:12 DEBUG [ : ] o.g.b.n.s.c.ManageFileController.transferFile -  [Blendata][Transfer] file /upload/test_dir/3dicons-png-dynamic-1.0.0.zip
+2026-01-29 00:27:12 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.moveFiles -  [Blendata] Starting task C001_task_external_112334411_CF7fLAox with source path /upload/test_dir
+2026-01-29 00:27:12 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.lambda$moveFiles$0 -  [Blendata] Task ID(task_external_112334411) Request to move file /upload/test_dir/3dicons-png-dynamic-1.0.0.zip to file:///Users/a007626/next_move_test/dest
+2026-01-29 00:27:12 ERROR [ : ] o.g.b.n.s.u.FileSystemUtil.getFileSystemKey -  [Blendata] !!!Error getting file system key for path: /upload/test_dir
+2026-01-29 00:27:12 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.logExecutorStats -  [Blendata] TaskKey(C001_task_external_112334411_CF7fLAox) ExecutorStats: active=0, poolSize=1, core=50, max=150, largest=1, completed=1, taskCount=1, queueSize=0, queueRemaining=2000
+2026-01-29 00:27:12 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.lambda$processFileTransfers$3 -  [Blendata] Task C001_task_external_112334411_CF7fLAox running on thread Async-2
+2026-01-29 00:27:12 WARN  [ : ] o.a.s.c.k.AcceptAllServerKeyVerifier.handleAcceptance -  Server at localhost/127.0.0.1:2222 presented unverified Ed25519 key: SHA256:1LhiKYR3krE1YsUFT766qi8SXik+u/kJVcLrBcLuLUQ
+2026-01-29 00:27:43 ERROR [ : ] o.g.b.n.s.u.FileSystemUtil.getSchemeAndAuthority -  [Blendata] !!!Error get scheme and authority for path: /upload/test_dir
+java.lang.NullPointerException: null
+	at org.gable.blendata.nextmove.shared.util.FileSystemUtil.getSchemeAndAuthority(FileSystemUtil.java:35)
+	at org.gable.blendata.nextmove.service.service.NoneCtrlService.processRegularFile(NoneCtrlService.java:510)
+	at org.gable.blendata.nextmove.service.service.NoneCtrlService.lambda$processFileTransfers$3(NoneCtrlService.java:241)
+	at java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1604)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+2026-01-29 00:28:25 WARN  [ : ] o.a.s.c.k.AcceptAllServerKeyVerifier.handleAcceptance -  Server at localhost/127.0.0.1:2222 presented unverified Ed25519 key: SHA256:1LhiKYR3krE1YsUFT766qi8SXik+u/kJVcLrBcLuLUQ
+2026-01-29 00:28:45 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.processRegularFile -  skip renamed file
+2026-01-29 00:28:45 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.saveFinish -  transfer history file modify time = 2026-01-26 23:20:41.0
+2026-01-29 00:31:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2026-01-29 00:33:56 DEBUG [ : ] o.g.b.n.s.c.ManageFileController.transferFile -  [Blendata][Transfer] file /upload/test_dir/3dicons-png-dynamic-1.0.0.zip
+2026-01-29 00:33:56 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.moveFiles -  [Blendata] Starting task C001_task_external_1111_RxodNGgB with source path /upload/test_dir
+2026-01-29 00:33:56 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.lambda$moveFiles$0 -  [Blendata] Task ID(task_external_1111) Request to move file /upload/test_dir/3dicons-png-dynamic-1.0.0.zip to file:///Users/a007626/next_move_test/dest
+2026-01-29 00:33:56 ERROR [ : ] o.g.b.n.s.u.FileSystemUtil.getFileSystemKey -  [Blendata] !!!Error getting file system key for path: /upload/test_dir
+2026-01-29 00:33:56 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.logExecutorStats -  [Blendata] TaskKey(C001_task_external_1111_RxodNGgB) ExecutorStats: active=0, poolSize=2, core=50, max=150, largest=2, completed=2, taskCount=2, queueSize=0, queueRemaining=2000
+2026-01-29 00:33:56 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.lambda$processFileTransfers$3 -  [Blendata] Task C001_task_external_1111_RxodNGgB running on thread Async-3
+2026-01-29 00:33:56 WARN  [ : ] o.a.s.c.k.AcceptAllServerKeyVerifier.handleAcceptance -  Server at localhost/127.0.0.1:2222 presented unverified Ed25519 key: SHA256:1LhiKYR3krE1YsUFT766qi8SXik+u/kJVcLrBcLuLUQ
+2026-01-29 00:34:29 ERROR [ : ] o.g.b.n.s.u.FileSystemUtil.getSchemeAndAuthority -  [Blendata] !!!Error get scheme and authority for path: /upload/test_dir
+java.lang.NullPointerException: null
+	at org.gable.blendata.nextmove.shared.util.FileSystemUtil.getSchemeAndAuthority(FileSystemUtil.java:35)
+	at org.gable.blendata.nextmove.service.service.NoneCtrlService.processRegularFile(NoneCtrlService.java:510)
+	at org.gable.blendata.nextmove.service.service.NoneCtrlService.lambda$processFileTransfers$3(NoneCtrlService.java:241)
+	at java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1604)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+2026-01-29 00:35:06 WARN  [ : ] o.a.s.c.k.AcceptAllServerKeyVerifier.handleAcceptance -  Server at localhost/127.0.0.1:2222 presented unverified Ed25519 key: SHA256:1LhiKYR3krE1YsUFT766qi8SXik+u/kJVcLrBcLuLUQ
+2026-01-29 00:35:23 DEBUG [ : ] o.g.b.n.s.c.ManageFileController.transferFile -  [Blendata][Transfer] file /upload/test_dir/3dicons-png-dynamic-1.0.0.zip
+2026-01-29 00:35:23 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.moveFiles -  [Blendata] Starting task C001_task_external_11_M0U9kS9r with source path /upload/test_dir
+2026-01-29 00:35:23 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.lambda$moveFiles$0 -  [Blendata] Task ID(task_external_11) Request to move file /upload/test_dir/3dicons-png-dynamic-1.0.0.zip to file:///Users/a007626/next_move_test/dest
+2026-01-29 00:35:23 ERROR [ : ] o.g.b.n.s.u.FileSystemUtil.getFileSystemKey -  [Blendata] !!!Error getting file system key for path: /upload/test_dir
+2026-01-29 00:35:23 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.logExecutorStats -  [Blendata] TaskKey(C001_task_external_11_M0U9kS9r) ExecutorStats: active=1, poolSize=3, core=50, max=150, largest=3, completed=2, taskCount=3, queueSize=0, queueRemaining=2000
+2026-01-29 00:35:23 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.lambda$processFileTransfers$3 -  [Blendata] Task C001_task_external_11_M0U9kS9r running on thread Async-4
+2026-01-29 00:35:23 WARN  [ : ] o.a.s.c.k.AcceptAllServerKeyVerifier.handleAcceptance -  Server at localhost/127.0.0.1:2222 presented unverified Ed25519 key: SHA256:1LhiKYR3krE1YsUFT766qi8SXik+u/kJVcLrBcLuLUQ
+2026-01-29 00:35:30 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.processRegularFile -  skip renamed file
+2026-01-29 00:35:30 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.saveFinish -  transfer history file modify time = 2026-01-26 23:20:41.0
+2026-01-29 00:35:54 ERROR [ : ] o.g.b.n.s.u.FileSystemUtil.getSchemeAndAuthority -  [Blendata] !!!Error get scheme and authority for path: /upload/test_dir
+java.lang.NullPointerException: null
+	at org.gable.blendata.nextmove.shared.util.FileSystemUtil.getSchemeAndAuthority(FileSystemUtil.java:35)
+	at org.gable.blendata.nextmove.service.service.NoneCtrlService.processRegularFile(NoneCtrlService.java:510)
+	at org.gable.blendata.nextmove.service.service.NoneCtrlService.lambda$processFileTransfers$3(NoneCtrlService.java:241)
+	at java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1604)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:750)
+2026-01-29 00:36:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2026-01-29 00:36:46 WARN  [ : ] o.a.s.c.k.AcceptAllServerKeyVerifier.handleAcceptance -  Server at localhost/127.0.0.1:2222 presented unverified Ed25519 key: SHA256:1LhiKYR3krE1YsUFT766qi8SXik+u/kJVcLrBcLuLUQ
+2026-01-29 00:37:13 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.processRegularFile -  skip renamed file
+2026-01-29 00:37:14 INFO  [ : ] o.g.b.n.s.s.NoneCtrlService.saveFinish -  transfer history file modify time = 2026-01-26 23:20:41.0
+2026-01-29 00:41:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2026-01-29 00:46:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2026-01-29 00:51:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2026-01-29 00:56:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration
+2026-01-29 01:01:23 INFO  [ : ] c.n.d.s.r.a.ConfigClusterResolver.getClusterEndpoints -  Resolving eureka endpoints via configuration

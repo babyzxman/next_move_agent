@@ -2,9 +2,13 @@ package org.gable.blendata.nextmove.service.service.connection;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.hadoop.fs.FileSystem;
+import org.apache.sshd.client.ClientBuilder;
 import org.apache.sshd.client.SshClient;
 import org.apache.sshd.client.session.ClientSession;
+import org.apache.sshd.common.NamedFactory;
 import org.apache.sshd.common.SshException;
+import org.apache.sshd.common.kex.BuiltinDHFactories;
+import org.apache.sshd.common.kex.KeyExchangeFactory;
 import org.apache.sshd.common.keyprovider.FileKeyPairProvider;
 import org.apache.sshd.core.CoreModuleProperties;
 import org.apache.sshd.sftp.client.SftpClient;
@@ -18,8 +22,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.KeyPair;
-import java.time.Duration;
-import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
@@ -30,19 +33,56 @@ public class SftpConnectionManager implements ConnectionManager {
     private final SftpConnectionProperties properties;
     private final FileSystem destFileSystem;
     private final FileSystemAdapterFactory adapterFactory;
-    private static final SshClient client;
 
-    // Static initializer to set up the SshClient once
+    private static final ConcurrentHashMap<String, Boolean> useLegacyByHost = new ConcurrentHashMap<>();
+
+    // Two profiles
+    private static final SshClient modernClient;
+    private static final SshClient legacyClient;
+
+    // host:port -> whether legacy is required
     static {
-        client = SshClient.setUpDefaultClient();
-        client.start();
-        // Optional: Register a shutdown hook to stop the client when the JVM exits
+        // MODERN: defaults
+        modernClient = SshClient.setUpDefaultClient();
+        modernClient.start();
+
+        // LEGACY: defaults + enable group14-sha1 (and optionally gex-sha1)
+        legacyClient = SshClient.setUpDefaultClient();
+
+// Build KEX list from DH factories, then set it
+        List<KeyExchangeFactory> legacyKex =
+                NamedFactory.setUpTransformedFactories(
+                        false,
+                        BuiltinDHFactories.VALUES,
+                        ClientBuilder.DH2KEX
+                );
+
+// Force preference order: group14-sha1 first, then gex-sha1, etc.
+        legacyKex.sort((a, b) -> {
+            String an = a.getName();
+            String bn = b.getName();
+            if ("diffie-hellman-group14-sha1".equals(an)) return -1;
+            if ("diffie-hellman-group14-sha1".equals(bn)) return 1;
+            if ("diffie-hellman-group-exchange-sha1".equals(an)) return -1;
+            if ("diffie-hellman-group-exchange-sha1".equals(bn)) return 1;
+            return 0;
+        });
+
+        legacyClient.setKeyExchangeFactories(legacyKex);
+        legacyClient.start();
+
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
-                client.stop();
-                log.info("SshClient stopped during shutdown");
+                modernClient.stop();
+                log.info("modernClient stopped during shutdown");
             } catch (Exception e) {
-                log.error("Error stopping SshClient", e);
+                log.error("Error stopping modernClient", e);
+            }
+            try {
+                legacyClient.stop();
+                log.info("legacyClient stopped during shutdown");
+            } catch (Exception e) {
+                log.error("Error stopping legacyClient", e);
             }
         }));
     }
@@ -57,76 +97,125 @@ public class SftpConnectionManager implements ConnectionManager {
 
     @Override
     public FileSystemAdapter createConnection() throws IOException {
+        String key = ConnectionManagerUtil.getServerMapKey(properties.getHost(), properties.getPort());
+
+        // If using private key and you have a list of signature algos to try:
         if (properties.getPrivateKeyPath() != null) {
-            String key = ConnectionManagerUtil.getServerMapKey(properties.getHost(),properties.getPort());
-            Set<String> algroithmSet = ConnectionManagerUtil.getSftpAlgorithmMap(key);
+            Set<String> algorithmSet = ConnectionManagerUtil.getSftpAlgorithmMap(key);
             Set<String> successKeySet = ConcurrentHashMap.newKeySet();
-            if(!algroithmSet.isEmpty()) {
+
+            if (algorithmSet != null && !algorithmSet.isEmpty()) {
                 int count = 0;
-                for (String algorithm : algroithmSet) {
-                    log.info("algorithm = {}",algorithm);
+
+                for (String algo : algorithmSet) {
                     count++;
-                    ClientSession session = client.connect(properties.getUsername(),
-                                    properties.getHost(),
-                                    properties.getPort())
-                            .verify(properties.getConnectionTimeout())
-                            .getSession();
-                    session.setSignatureFactoriesNameList(algorithm);
-                    Path keyPath = Paths.get(properties.getPrivateKeyPath());
-                    FileKeyPairProvider provider = new FileKeyPairProvider(keyPath);
-                    Iterable<KeyPair> keys = provider.loadKeys(null);
-                    session.addPublicKeyIdentity(keys.iterator().next());
+                    log.info("Trying signature algorithm = {}", algo);
+
+                    ClientSession session = null;
                     try {
-                        session.auth().verify(properties.getConnectionTimeout(), TimeUnit.MILLISECONDS);
+                        session = connectAndAuthSmart(algo);  // auth happens here ONCE
                         SftpClient sftpClient = SftpClientFactory.instance().createSftpClient(session);
-                        if(algroithmSet.size() != 1) {
-                            successKeySet.add(algorithm);
-                            ConnectionManagerUtil.setSftpAlogirthmSet(successKeySet,key);
+
+                        if (algorithmSet.size() != 1) {
+                            successKeySet.add(algo);
+                            ConnectionManagerUtil.setSftpAlogirthmSet(successKeySet, key);
                         }
-                        return adapterFactory.createSftpAdapter(sftpClient, session, destFileSystem);
-                    }
-                    catch (SshException ex) {
-                        session.close();
+                        return adapterFactory.createSftpAdapter(sftpClient, session,destFileSystem);
+
+                    } catch (Exception ex) {
+                        if (session != null) {
+                            try { session.close(); } catch (Exception ignore) {}
+                        }
+
+                        // keep your previous behavior: only continue on IllegalArgumentException
                         if (ex.getCause() instanceof IllegalArgumentException) {
-                            if (count >= algroithmSet.size()) {
+                            if (count >= algorithmSet.size()) {
                                 ConnectionManagerUtil.setSftpAlogirthmSet(successKeySet, key);
                                 throw new IOException(ex);
                             }
+                            continue;
                         }
-                        else {
-                            throw new IOException(ex);
-                        }
+                        throw (ex instanceof IOException) ? (IOException) ex : new IOException(ex);
                     }
                 }
+
+                throw new IOException("Unable to authenticate using provided signature algorithms.");
             }
-            else {
-//                client.setSignatureFactories(ConnectionManagerUtil.getDEFAULT_SIGNATURE_FACTORIES());
-                ClientSession session = client.connect(properties.getUsername(),
-                                properties.getHost(),
-                                properties.getPort())
-                        .verify(properties.getConnectionTimeout())
-                        .getSession();
-                session.setSignatureFactories(ConnectionManagerUtil.getDEFAULT_SIGNATURE_FACTORIES());
-                Path keyPath = Paths.get(properties.getPrivateKeyPath());
-                FileKeyPairProvider provider = new FileKeyPairProvider(keyPath);
-                Iterable<KeyPair> keys = provider.loadKeys(null);
-                session.addPublicKeyIdentity(keys.iterator().next());
-                session.auth().verify(properties.getConnectionTimeout(), TimeUnit.MILLISECONDS);
-                SftpClient sftpClient = SftpClientFactory.instance().createSftpClient(session);
-                return adapterFactory.createSftpAdapter(sftpClient, session, destFileSystem);
-            }
-        } else {
-            ClientSession session = client.connect(properties.getUsername(),
-                            properties.getHost(),
-                            properties.getPort())
-                    .verify(properties.getConnectionTimeout())
-                    .getSession();
-            session.addPasswordIdentity(properties.getPassword());
-            session.auth().verify(properties.getConnectionTimeout(), TimeUnit.MILLISECONDS);
+
+            // No per-host signature list -> default signature factories
+            ClientSession session = connectAndAuthSmart(null);
             SftpClient sftpClient = SftpClientFactory.instance().createSftpClient(session);
-            return adapterFactory.createSftpAdapter(sftpClient, session, destFileSystem);
+            return adapterFactory.createSftpAdapter(sftpClient, session,destFileSystem);
         }
-        return null;
+
+        // Password auth (no re-auth)
+        ClientSession session = connectAndAuthSmart(null);
+        SftpClient sftpClient = SftpClientFactory.instance().createSftpClient(session);
+        return adapterFactory.createSftpAdapter(sftpClient, session,destFileSystem);
+    }
+
+
+    private ClientSession connectAndAuthSmart(String signatureAlgoOrNull) throws IOException {
+        String hostKey = ConnectionManagerUtil.getServerMapKey(properties.getHost(), properties.getPort());
+        boolean preferLegacy = useLegacyByHost.getOrDefault(hostKey, false);
+
+        try {
+            return connectAndAuth(preferLegacy ? legacyClient : modernClient, signatureAlgoOrNull);
+        } catch (Exception first) {
+            if (!preferLegacy && looksLikeLegacyNegotiation(first)) {
+                try {
+                    ClientSession s = connectAndAuth(legacyClient, signatureAlgoOrNull);
+                    useLegacyByHost.put(hostKey, true);
+                    log.info("Host {} classified as LEGACY after retry", hostKey);
+                    return s;
+                } catch (Exception second) {
+                    throw new IOException(second);
+                }
+            }
+            throw new IOException(first);
+        }
+    }
+
+    private ClientSession connectAndAuth(SshClient client, String signatureAlgoOrNull) throws Exception {
+        ClientSession session = client.connect(properties.getUsername(), properties.getHost(), properties.getPort())
+                .verify(properties.getConnectionTimeout())
+                .getSession();
+
+        // IMPORTANT: set signature algorithms BEFORE auth (if provided)
+        if (signatureAlgoOrNull != null) {
+            session.setSignatureFactoriesNameList(signatureAlgoOrNull);
+        } else {
+            session.setSignatureFactories(ConnectionManagerUtil.getDEFAULT_SIGNATURE_FACTORIES());
+        }
+
+        // Add identity BEFORE auth
+        if (properties.getPrivateKeyPath() != null) {
+            Path keyPath = Paths.get(properties.getPrivateKeyPath());
+            FileKeyPairProvider provider = new FileKeyPairProvider(keyPath);
+            Iterable<KeyPair> keys = provider.loadKeys(null);
+            session.addPublicKeyIdentity(keys.iterator().next());
+        } else {
+            session.addPasswordIdentity(properties.getPassword());
+        }
+
+        session.auth().verify(properties.getConnectionTimeout(), TimeUnit.MILLISECONDS);
+        return session;
+    }
+
+    private boolean looksLikeLegacyNegotiation(Throwable t) {
+        Throwable cur = t;
+        while (cur.getCause() != null) cur = cur.getCause();
+        String msg = (cur.getMessage() == null) ? "" : cur.getMessage().toLowerCase();
+
+        return msg.contains("unable to negotiate key exchange")
+                || (msg.contains("unable to negotiate") && msg.contains("kex"))
+                || (msg.contains("no matching") && msg.contains("kex"));
+    }
+
+    private ClientSession connect(SshClient c) throws Exception {
+        return c.connect(properties.getUsername(), properties.getHost(), properties.getPort())
+                .verify(properties.getConnectionTimeout())
+                .getSession();
     }
 
     public FileSystemAdapter ensureConnectionAlive(FileSystemAdapter currentAdapter, FileSystem fs, String taskKey, String sourceRootPath) throws IOException {

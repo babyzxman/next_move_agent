@@ -171,7 +171,7 @@ public class NoneCtrlService extends MoveService{
                     catch (Exception ex) {
                         Thread.sleep(WAIT_RETRY);
                         if(i == RETRY_COUNT-1) {
-                            throw new Exception();
+                            throw new Exception(ex);
                         }
                     }
                 }

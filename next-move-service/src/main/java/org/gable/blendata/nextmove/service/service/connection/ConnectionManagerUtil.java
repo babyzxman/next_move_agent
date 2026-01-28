@@ -28,7 +28,6 @@ public class ConnectionManagerUtil {
         }
     }
 
-
     private static ConcurrentHashMap<String,Set<String>> sftpAlgroithmMap = new ConcurrentHashMap<>();
 
     public static String getServerMapKey(String host, Integer port) {
