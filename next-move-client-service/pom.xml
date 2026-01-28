@@ -17,7 +17,7 @@
         <apache-commons-configuration2>2.3</apache-commons-configuration2>
         <apache-commons-beanutils>1.9.4</apache-commons-beanutils>
         <github-ulisesbocchio>3.0.3</github-ulisesbocchio>
-        <mina.sshd.version>2.14.0</mina.sshd.version>
+        <mina.sshd.version>2.16.0</mina.sshd.version>
     </properties>
     <dependencies>
         <dependency>

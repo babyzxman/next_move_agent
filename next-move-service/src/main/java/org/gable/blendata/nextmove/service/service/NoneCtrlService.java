@@ -224,7 +224,9 @@ public class NoneCtrlService extends MoveService{
                         transferHistory.setFileModifiedTime(srcFile.getModifyTime());
 
                         //...Check connection is alive or not for SFTP source
-                        adapter = connectionManager.ensureConnectionAlive(adapter, adapter.getSourceFileSystem(), taskKey);
+                        adapter = connectionManager.ensureConnectionAlive(
+                                adapter, adapter.getSourceFileSystem(), taskKey,
+                                transferRequestWrapper.getSourceRootPathStr());
 
                         if (!transferRequestWrapper.isNotExtract() && isCompressFile) {
                             processCompressFile(reconcileInfos, transferHistory, destRootPathStr, isDeleteSrc

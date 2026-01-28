@@ -9,11 +9,12 @@ import org.gable.blendata.nextmove.service.adapter.FileSystemAdapter;
 import org.gable.blendata.nextmove.shared.dto.FileInfoDTO;
 import org.gable.blendata.nextmove.shared.util.FileInfoUtil;
 
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
+import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.Objects;
 
 /**
@@ -70,7 +71,6 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
     @Override
     public void copy(FileSystem destFileSystem, String srcFilePath, String destFilePath, boolean isDeleteSrc, boolean overwrite) throws IOException {
         FSDataOutputStream hdfsOutputStream = null;
-        SftpClient.CloseableHandle handle = null;
         try {
 
             // Check if source file exists
@@ -90,7 +90,6 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
             }
 
             // Open SFTP file for reading (streaming)
-            handle = sftpClient.open(srcFilePath, SftpClient.OpenMode.Read);
             log.info("hadoop file = {}",destFileSystem.getConf());
             Configuration c = destFileSystem.getConf();
             log.info("fast.upload=" + c.get("fs.s3a.fast.upload"));
@@ -112,13 +111,13 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
             hdfsOutputStream = this.destFileSystem.create(destPath, overwrite);
 
             // Stream copy with buffer
-            byte[] buffer = new byte[64 * 1024]; // 256 KiB
-            log.info("buffer = {}",buffer.length);
-            int bytesRead;
-            long fileOffset = 0;
-            while ((bytesRead = sftpClient.read(handle, fileOffset, buffer, 0, buffer.length)) > 0) {
-                hdfsOutputStream.write(buffer, 0, bytesRead);
-                fileOffset += bytesRead;
+            try (InputStream sftpInputStream = sftpClient.read(srcFilePath)) {
+
+                byte[] buffer = new byte[64 * 1024]; // 256KB buffer
+                int bytesRead;
+                while ((bytesRead = sftpInputStream.read(buffer)) != -1) {
+                    hdfsOutputStream.write(buffer, 0, bytesRead);
+                }
             }
 
             // Flush and sync
@@ -131,9 +130,6 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
             // Close resources in reverse order
             if (hdfsOutputStream != null) {
                 try { hdfsOutputStream.close(); } catch (IOException e) { /* ignore */ }
-            }
-            if (handle != null) {
-                try { handle.close(); } catch (IOException e) { /* ignore */ }
             }
         }
     }
@@ -216,16 +212,13 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
         Path destPath = Paths.get(destFilePath);
         Files.createDirectories(destPath.getParent());
 
-        try (SftpClient.CloseableHandle handle = sftpClient.open(srcFilePath, SftpClient.OpenMode.Read);
-             OutputStream outputStream = Files.newOutputStream(destPath)) {
+        try (InputStream sftpInputStream = sftpClient.read(srcFilePath);
+             OutputStream localOutputStream = new BufferedOutputStream(Files.newOutputStream(destPath))) {
 
-            byte[] buffer = new byte[32768]; // 32KB buffer
-            long offset = 0;
+            byte[] buffer = new byte[64 * 1024]; // 256KB buffer
             int bytesRead;
-
-            while ((bytesRead = sftpClient.read(handle, offset, buffer, 0, buffer.length)) > 0) {
-                outputStream.write(buffer, 0, bytesRead);
-                offset += bytesRead;
+            while ((bytesRead = sftpInputStream.read(buffer)) != -1) {
+                localOutputStream.write(buffer, 0, bytesRead);
             }
         }
     }
