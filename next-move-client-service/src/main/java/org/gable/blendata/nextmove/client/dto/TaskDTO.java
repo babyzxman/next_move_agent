@@ -41,6 +41,7 @@ public class TaskDTO implements Serializable {
     private Integer filePartitionDate;
     private Boolean usedCheckpoint = false;
     private Timestamp modifiedTime;
+    private boolean useTempFileDownload;
 
     @AllArgsConstructor
     @NoArgsConstructor

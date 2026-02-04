@@ -1,9 +1,14 @@
 package org.gable.blendata.nextmove.service.adapter.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.hadoop.fs.*;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.hadoop.fs.FileUtil;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
 import org.gable.blendata.nextmove.service.adapter.FileSystemAdapter;
+import org.gable.blendata.nextmove.shared.constant.TaskConst;
 import org.gable.blendata.nextmove.shared.dto.FileInfoDTO;
+import org.gable.blendata.nextmove.shared.dto.TransferRequestWrapper;
 import org.gable.blendata.nextmove.shared.util.FileInfoUtil;
 
 import java.io.IOException;
@@ -50,8 +55,11 @@ public class HadoopFileSystemAdapter implements FileSystemAdapter {
     }
 
     @Override
-    public void copy(FileSystem destFileSystem, String srcFilePath, String destFilePath, boolean isDeleteSrc, boolean overwrite) throws IOException {
-        FileUtil.copy(this.sourceFileSystem, new Path(srcFilePath), destFileSystem, new Path(destFilePath), isDeleteSrc, overwrite, sourceFileSystem.getConf());
+    public void copy(FileSystem destFileSystem, TransferRequestWrapper request) throws IOException {
+        String srcFilePath = request.getFilePathStrs().get(0);
+        String destFilePath = Paths.get(request.getDestinationRootPathStr(), new java.io.File(srcFilePath).getName()).toString();
+        boolean isDeleteSrc = TaskConst.MoveType.MOVE.name().equalsIgnoreCase(request.getMoveType());
+        FileUtil.copy(this.sourceFileSystem, new Path(srcFilePath), destFileSystem, new Path(destFilePath), isDeleteSrc, request.isOverwrite(), sourceFileSystem.getConf());
     }
 
     @Override

@@ -156,6 +156,7 @@ public class TransferService {
                 .createTargetZipBaseDir(Objects.isNull(taskDto.getCompression())? false : taskDto.getCompression().isCreateTargetDirectory())
                 .filePartitionDate(taskDto.getFilePartitionDate())
                 .usedCheckpoint(taskDto.getUsedCheckpoint())
+                .useTempFileDownload(taskDto.isUseTempFileDownload())
                 .build();
         HttpEntity<TransferRequestWrapper> entity = new HttpEntity<>(body, headers);
 
