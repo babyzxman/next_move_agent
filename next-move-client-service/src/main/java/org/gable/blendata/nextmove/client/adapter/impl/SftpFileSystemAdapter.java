@@ -9,6 +9,7 @@ import org.gable.blendata.nextmove.client.adapter.FileInfo;
 import org.gable.blendata.nextmove.client.adapter.FileListingCriteria;
 import org.gable.blendata.nextmove.client.adapter.FileSystemAdapter;
 import org.gable.blendata.nextmove.shared.util.DateUtil;
+import org.xbill.DNS.Zone;
 
 import java.io.IOException;
 import java.nio.file.attribute.FileTime;
@@ -53,7 +54,7 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
                     break;
                 }
                 collectFiles(path, criteria, allFiles, 0,
-                        usedCheckpoint,checkpointTime,filePartitionDate);
+                        usedCheckpoint,null,filePartitionDate);
             }
         } else {
             collectFiles(rootPath, criteria, allFiles, 0,
@@ -252,6 +253,7 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
                         Instant instant = Instant.ofEpochMilli(entry.getAttributes().getCreateTime() != null
                                 ? entry.getAttributes().getCreateTime().toMillis()
                                 : entry.getAttributes().getModifyTime().toMillis());
+                        log.debug("file name = {} , file modified time = {}",entry.getFilename(),instant.getEpochSecond());
                         LocalDate date = instant.atZone(ZoneId.systemDefault()).toLocalDate();
                         String yyyyMMdd = date.format(DateTimeFormatter.BASIC_ISO_DATE);
                         if(yyyyMMdd.equals(filePartitionDate.toString())) {
@@ -332,7 +334,6 @@ public class SftpFileSystemAdapter implements FileSystemAdapter {
         SftpClient.Attributes attrs = sftpClient.stat(filePath);
         String filename = FilenameUtils.getName(filePath);
         LocalDateTime modTime = DateUtil.convertToLocalDateTime(attrs.getModifyTime().toMillis());
-
         return new FileInfo(filePath, filename, attrs.getSize(), modTime, attrs.isDirectory());
     }
 

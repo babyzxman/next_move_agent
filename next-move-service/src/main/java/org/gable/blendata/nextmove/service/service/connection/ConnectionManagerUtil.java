@@ -14,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ConnectionManagerUtil {
 
     private static final Set<String> keyAlgorithmSet = new HashSet<>(Arrays.asList(
-            "rsa-sha2-512","rsa-sha2-256","ssh-rsa"));
+            "rsa-sha2-512","rsa-sha2-256","ssh-rsa","ssh-dss"));
 
     @Getter
     private static List<NamedFactory<Signature>> DEFAULT_SIGNATURE_FACTORIES;

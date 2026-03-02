@@ -90,36 +90,36 @@ public class MainTaskService {
 
             //...List files of tasks
             List<String> fileSourcePaths = listFile(taskDto);
-            SftpConnectionProperties sftpConnectionProperties =
-                    SftpConnectionProperties.fromMap(taskDto.getSourceProperties());
-            if(taskDto.getUsedCheckpoint()) {
-                List<CheckPointMasterFileList> checkPointMasterFileLists = new ArrayList<>();
-                int batchCount = 0;
-                Set<String> leftOverFileProcess = checkpointMasterRepository.getLeftOverFileProcess(
-                        taskDto.getRootPath().getSource(),sftpConnectionProperties.getHost(),
-                        sftpConnectionProperties.getPort(),taskDto.getFilePartitionDate());
-                for(String fileSourcePath: fileSourcePaths) {
-                    log.info("check test in file source path");
-                    leftOverFileProcess.remove(fileSourcePath);
-                    CheckPointMasterFileList checkPointMasterFileList = new CheckPointMasterFileList();
-                    checkPointMasterFileList.setFilePath(fileSourcePath);
-                    checkPointMasterFileList.setStatus(FileStatus.READY_TO_PROCESS.toString());
-                    checkPointMasterFileList.setFilePartitionDate(taskDto.getFilePartitionDate());
-                    checkPointMasterFileList.setHost(sftpConnectionProperties.getHost());
-                    checkPointMasterFileList.setPort(sftpConnectionProperties.getPort());
-                    checkPointMasterFileList.setSourceRootPath(taskDto.getRootPath().getSource());
-                    checkPointMasterFileLists.add(checkPointMasterFileList);
-                    batchCount++;
-                    if(batchCount > 5000) {
-                        checkPointMasterFileLists = new ArrayList<>();
-                        checkpointMasterRepository.saveAll(checkPointMasterFileLists);
-                    }
-                }
-                fileSourcePaths.addAll(leftOverFileProcess);
-                if(!checkPointMasterFileLists.isEmpty()) {
-                    checkpointMasterRepository.saveAll(checkPointMasterFileLists);
-                }
-            }
+//            SftpConnectionProperties sftpConnectionProperties =
+//                    SftpConnectionProperties.fromMap(taskDto.getSourceProperties());
+//            if(taskDto.getUsedCheckpoint()) {
+//                List<CheckPointMasterFileList> checkPointMasterFileLists = new ArrayList<>();
+//                int batchCount = 0;
+//                Set<String> leftOverFileProcess = checkpointMasterRepository.getLeftOverFileProcess(
+//                        taskDto.getRootPath().getSource(),sftpConnectionProperties.getHost(),
+//                        sftpConnectionProperties.getPort(),taskDto.getFilePartitionDate());
+//                for(String fileSourcePath: fileSourcePaths) {
+//                    log.info("check test in file source path");
+//                    leftOverFileProcess.remove(fileSourcePath);
+//                    CheckPointMasterFileList checkPointMasterFileList = new CheckPointMasterFileList();
+//                    checkPointMasterFileList.setFilePath(fileSourcePath);
+//                    checkPointMasterFileList.setStatus(FileStatus.READY_TO_PROCESS.toString());
+//                    checkPointMasterFileList.setFilePartitionDate(taskDto.getFilePartitionDate());
+//                    checkPointMasterFileList.setHost(sftpConnectionProperties.getHost());
+//                    checkPointMasterFileList.setPort(sftpConnectionProperties.getPort());
+//                    checkPointMasterFileList.setSourceRootPath(taskDto.getRootPath().getSource());
+//                    checkPointMasterFileLists.add(checkPointMasterFileList);
+//                    batchCount++;
+//                    if(batchCount > 5000) {
+//                        checkPointMasterFileLists = new ArrayList<>();
+//                        checkpointMasterRepository.saveAll(checkPointMasterFileLists);
+//                    }
+//                }
+//                fileSourcePaths.addAll(leftOverFileProcess);
+//                if(!checkPointMasterFileLists.isEmpty()) {
+//                    checkpointMasterRepository.saveAll(checkPointMasterFileLists);
+//                }
+//            }
             //...P'Ban request to print all matching file paths
             log.info("{} task = {}, matching file source paths = {}"
                     , AppConst.PREFIX_LOG
@@ -195,7 +195,7 @@ public class MainTaskService {
         return numNodes;
     }
 
-    private List<String> listFile(TaskDTO taskDTO) throws IOException {
+    private List<String> listFile(TaskDTO taskDTO) throws IOException, InterruptedException {
         List<String> filteredSourcePaths = new ArrayList<>();
         LocalDateTime executeTime = LocalDateTime.now();
         String sourcePathString = StringUtil.replaceVariableCurrentDate(LocalDateTime.now(), taskDTO.getRootPath().getSource()).toString();
@@ -213,11 +213,11 @@ public class MainTaskService {
                 : taskDTO.getBeforeCurrentDateInHours() != null ? DateUtil.calculateDateBySubtractingHours(taskDTO.getBeforeCurrentDateInHours())
                 : null;
         FileSystemAdapter fileSystemAdapter = taskAwareFileSystemService.getFileSystemAdapter(taskDTO.getId());
-        SftpConnectionProperties sftpProps = SftpConnectionProperties.fromMap(taskDTO.getSourceProperties());
-        Timestamp checkpoint = checkpointRepository.getCheckpointTimeByPath(
-                taskDTO.getRootPath().getSource(),sftpProps.getHost(),
-                sftpProps.getPort(),taskDTO.getFilePartitionDate());
-        log.info("check point time = {}",checkpoint);
+//        SftpConnectionProperties sftpProps = SftpConnectionProperties.fromMap(taskDTO.getSourceProperties());
+//        Timestamp checkpoint = checkpointRepository.getCheckpointTimeByPath(
+//                taskDTO.getRootPath().getSource(),sftpProps.getHost(),
+//                sftpProps.getPort(),taskDTO.getFilePartitionDate());
+//        log.info("check point time = {}",checkpoint);
         ReturnListFile returnListFile = new ReturnListFile();
         try {
             switch (taskDTO.getType()) {
@@ -238,7 +238,7 @@ public class MainTaskService {
                             destination,
                             taskDTO.getFilePartitionDate(),
                             taskDTO.getUsedCheckpoint(),
-                            checkpoint
+                            null
                     );
                     filteredSourcePaths = returnListFile.getFileList();
                     break;
@@ -259,31 +259,31 @@ public class MainTaskService {
                                     : taskDTO.getSourceProperties().get(TaskConst.SourceProperties.HOST.getPropertyName()).toString(),
                             taskDTO.getRootPath().getCtrlPath(),taskDTO.getCtrlFilePatterns(),
                             destination, taskDTO.getFilePartitionDate(),
-                            taskDTO.getUsedCheckpoint(), checkpoint
+                            taskDTO.getUsedCheckpoint(), null
                     );
                     filteredSourcePaths = returnListFile.getFileList();
             }
         } finally {
             taskAwareFileSystemService.closeConnection(taskDTO.getId(), fileSystemAdapter);
         }
-        if(taskDTO.getUsedCheckpoint()) {
-            SftpConnectionProperties sftpConnectionProperties = SftpConnectionProperties.fromMap(taskDTO.getSourceProperties());
-            if (returnListFile.getLatestModifiedTime() != null) {
-                PathCheckpoint pathCheckpoint = checkpointRepository.findByPathHostAndPort(
-                        taskDTO.getRootPath().getSource(),
-                        sftpConnectionProperties.getHost(),
-                        sftpConnectionProperties.getPort(), taskDTO.getFilePartitionDate());
-                if (pathCheckpoint == null) {
-                    pathCheckpoint = new PathCheckpoint();
-                }
-                pathCheckpoint.setPath(taskDTO.getRootPath().getSource());
-                pathCheckpoint.setLatestModifiedTime(returnListFile.getLatestModifiedTime());
-                pathCheckpoint.setPort(sftpConnectionProperties.getPort());
-                pathCheckpoint.setHost(sftpConnectionProperties.getHost());
-                pathCheckpoint.setFilePartitionDate(taskDTO.getFilePartitionDate());
-                checkpointRepository.save(pathCheckpoint);
-            }
-        }
+//        if(taskDTO.getUsedCheckpoint()) {
+//            SftpConnectionProperties sftpConnectionProperties = SftpConnectionProperties.fromMap(taskDTO.getSourceProperties());
+//            if (returnListFile.getLatestModifiedTime() != null) {
+//                PathCheckpoint pathCheckpoint = checkpointRepository.findByPathHostAndPort(
+//                        taskDTO.getRootPath().getSource(),
+//                        sftpConnectionProperties.getHost(),
+//                        sftpConnectionProperties.getPort(), taskDTO.getFilePartitionDate());
+//                if (pathCheckpoint == null) {
+//                    pathCheckpoint = new PathCheckpoint();
+//                }
+//                pathCheckpoint.setPath(taskDTO.getRootPath().getSource());
+//                pathCheckpoint.setLatestModifiedTime(returnListFile.getLatestModifiedTime());
+//                pathCheckpoint.setPort(sftpConnectionProperties.getPort());
+//                pathCheckpoint.setHost(sftpConnectionProperties.getHost());
+//                pathCheckpoint.setFilePartitionDate(taskDTO.getFilePartitionDate());
+//                checkpointRepository.save(pathCheckpoint);
+//            }
+//        }
         return filteredSourcePaths;
     }
 

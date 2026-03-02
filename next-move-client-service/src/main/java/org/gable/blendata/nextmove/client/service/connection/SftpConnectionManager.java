@@ -8,19 +8,21 @@ import org.apache.sshd.common.NamedFactory;
 import org.apache.sshd.common.kex.BuiltinDHFactories;
 import org.apache.sshd.common.kex.KeyExchangeFactory;
 import org.apache.sshd.common.keyprovider.FileKeyPairProvider;
+import org.apache.sshd.common.signature.BuiltinSignatures;
+import org.apache.sshd.common.signature.Signature;
+import org.apache.sshd.common.signature.SignatureFactory;
 import org.apache.sshd.sftp.client.SftpClient;
 import org.apache.sshd.sftp.client.SftpClientFactory;
 import org.gable.blendata.nextmove.client.adapter.FileSystemAdapter;
 import org.gable.blendata.nextmove.client.adapter.factory.FileSystemAdapterFactory;
 import org.gable.blendata.nextmove.client.config.SftpConnectionProperties;
 
+import javax.inject.Singleton;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.KeyPair;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -71,6 +73,11 @@ public class SftpConnectionManager implements ConnectionManager {
         });
 
         legacyClient.setKeyExchangeFactories(legacyKex);
+        List<NamedFactory<Signature>> sigs = legacyClient.getSignatureFactories();
+        if (sigs.stream().noneMatch(f -> "ssh-dss".equalsIgnoreCase(f.getName()))) {
+            sigs.add(0, BuiltinSignatures.dsa); // enables ssh-dss
+        }
+        legacyClient.setSignatureFactories(sigs);
         legacyClient.start();
 
         logClientKex("LEGACY", legacyClient);
@@ -94,6 +101,22 @@ public class SftpConnectionManager implements ConnectionManager {
     public SftpConnectionManager(SftpConnectionProperties properties) {
         this.properties = properties;
         this.adapterFactory = new FileSystemAdapterFactory();
+    }
+
+    private static boolean shouldContinueToNextAlgo(Throwable t) {
+        for (Throwable cur = t; cur != null; cur = cur.getCause()) {
+            if (cur instanceof IllegalArgumentException) return true;
+
+            String m = cur.getMessage();
+            if (m == null) continue;
+            m = m.toLowerCase();
+
+            // Your exact error
+            if (m.contains("no verifier located for algorithm")) return true;
+
+            // Common MINA wraps
+        }
+        return false;
     }
 
     @Override
@@ -129,7 +152,7 @@ public class SftpConnectionManager implements ConnectionManager {
                         }
 
                         // keep your previous behavior: only continue on IllegalArgumentException
-                        if (ex.getCause() instanceof IllegalArgumentException) {
+                        if (shouldContinueToNextAlgo(ex)) {
                             if (count >= algorithmSet.size()) {
                                 ConnectionManagerUtil.setSftpAlogirthmSet(successKeySet, key);
                                 throw new IOException(ex);

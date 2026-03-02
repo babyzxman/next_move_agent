@@ -33,11 +33,13 @@ spring:
       maximum-pool-size: 20  # Maximum number of connections that HikariCP will keep in the pool, including both idle and in-use connections. Default is 10.
       idle-timeout: 30000  # Maximum amount of time (in milliseconds) that a connection is allowed to sit idle in the pool. Default is 600000 (10 minutes).
       max-lifetime: 1800000  # Maximum lifetime (in milliseconds) of a connection in the pool. Connections older than this are closed and removed from the pool. Default is 1800000 (30 minutes).
+      keepaliveTime: 120000
       connection-timeout: 30000  # Maximum number of milliseconds that a client will wait for a connection from the pool. Default is 30000 (30 seconds).
       pool-name: HikariCP  # User-defined name for the connection pool for logging and JMX management purposes.
       auto-commit: true  # Controls the default auto-commit behavior of connections returned from the pool. Default is true.
       leak-detection-threshold: 2000  # Amount of time (in milliseconds) a connection can be out of the pool before a message is logged indicating a possible connection leak. Default is 0 (disabled).
   jpa:
+    open-in-view: false
     hibernate:
       ddl-auto: update
     show-sql: false
@@ -87,11 +89,10 @@ const:
 logging:
   config: file:/Users/a007626/IdeaProjects/beg-move-file-agent/next-move-client-service/src/main/resources/logback.xml
   level:
-    org:
-      springframework:
-        boot:
-          context:
-            logging: DEBUG
+    com:
+      zaxxer:
+        hikari:
+          HikariConfig: DEBUG
 #  level:
 #    org.springframework.cloud.netflix.eureka: DEBUG
 #    org.springframework.web.client: DEBUG

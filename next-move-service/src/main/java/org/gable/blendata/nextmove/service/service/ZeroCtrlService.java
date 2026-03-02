@@ -244,10 +244,9 @@ public class ZeroCtrlService extends MoveService{
                         log.error("{} !!!Error cannot close connection : {}", AppConst.PREFIX_LOG, e.getMessage(), e);
                     }
                 }
-                SftpConnectionProperties sftpConnectionProperties = SftpConnectionProperties.fromMap(
-                        transferRequestWrapper.getSourceProperties());
-                saveFinish(transferHistories, sftpConnectionProperties.getHost(),
-                        sftpConnectionProperties.getPort(),transferRequestWrapper.getUsedCheckpoint());
+//                SftpConnectionProperties sftpConnectionProperties = SftpConnectionProperties.fromMap(
+//                        transferRequestWrapper.getSourceProperties());
+                saveFinish(transferHistories);
                 //...Write log file
                 if (!reconcileInfos.isEmpty()) {
                     reconcileLogService.writeLogFile(reconcileInfos, transferRequestWrapper.getSourceRootPathStr(), transferRequestWrapper.getTaskId());
@@ -531,37 +530,30 @@ public class ZeroCtrlService extends MoveService{
         }
     }
 
-    private void saveFinish(List<TransferHistory> transferHistories,
-                            String host,Integer port,Boolean isUsedCheckpoint) {
-        int batchCount = 0;
-        String sourceRootPath = null;
-        List<String> updatePath = new ArrayList<>();
-        Integer filePartitionDate = null;
+    private void saveFinish(List<TransferHistory> transferHistories) {
         for (TransferHistory transferHistory : transferHistories) {
-            sourceRootPath = transferHistory.getSourceRootPath();
             transferHistory.setModifiedBy(appConfig.getAppId());
             transferHistory.setModifiedDate(DateUtil.getCurrentDateWithTime());
             log.info("transfer history file modify time = {}",transferHistory.getFileModifiedTime());
             transferHistoryService.save(transferHistory);
-            filePartitionDate = transferHistory.getFilePartitionDate();
-            if(isUsedCheckpoint) {
-                if (transferHistory.getStatus().equals(FileStatus.SUCCESS.toString())) {
-                    updatePath.add(transferHistory.getFilePath());
-                    batchCount++;
-                }
-                if (batchCount > 5000) {
-                    batchCount = 0;
-                    checkpointMasterRepository.updateCheckpointMasterFileListFinished(
-                            sourceRootPath, updatePath, host, port, transferHistory.getFilePartitionDate());
-                    updatePath = new ArrayList<>();
-                }
-            }
+//            if(isUsedCheckpoint) {
+//                if (transferHistory.getStatus().equals(FileStatus.SUCCESS.toString())) {
+//                    updatePath.add(transferHistory.getFilePath());
+//                    batchCount++;
+//                }
+//                if (batchCount > 5000) {
+//                    batchCount = 0;
+//                    checkpointMasterRepository.updateCheckpointMasterFileListFinished(
+//                            sourceRootPath, updatePath, host, port, transferHistory.getFilePartitionDate());
+//                    updatePath = new ArrayList<>();
+//                }
+//            }
         }
-        if(isUsedCheckpoint) {
-            if (!updatePath.isEmpty())
-                checkpointMasterRepository.updateCheckpointMasterFileListFinished(
-                        sourceRootPath, updatePath, host, port, filePartitionDate);
-        }
+//        if(isUsedCheckpoint) {
+//            if (!updatePath.isEmpty())
+//                checkpointMasterRepository.updateCheckpointMasterFileListFinished(
+//                        sourceRootPath, updatePath, host, port, filePartitionDate);
+//        }
     }
 
     public Map<String, String> stopMoveFiles(List<StopTaskRequestWrapper> stopTaskRequestWrappers) {

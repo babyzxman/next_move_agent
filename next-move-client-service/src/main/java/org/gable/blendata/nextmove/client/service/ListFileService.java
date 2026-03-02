@@ -84,17 +84,14 @@ public class ListFileService {
             return returnListFile;
         }
         List<TransferHistoryView> excludeFiles = new ArrayList<>();
-        if(!usedCheckpoint) {
-            excludeFiles = getExcludeFiles(
-                    sourceType, rootPath, moveType, host, isOverwrite,
-                    destPath, filePartitionDate);
-        }
+        excludeFiles = getExcludeFiles(
+                sourceType, rootPath, moveType, host, isOverwrite,
+                destPath, filePartitionDate);
 
         Map<String,TransferHistoryView> transferHistoryViewMap = new HashMap<>();
         for(TransferHistoryView transferHistoryView: excludeFiles) {
             transferHistoryViewMap.put(transferHistoryView.getFilePath(),transferHistoryView);
         }
-
         long criteriaMaxFiles = criteria.getMaxFiles() != null ? criteria.getMaxFiles() : Long.MAX_VALUE;
         int count = 0;
         List<String> filePath = new ArrayList<>();
@@ -109,10 +106,14 @@ public class ListFileService {
                         filePath.add(file.getPath());
                         count++;
                     }
-                    else if(file.getModificationTime().isAfter(
-                            transferHistoryView.getFileModifiedTime().toLocalDateTime())) {
-                        filePath.add(file.getPath());
-                        count++;
+                    else if(file.getModificationTime().minusSeconds(1).truncatedTo(ChronoUnit.SECONDS).isAfter(
+                            transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.SECONDS))) {
+                        FileInfo newFile = fileSystemAdapter.getFileInfo(file.getPath());
+                        if(newFile.getModificationTime().truncatedTo(ChronoUnit.SECONDS).
+                                isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.SECONDS))) {
+                            filePath.add(file.getPath());
+                            count++;
+                        }
                     }
                 }
             }
@@ -228,27 +229,49 @@ public class ListFileService {
         List<String> result = new ArrayList<>();
 
         for (FileInfo file : files) {
-            log.debug("list file name = {}",file.getName());
             TransferHistoryView transferHistoryView = transferHistoryViewMap.get(file.getPath());
             boolean isControlFileFailedToCopy = false;
             if (result.size() >= (criteria.getMaxFiles() != null ? criteria.getMaxFiles() : Integer.MAX_VALUE)) {
                 break;
             }
-            if (transferHistoryView != null && transferHistoryView.getFileModifiedTime() != null
-                && !file.getModificationTime().truncatedTo(ChronoUnit.SECONDS).
-                    isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.SECONDS))) {
-                if(controlFileNamePattern == null) {
-                    if(transferHistoryViewMap.get(getControlFilePath(file,ctrlExtensions,
-                            controlPath,fileSystemAdapter)) == null) {
-                        isControlFileFailedToCopy = true;
+            if (transferHistoryView != null && transferHistoryView.getFileModifiedTime() != null) {
+                if(!file.getModificationTime().minusSeconds(1).truncatedTo(ChronoUnit.SECONDS).
+                        isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.SECONDS))) {
+                    if(controlFileNamePattern == null) {
+                        if(transferHistoryViewMap.get(getControlFilePath(file,ctrlExtensions,
+                                controlPath,fileSystemAdapter)) == null) {
+                            isControlFileFailedToCopy = true;
+                        }
+                        else {
+                            continue;
+                        }
                     }
                     else {
+                        log.info("check inside continue");
                         continue;
                     }
                 }
                 else {
-                    log.info("check inside continue");
-                    continue;
+                    log.info("has new file when list new time = {}",file.getModificationTime());
+                    FileInfo newFile = fileSystemAdapter.getFileInfo(file.getPath());
+                    log.info("new file = {}",newFile.getModificationTime());
+                    if(!newFile.getModificationTime().truncatedTo(ChronoUnit.SECONDS).
+                            isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().
+                                    truncatedTo(ChronoUnit.SECONDS))) {
+                        if(controlFileNamePattern == null) {
+                            if(transferHistoryViewMap.get(getControlFilePath(file,ctrlExtensions,
+                                    controlPath,fileSystemAdapter)) == null) {
+                                isControlFileFailedToCopy = true;
+                            }
+                            else {
+                                continue;
+                            }
+                        }
+                        else {
+                            log.info("check inside continue");
+                            continue;
+                        }
+                    }
                 }
             }
 
@@ -299,17 +322,27 @@ public class ListFileService {
             }
             for(FileInfo fileInfo: controlFiles) {
                 TransferHistoryView transferHistoryView = transferHistoryViewMap.get(fileInfo.getPath());
-                if (null != transferHistoryView && transferHistoryView.getFileModifiedTime() != null
-                        && !fileInfo.getModificationTime().truncatedTo(ChronoUnit.SECONDS).
-                        isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.SECONDS))) {
-                    continue;
+                if (null != transferHistoryView && transferHistoryView.getFileModifiedTime() != null) {
+                    if(!fileInfo.getModificationTime().truncatedTo(ChronoUnit.SECONDS).
+                            isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.SECONDS))) {
+                        continue;
+                    }
+                    else {
+                        FileInfo newFile = fileSystemAdapter.getFileInfo(fileInfo.getPath());
+                        if(!newFile.getModificationTime().truncatedTo(ChronoUnit.SECONDS).isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.SECONDS))) {
+                            continue;
+                        }
+                    }
                 }
                 result.add(fileInfo.getPath());
             }
         }
         returnListFile.setFileList(result);
-        if(criteria.getCheckpointTime() != null)
+        if(criteria.getCheckpointTime() != null) {
+//            log.info("epoch milli = {}",criteria.getCheckpointTime());
             returnListFile.setLatestModifiedTime(Timestamp.from(criteria.getCheckpointTime().toInstant()));
+//            log.info("return list file milli = {}",Timestamp.from(criteria.getCheckpointTime().toInstant()));
+        }
         return returnListFile;
     }
 
