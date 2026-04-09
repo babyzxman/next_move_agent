@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class FileListConfig {
 
-    @Value("${file.modifyTime.partition:7}")
-    private Long fileModifyTimePartition;
+    @Value("${file.modifyTime.checkSkipDate:true}")
+    private Boolean fileModifyTimeCheckSkipDate;
 
 }

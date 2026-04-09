@@ -74,7 +74,7 @@ app:
       cron: 0 0 0 ? * *      # Seconds | Minutes | Hours | Day of Month | Month | Day of Week
 file:
   modifyTime:
-    partition: 7
+    checkSkipDate: true
 client:
   url-scheme: https
 const:

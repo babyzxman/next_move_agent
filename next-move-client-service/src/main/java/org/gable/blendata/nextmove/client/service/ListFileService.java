@@ -7,6 +7,7 @@ import org.apache.hadoop.fs.*;
 import org.gable.blendata.nextmove.client.adapter.FileInfo;
 import org.gable.blendata.nextmove.client.adapter.FileListingCriteria;
 import org.gable.blendata.nextmove.client.adapter.FileSystemAdapter;
+import org.gable.blendata.nextmove.client.config.FileListConfig;
 import org.gable.blendata.nextmove.client.dto.TransferHistoryView;
 import org.gable.blendata.nextmove.shared.constant.AppConst;
 import org.gable.blendata.nextmove.shared.constant.TaskConst;
@@ -29,6 +30,8 @@ import static org.gable.blendata.nextmove.shared.constant.FileStatus.PROCESSING;
 public class ListFileService {
 
     private final TransferHistoryService transferHistoryService;
+
+    private final FileListConfig fileListConfig;
 
     /*private PathFilter generateSrcExtensionPathFilter(String[] srcExtensions){
         if(ArrayUtils.isEmpty(srcExtensions)){
@@ -101,18 +104,35 @@ public class ListFileService {
             }
             TransferHistoryView transferHistoryView = transferHistoryViewMap.get(file.getPath());
             if(transferHistoryView != null) {
-                if (!transferHistoryView.getStatus().equals(PROCESSING.name())) {
-                    if(transferHistoryView.getFileModifiedTime() == null) {
-                        filePath.add(file.getPath());
-                        count++;
-                    }
-                    else if(file.getModificationTime().truncatedTo(ChronoUnit.DAYS).isAfter(
-                            transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.DAYS))) {
-                        FileInfo newFile = fileSystemAdapter.getFileInfo(file.getPath());
-                        if(newFile.getModificationTime().truncatedTo(ChronoUnit.DAYS).
-                                isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.DAYS))) {
+                if (fileListConfig.getFileModifyTimeCheckSkipDate()) {
+                    if (!transferHistoryView.getStatus().equals(PROCESSING.name())) {
+                        if (transferHistoryView.getFileModifiedTime() == null) {
                             filePath.add(file.getPath());
                             count++;
+                        } else if (file.getModificationTime().truncatedTo(ChronoUnit.DAYS).isAfter(
+                                transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.DAYS))) {
+                            FileInfo newFile = fileSystemAdapter.getFileInfo(file.getPath());
+                            if (newFile.getModificationTime().truncatedTo(ChronoUnit.DAYS).
+                                    isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.DAYS))) {
+                                filePath.add(file.getPath());
+                                count++;
+                            }
+                        }
+                    }
+                }
+                else {
+                    if (!transferHistoryView.getStatus().equals(PROCESSING.name())) {
+                        if (transferHistoryView.getFileModifiedTime() == null) {
+                            filePath.add(file.getPath());
+                            count++;
+                        } else if (file.getModificationTime().minusSeconds(1).truncatedTo(ChronoUnit.SECONDS).isAfter(
+                                transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.SECONDS))) {
+                            FileInfo newFile = fileSystemAdapter.getFileInfo(file.getPath());
+                            if (newFile.getModificationTime().truncatedTo(ChronoUnit.SECONDS).
+                                    isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.SECONDS))) {
+                                filePath.add(file.getPath());
+                                count++;
+                            }
                         }
                     }
                 }
@@ -234,42 +254,76 @@ public class ListFileService {
             if (result.size() >= (criteria.getMaxFiles() != null ? criteria.getMaxFiles() : Integer.MAX_VALUE)) {
                 break;
             }
-            if (transferHistoryView != null && transferHistoryView.getFileModifiedTime() != null) {
-                if(!file.getModificationTime().truncatedTo(ChronoUnit.DAYS).
-                        isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.DAYS))) {
-                    if(controlFileNamePattern == null) {
-                        if(transferHistoryViewMap.get(getControlFilePath(file,ctrlExtensions,
-                                controlPath,fileSystemAdapter)) == null) {
-                            isControlFileFailedToCopy = true;
-                        }
-                        else {
+            if (fileListConfig.getFileModifyTimeCheckSkipDate()) {
+                if (transferHistoryView != null && transferHistoryView.getFileModifiedTime() != null) {
+                    if (!file.getModificationTime().truncatedTo(ChronoUnit.DAYS).
+                            isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.DAYS))) {
+                        if (controlFileNamePattern == null) {
+                            if (transferHistoryViewMap.get(getControlFilePath(file, ctrlExtensions,
+                                    controlPath, fileSystemAdapter)) == null) {
+                                isControlFileFailedToCopy = true;
+                            } else {
+                                continue;
+                            }
+                        } else {
+                            log.info("check inside continue");
                             continue;
                         }
-                    }
-                    else {
-                        log.info("check inside continue");
-                        continue;
-                    }
-                }
-                else {
-                    log.info("has new file when list new time = {}",file.getModificationTime());
-                    FileInfo newFile = fileSystemAdapter.getFileInfo(file.getPath());
-                    log.info("new file = {}",newFile.getModificationTime());
-                    if(!newFile.getModificationTime().truncatedTo(ChronoUnit.DAYS).
-                            isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().
-                                    truncatedTo(ChronoUnit.DAYS))) {
-                        if(controlFileNamePattern == null) {
-                            if(transferHistoryViewMap.get(getControlFilePath(file,ctrlExtensions,
-                                    controlPath,fileSystemAdapter)) == null) {
-                                isControlFileFailedToCopy = true;
-                            }
-                            else {
+                    } else {
+                        log.info("has new file when list new time = {}", file.getModificationTime());
+                        FileInfo newFile = fileSystemAdapter.getFileInfo(file.getPath());
+                        log.info("new file = {}", newFile.getModificationTime());
+                        if (!newFile.getModificationTime().truncatedTo(ChronoUnit.DAYS).
+                                isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().
+                                        truncatedTo(ChronoUnit.DAYS))) {
+                            if (controlFileNamePattern == null) {
+                                if (transferHistoryViewMap.get(getControlFilePath(file, ctrlExtensions,
+                                        controlPath, fileSystemAdapter)) == null) {
+                                    isControlFileFailedToCopy = true;
+                                } else {
+                                    continue;
+                                }
+                            } else {
+                                log.info("check inside continue");
                                 continue;
                             }
                         }
-                        else {
+                    }
+                }
+            }
+            else {
+                if (transferHistoryView != null && transferHistoryView.getFileModifiedTime() != null) {
+                    if (!file.getModificationTime().minusSeconds(1).truncatedTo(ChronoUnit.SECONDS).
+                            isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.SECONDS))) {
+                        if (controlFileNamePattern == null) {
+                            if (transferHistoryViewMap.get(getControlFilePath(file, ctrlExtensions,
+                                    controlPath, fileSystemAdapter)) == null) {
+                                isControlFileFailedToCopy = true;
+                            } else {
+                                continue;
+                            }
+                        } else {
                             log.info("check inside continue");
                             continue;
+                        }
+                    } else {
+                        log.info("has new file when list new time = {}", file.getModificationTime());
+                        FileInfo newFile = fileSystemAdapter.getFileInfo(file.getPath());
+                        log.info("new file = {}", newFile.getModificationTime());
+                        if (!newFile.getModificationTime().truncatedTo(ChronoUnit.SECONDS).
+                                isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().
+                                        truncatedTo(ChronoUnit.SECONDS))) {
+                            if (controlFileNamePattern == null) {
+                                if (transferHistoryViewMap.get(getControlFilePath(file, ctrlExtensions,
+                                        controlPath, fileSystemAdapter)) == null) {
+                                    isControlFileFailedToCopy = true;
+                                } else {
+                                    continue;
+                                }
+                            } else {
+                                log.info("check inside continue");
+                                continue;
+                            }
                         }
                     }
                 }
@@ -322,17 +376,33 @@ public class ListFileService {
             }
             for(FileInfo fileInfo: controlFiles) {
                 TransferHistoryView transferHistoryView = transferHistoryViewMap.get(fileInfo.getPath());
-                if (null != transferHistoryView && transferHistoryView.getFileModifiedTime() != null) {
-                    if(!fileInfo.getModificationTime().truncatedTo(ChronoUnit.DAYS).
-                            isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.DAYS))) {
-                        continue;
-                    }
-                    else {
-                        FileInfo newFile = fileSystemAdapter.getFileInfo(fileInfo.getPath());
-                        if(!newFile.getModificationTime().truncatedTo(ChronoUnit.DAYS).
-                                isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().
-                                        truncatedTo(ChronoUnit.DAYS))) {
+                if(fileListConfig.getFileModifyTimeCheckSkipDate()) {
+                    if (null != transferHistoryView && transferHistoryView.getFileModifiedTime() != null) {
+                        if (!fileInfo.getModificationTime().truncatedTo(ChronoUnit.DAYS).
+                                isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.DAYS))) {
                             continue;
+                        } else {
+                            FileInfo newFile = fileSystemAdapter.getFileInfo(fileInfo.getPath());
+                            if (!newFile.getModificationTime().truncatedTo(ChronoUnit.DAYS).
+                                    isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().
+                                            truncatedTo(ChronoUnit.DAYS))) {
+                                continue;
+                            }
+                        }
+                    }
+                }
+                else {
+                    if (null != transferHistoryView && transferHistoryView.getFileModifiedTime() != null) {
+                        if (!fileInfo.getModificationTime().truncatedTo(ChronoUnit.SECONDS).
+                                isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.SECONDS))) {
+                            continue;
+                        } else {
+                            FileInfo newFile = fileSystemAdapter.getFileInfo(fileInfo.getPath());
+                            if (!newFile.getModificationTime().truncatedTo(ChronoUnit.SECONDS).
+                                    isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().
+                                            truncatedTo(ChronoUnit.SECONDS))) {
+                                continue;
+                            }
                         }
                     }
                 }

@@ -43,7 +43,6 @@ public class TransferHistoryService {
 
     public List<TransferHistoryView> getSuccessOrProcessingFiles(SourceType sourceType, String rootPath, String host,
                                                                  String destinationRootPath,Integer filePartitionDate){
-        Long filePartitionCountDate = fileListConfig.getFileModifyTimePartition();
         if(SourceType.HADOOP.equals(sourceType)){
             return transferHistoryRepository.findHadoopFilePathBySourceRootPathAndStatus(
                     rootPath, Arrays.asList(FileStatus.SUCCESS.name(),
