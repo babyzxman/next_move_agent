@@ -106,11 +106,11 @@ public class ListFileService {
                         filePath.add(file.getPath());
                         count++;
                     }
-                    else if(file.getModificationTime().minusSeconds(1).truncatedTo(ChronoUnit.SECONDS).isAfter(
-                            transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.SECONDS))) {
+                    else if(file.getModificationTime().truncatedTo(ChronoUnit.DAYS).isAfter(
+                            transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.DAYS))) {
                         FileInfo newFile = fileSystemAdapter.getFileInfo(file.getPath());
-                        if(newFile.getModificationTime().truncatedTo(ChronoUnit.SECONDS).
-                                isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.SECONDS))) {
+                        if(newFile.getModificationTime().truncatedTo(ChronoUnit.DAYS).
+                                isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.DAYS))) {
                             filePath.add(file.getPath());
                             count++;
                         }
@@ -235,8 +235,8 @@ public class ListFileService {
                 break;
             }
             if (transferHistoryView != null && transferHistoryView.getFileModifiedTime() != null) {
-                if(!file.getModificationTime().minusSeconds(1).truncatedTo(ChronoUnit.SECONDS).
-                        isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.SECONDS))) {
+                if(!file.getModificationTime().truncatedTo(ChronoUnit.DAYS).
+                        isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.DAYS))) {
                     if(controlFileNamePattern == null) {
                         if(transferHistoryViewMap.get(getControlFilePath(file,ctrlExtensions,
                                 controlPath,fileSystemAdapter)) == null) {
@@ -255,9 +255,9 @@ public class ListFileService {
                     log.info("has new file when list new time = {}",file.getModificationTime());
                     FileInfo newFile = fileSystemAdapter.getFileInfo(file.getPath());
                     log.info("new file = {}",newFile.getModificationTime());
-                    if(!newFile.getModificationTime().truncatedTo(ChronoUnit.SECONDS).
+                    if(!newFile.getModificationTime().truncatedTo(ChronoUnit.DAYS).
                             isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().
-                                    truncatedTo(ChronoUnit.SECONDS))) {
+                                    truncatedTo(ChronoUnit.DAYS))) {
                         if(controlFileNamePattern == null) {
                             if(transferHistoryViewMap.get(getControlFilePath(file,ctrlExtensions,
                                     controlPath,fileSystemAdapter)) == null) {
@@ -323,13 +323,15 @@ public class ListFileService {
             for(FileInfo fileInfo: controlFiles) {
                 TransferHistoryView transferHistoryView = transferHistoryViewMap.get(fileInfo.getPath());
                 if (null != transferHistoryView && transferHistoryView.getFileModifiedTime() != null) {
-                    if(!fileInfo.getModificationTime().truncatedTo(ChronoUnit.SECONDS).
-                            isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.SECONDS))) {
+                    if(!fileInfo.getModificationTime().truncatedTo(ChronoUnit.DAYS).
+                            isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.DAYS))) {
                         continue;
                     }
                     else {
                         FileInfo newFile = fileSystemAdapter.getFileInfo(fileInfo.getPath());
-                        if(!newFile.getModificationTime().truncatedTo(ChronoUnit.SECONDS).isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().truncatedTo(ChronoUnit.SECONDS))) {
+                        if(!newFile.getModificationTime().truncatedTo(ChronoUnit.DAYS).
+                                isAfter(transferHistoryView.getFileModifiedTime().toLocalDateTime().
+                                        truncatedTo(ChronoUnit.DAYS))) {
                             continue;
                         }
                     }
